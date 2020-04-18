@@ -1,12 +1,27 @@
-import { LitElement, html, css } from 'lit-element';
-import { openWcLogo } from './open-wc-logo';
+import { LitElement, html, css, PropertyValues } from 'lit-element';
+import { openDB, IDBPDatabase } from 'idb';
+import { TimeRegistration } from './time-registration';
+import { TimeregDB } from './TimeregDB';
 
 export class GroniaTimereg extends LitElement {
+  registrations: TimeRegistration[];
+
+  db! : IDBPDatabase<TimeregDB>;
+
   static get properties() {
     return {
       title: { type: String },
       page: { type: String },
+      registrations: {type: Array}
     };
+  }
+
+  /**
+   *
+   */
+  constructor() {
+    super();
+    this.registrations = [];
   }
 
   static get styles() {
@@ -53,27 +68,49 @@ export class GroniaTimereg extends LitElement {
     `;
   }
 
+  async firstUpdated() {
+    this.db = await openDB<TimeregDB>('timereg-db', 1, {
+      upgrade (db){
+        const store = db.createObjectStore('registrations',{
+          keyPath: 'id'
+        });
+        store.createIndex('by-date', 'date');
+      }
+    });
+
+    const registrations = await this.db.getAllFromIndex('registrations', 'by-date');
+    this.registrations = registrations;
+  }
+
+  update(changedProperty : PropertyValues) {
+    console.log("update!");
+    super.update(changedProperty);
+  }
+
+  async insertMock() {
+    const registration = {
+      date: new Date(),
+      description: `Did a thing ${Math.random()} times`,
+      id: (new Date()).getTime() + Math.random().toString()
+    };
+    await this.db.add('registrations', registration);
+    this.registrations = [...this.registrations, registration];
+  }
+
   render() {
     return html`
       <main>
-        <div class="logo">${openWcLogo}</div>
-        <h1>My app</h1>
-
-        <p>Edit <code>src/MyApp.js</code> and save to reload.</p>
-        <a
-          class="app-link"
-          href="https://open-wc.org/developing/#code-examples"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Code examples
-        </a>
+        <h1>${this.title}</h1>
+        <button @click="${this.insertMock}">Add data</button>
+        ${this.renderRegistrations()}
       </main>
-
-      <p class="app-footer">
-        🚽 Made with love by
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/open-wc">open-wc</a>.
-      </p>
     `;
+  }
+
+  renderRegistrations() {
+    return this.registrations.map(
+      registration =>
+        html`<gronia-time-registration date="${registration.date.toDateString()}"></gronia-time-registration>`
+    );
   }
 }
