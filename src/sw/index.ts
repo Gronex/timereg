@@ -1,7 +1,6 @@
 // Give TypeScript the correct global.
 declare var self: ServiceWorkerGlobalScope;
 
-const VERSION = "1";
 const CACHE_KEY = 'timereg-v' + VERSION;
 
 self.addEventListener('install', (event) => {
