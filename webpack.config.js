@@ -1,11 +1,10 @@
 /* eslint-disable func-names */
 const path = require('path');
 const webpack = require('webpack');
-const CleanPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlPlugin = require('script-ext-html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 
@@ -18,10 +17,9 @@ module.exports = function (_, env) {
   return {
     mode: isProd ? 'production' : 'development',
     entry: {
-      'first-interaction': './src/index'
+      'app': './src/index'
     },
     devtool: isProd ? 'source-map' : 'inline-source-map',
-    stats: 'minimal',
     output: {
       filename: isProd ? '[name].[chunkhash:5].js' : '[name].js',
       chunkFilename: '[name].[chunkhash:5].js',
@@ -64,10 +62,7 @@ module.exports = function (_, env) {
 
     plugins: [
       // Remove old files before outputting a production build:
-      isProd && new CleanPlugin([
-        'assets',
-        '**/*.{css,js,json,html,map}'
-      ], {
+      isProd && new CleanWebpackPlugin({
         root: path.join(__dirname, 'build'),
         verbose: false,
         beforeEmit: true
@@ -90,7 +85,7 @@ module.exports = function (_, env) {
       // For now we're not doing SSR.
       new HtmlPlugin({
         filename: path.join(__dirname, 'build/index.html'),
-        template: isProd ? '!!prerender-loader?string!src/index.html' : 'src/index.html',
+        template: 'src/index.html',
         minify: isProd && {
           collapseWhitespace: true,
           removeScriptTypeAttributes: true,
@@ -98,13 +93,8 @@ module.exports = function (_, env) {
           removeRedundantAttributes: true,
           removeComments: true
         },
-        manifest: require('./src/manifest.json'),
-        inject: 'body',
-        compile: true
-      }),
-
-      new ScriptExtHtmlPlugin({
-        inline: ['first']
+        manifest: 'src/manifest.json',
+        inject: 'body'
       }),
 
       // Inline constants during build, so they can be folded by UglifyJS.
