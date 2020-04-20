@@ -1,10 +1,9 @@
 import { DBSchema } from "idb";
+import { TimeRegistration } from './models/timeRegistration';
 
 export interface TimeregDB extends DBSchema {
   registrations: {
-    value: {
-      date: Date;
-      description: string;
+    value: TimeRegistration & {
       id: string;
     },
     key: string,

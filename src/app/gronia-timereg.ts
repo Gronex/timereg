@@ -1,5 +1,5 @@
 import { GroniaTimereg } from './GroniaTimereg';
-import { Registration } from './time-registration-ui';
+import { TimeRegistration } from './TimeRegistration';
 
 customElements.define('gronia-timereg', GroniaTimereg);
-customElements.define('gronia-time-registration', Registration);
+customElements.define('gronia-time-registration', TimeRegistration);

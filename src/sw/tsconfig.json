@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "strict": true,
-    "target": "esnext",
+    "target": "ES2019",
     "module": "esnext",
     "lib": [
       "webworker",
