@@ -27,13 +27,14 @@ export class TimeRegistration extends LitElement {
       unitDisplay: "long"
     });
     return html`
-  <div>
-    <div  @click="${this.toggleEditing}">
-      ${formatter.format(ishour ? hours : hours * 60)} <br/>
+  <details>
+    <summary>
+      ${formatter.format(ishour ? hours : hours * 60)}
+      <span>-</span>
       ${this.registration.description}
-    </div>
-    ${this.renderEditMode()}
-  </div>
+    </summary>
+    <gronia-edit-time-registration .registration="${this.registration}"></gronia-edit-time-registration>
+  </details>
     `;
   }
 

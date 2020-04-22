@@ -70,8 +70,10 @@ export class GroniaTimereg extends LitElement {
     return html`
       <main>
         <h1>${this.title}</h1>
-        <button @click="${this.addNew}">${this.creating ? '-' : '+'}</button>
-        ${this.creating ? html`<gronia-edit-time-registration @save="${this.saveRegistration}"></gronia-edit-time-registration>` : ''}
+        <details>
+          <summary>Add</summary>
+          <gronia-edit-time-registration @save="${this.saveRegistration}"></gronia-edit-time-registration>
+        </details>
         ${this.renderRegistrations()}
       </main>
     `;
@@ -86,15 +88,12 @@ export class GroniaTimereg extends LitElement {
       yield html`
         <div>
           <span>${formatter.format(key)}</span>
-          <ul>
-            <li>
-              ${registrations.map(registration => html`
-                <gronia-time-registration
-                  @save="${(e : EditTimeRegistrationEvent) => this.saveRegistration(e, registration.id)}"
-                  .registration="${registration}">
-                </gronia-time-registration>`)}
-            </li>
-          </ul>
+          ${registrations.map(registration => html`
+            <gronia-time-registration
+              @save="${(e : EditTimeRegistrationEvent) => this.saveRegistration(e, registration.id)}"
+              .registration="${registration}">
+            </gronia-time-registration>`)
+          }
         </div>
       `
     }
@@ -103,7 +102,6 @@ export class GroniaTimereg extends LitElement {
 
   private groupByDate(registrations : TimeRegistrationViewModel[]) {
     var map = new Map<number, TimeRegistrationViewModel[]>();
-    map.set(new Date().setUTCHours(0,0,0,0), [])
 
     return registrations.reduce((group : Map<number, TimeRegistrationViewModel[]>, registration) => {
       const date = registration.date.setUTCHours(0,0,0,0);
@@ -116,9 +114,5 @@ export class GroniaTimereg extends LitElement {
       }
       return group;
     }, map);
-  }
-
-  private addNew() {
-    this.creating = !this.creating;
   }
 }
