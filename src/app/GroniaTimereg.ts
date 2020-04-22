@@ -1,12 +1,15 @@
-import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit-element';
+import { LitElement, html, css, TemplateResult, property } from 'lit-element';
 import { openDB, IDBPDatabase } from 'idb';
-import { TimeregDB } from './TimeregDB';
-import {TimeRegistration } from './models/timeRegistration';
+import { Repository } from '../shared/repository';
+import { TimeRegistrationViewModel } from './models/timeRegistrationViewModel';
+import { EditTimeRegistrationEvent } from './EditTimeRegistration';
 
 export class GroniaTimereg extends LitElement {
-  registrations: TimeRegistration[];
+  private registrations: TimeRegistrationViewModel[];
+  private repository: Repository;
 
-  db! : IDBPDatabase<TimeregDB>;
+  @property({type : Boolean})
+  creating: boolean = false;
 
   static get properties() {
     return {
@@ -22,86 +25,53 @@ export class GroniaTimereg extends LitElement {
   constructor() {
     super();
     this.registrations = [];
+    this.repository = new Repository();
   }
 
   static get styles() {
-    return css`
-      :host {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        font-size: calc(10px + 2vmin);
-        color: #1a2b42;
-        max-width: 960px;
-        margin: 0 auto;
-        text-align: center;
-      }
-
-      main {
-        flex-grow: 1;
-      }
-
-      .logo > svg {
-        margin-top: 36px;
-        animation: app-logo-spin infinite 20s linear;
-      }
-
-      @keyframes app-logo-spin {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .app-footer {
-        font-size: calc(12px + 0.5vmin);
-        align-items: center;
-      }
-
-      .app-footer a {
-        margin-left: 5px;
-      }
-    `;
+    return css``;
   }
 
   async firstUpdated() {
-    this.db = await openDB<TimeregDB>('timereg-db', 1, {
-      upgrade (db){
-        const store = db.createObjectStore('registrations',{
-          keyPath: 'id'
-        });
-        store.createIndex('by-date', 'date');
-      }
+    await this.repository.initialize();
+    this.registrations = await this.repository
+      .getRegistrations()
+      .then(x =>
+        x.map(reg => {
+          return {
+            ...reg,
+            editing: false
+          }
+        })
+      );
+  }
+
+  async saveRegistration(event : EditTimeRegistrationEvent, id? : number) {
+    await this.repository.updateRegistration({
+      description: event.data.description,
+      hours: event.data.hours,
+      timeFrom: event.data.timeFrom,
+      timeTo: event.data.timeTo,
+      project: event.data.project,
+      date: event.data.date,
+      id
     });
 
-    const registrations = await this.db.getAllFromIndex('registrations', 'by-date');
-    this.registrations = registrations;
-  }
-
-  update(changedProperty : PropertyValues) {
-    console.log("update!");
-    super.update(changedProperty);
-  }
-
-  async insertMock(date : Date) {
-    const registration = {
-      date: date,
-      description: `Did a thing ${Math.random()*100} times`,
-      id: (new Date()).getTime() + Math.random().toString(),
-      time: Math.random()*10
-    };
-    await this.db.add('registrations', registration);
-    this.registrations = [...this.registrations, registration];
+    const dbRegistrations = await this.repository.getRegistrations();
+    this.registrations = dbRegistrations.map(x => {
+      return {
+        ...x,
+        editing: false
+      }
+    });
   }
 
   render() {
     return html`
       <main>
         <h1>${this.title}</h1>
+        <button @click="${this.addNew}">${this.creating ? '-' : '+'}</button>
+        ${this.creating ? html`<gronia-edit-time-registration @save="${this.saveRegistration}"></gronia-edit-time-registration>` : ''}
         ${this.renderRegistrations()}
       </main>
     `;
@@ -115,9 +85,15 @@ export class GroniaTimereg extends LitElement {
     for (const [key, registrations] of grouped) {
       yield html`
         <div>
-          <span>${formatter.format(key)}</span><button @click="${() => this.insertMock(new Date(key))}">+</button>
+          <span>${formatter.format(key)}</span>
           <ul>
-            <li>${registrations.map(registration => html`<gronia-time-registration .registration="${registration}"></gronia-time-registration>`)}</li>
+            <li>
+              ${registrations.map(registration => html`
+                <gronia-time-registration
+                  @save="${(e : EditTimeRegistrationEvent) => this.saveRegistration(e, registration.id)}"
+                  .registration="${registration}">
+                </gronia-time-registration>`)}
+            </li>
           </ul>
         </div>
       `
@@ -125,11 +101,11 @@ export class GroniaTimereg extends LitElement {
 
   }
 
-  private groupByDate(registrations : TimeRegistration[]) {
-    var map = new Map<number, TimeRegistration[]>();
+  private groupByDate(registrations : TimeRegistrationViewModel[]) {
+    var map = new Map<number, TimeRegistrationViewModel[]>();
     map.set(new Date().setUTCHours(0,0,0,0), [])
 
-    return registrations.reduce((group : Map<number, TimeRegistration[]>, registration) => {
+    return registrations.reduce((group : Map<number, TimeRegistrationViewModel[]>, registration) => {
       const date = registration.date.setUTCHours(0,0,0,0);
       if(!group.has(date)){
         group.set(date, [registration]);
@@ -140,5 +116,9 @@ export class GroniaTimereg extends LitElement {
       }
       return group;
     }, map);
+  }
+
+  private addNew() {
+    this.creating = !this.creating;
   }
 }
