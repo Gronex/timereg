@@ -8,9 +8,6 @@ export class GroniaTimereg extends LitElement {
   private registrations: TimeRegistrationViewModel[];
   private repository: Repository;
 
-  @property({type : Boolean})
-  creating: boolean = false;
-
   static get properties() {
     return {
       title: { type: String },

@@ -14,7 +14,7 @@ export class EditTimeRegistration extends LitElement {
     <form @submit="${this.onSubmit}">
       <div>
         <label for='date'>Date</label>
-        <input type='date' name='date' value='${dateString}' />
+        <input type='date' name='date' value='${this.formatDate(this.registration?.date)}' />
       </div>
       <div>
         <label for='description'>Description</label>
@@ -30,11 +30,11 @@ export class EditTimeRegistration extends LitElement {
       </div>
       <div>
         <label for='timeFrom'>From</label>
-        <input type='time' name='timeFrom' value='${this.registration?.timeFrom ?? ''}' />
+        <input type='time' name='timeFrom' value='${this.formatTime(this.registration?.timeFrom)}' />
       </div>
       <div>
         <label for='timeTo'>To</label>
-        <input type='time' name='timeTo' value='${this.registration?.timeTo ?? ''}' />
+        <input type='time' name='timeTo' value='${this.formatTime(this.registration?.timeTo)}' />
       </div>
       <button type="submit">Save</button>
     </form>
@@ -49,20 +49,18 @@ export class EditTimeRegistration extends LitElement {
     }
     if (form.reportValidity()){
       const model = this.convertToObject(form);
-      if (model) {
-        this.dispatchEvent(new EditTimeRegistrationEvent('save', {
-          bubbles: true,
-          cancelable: true,
-          composed: true,
-          data: model,
-        }));
-      }
+      this.dispatchEvent(new EditTimeRegistrationEvent('save', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+        data: model,
+      }));
     }
 
     return false;
   }
 
-  private convertToObject(form : HTMLFormElement) : TimeRegistrationForm | null {
+  private convertToObject(form : HTMLFormElement) : TimeRegistrationForm {
 
     let date = (form["date"] as HTMLInputElement)?.valueAsDate;
     if(!date){
@@ -77,6 +75,24 @@ export class EditTimeRegistration extends LitElement {
       project: (form["project"] as HTMLInputElement)?.value,
       date: date
     };
+  }
+
+  private formatDate(date? : Date) {
+    let dateString = date?.toISOString();
+    return dateString?.substring(0, dateString.indexOf('T')) ?? '';
+  }
+
+  private formatTime(time? : number) {
+
+    if(!time) {
+      return '';
+    }
+
+    const minutes = Math.floor(time / 1000 / 60 / 60);
+    const hours = Math.floor(minutes / 60);
+    const minString = minutes.toString().padStart(2, '0');
+    const hourString = minutes.toString().padStart(2, '0');
+    return `${hourString}:${minString}`;
   }
 }
 
