@@ -1,5 +1,4 @@
-import { LitElement, html, css, TemplateResult, property } from 'lit-element';
-import { openDB, IDBPDatabase } from 'idb';
+import { LitElement, html, css, TemplateResult } from 'lit-element';
 import { Repository } from '../shared/repository';
 import { TimeRegistrationViewModel } from './models/timeRegistrationViewModel';
 import { EditTimeRegistrationEvent } from './EditTimeRegistration';

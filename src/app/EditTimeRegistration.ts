@@ -1,4 +1,4 @@
-import { LitElement, html, css, property, Constructor } from 'lit-element';
+import { LitElement, html, property } from 'lit-element';
 import { TimeRegistrationViewModel } from './models/timeRegistrationViewModel';
 
 export class EditTimeRegistration extends LitElement {
@@ -91,7 +91,7 @@ export class EditTimeRegistration extends LitElement {
     const minutes = Math.floor(time / 1000 / 60 / 60);
     const hours = Math.floor(minutes / 60);
     const minString = minutes.toString().padStart(2, '0');
-    const hourString = minutes.toString().padStart(2, '0');
+    const hourString = hours.toString().padStart(2, '0');
     return `${hourString}:${minString}`;
   }
 }

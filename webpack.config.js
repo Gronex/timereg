@@ -5,7 +5,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
+
 
 
 const VERSION = require('./package.json').version;
@@ -17,7 +18,7 @@ module.exports = function (_, env) {
   return {
     mode: isProd ? 'production' : 'development',
     entry: {
-      'app': './src/index'
+      'app': './src/app/index'
     },
     devtool: isProd ? 'source-map' : 'inline-source-map',
     output: {
@@ -34,21 +35,17 @@ module.exports = function (_, env) {
       defaultRules: [],
       rules: [
         {
-          oneOf: [
-            {
-              type: 'javascript/auto',
-              resolve: {},
-              parser: {
-                system: false,
-                requireJs: false
-              }
-            }
-          ]
+          type: 'javascript/auto',
+          resolve: {},
+          parser: {
+            system: false,
+            requireJs: false
+          }
         },
         {
           test: /\.tsx?$/,
           exclude: nodeModules,
-          loader: 'ts-loader'
+          loader: 'ts-loader',
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
@@ -68,10 +65,6 @@ module.exports = function (_, env) {
         beforeEmit: true
       }),
 
-      new ServiceWorkerWebpackPlugin({
-        entry: path.join(__dirname, 'src/sw/index.ts')
-      }),
-
       // Automatically split code into async chunks.
       // See: https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
       isProd && new webpack.optimize.SplitChunksPlugin({}),
@@ -86,6 +79,7 @@ module.exports = function (_, env) {
       new HtmlPlugin({
         filename: path.join(__dirname, 'build/index.html'),
         template: 'src/index.html',
+        excludeChunks: ['ws'],
         minify: isProd && {
           collapseWhitespace: true,
           removeScriptTypeAttributes: true,
@@ -116,6 +110,10 @@ module.exports = function (_, env) {
         analyzerMode: 'static',
         defaultSizes: 'gzip',
         openAnalyzer: false
+      }),
+
+      new InjectManifest({
+        swSrc: './src/sw/sw.ts',
       }),
     ].filter(Boolean), // Filter out any falsey plugin array entries.
 

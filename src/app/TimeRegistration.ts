@@ -38,13 +38,6 @@ export class TimeRegistration extends LitElement {
     `;
   }
 
-  private toggleEditing() {
-    if(this.registration){
-      this.registration.editing = !this.registration?.editing;
-    }
-    this.requestUpdate();
-  }
-
   renderEditMode(){
     if(this.registration?.editing){
       return html`

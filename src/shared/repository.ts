@@ -31,7 +31,15 @@ export class Repository {
     if (registration.id) {
       await this.db.put('registrations', registration);
     } else {
-      await this.db.add('registrations', registration)
+      await this.db.add('registrations', {
+        date: registration.date,
+        hours: registration.hours,
+        timeFrom: registration.timeFrom,
+        timeTo: registration.timeTo,
+        description: registration.description,
+        project: registration.project,
+        serverId: registration.serverId
+      });
     }
   }
 
