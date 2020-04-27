@@ -16,20 +16,10 @@ export class TimeRegistration extends LitElement {
     if(!this.registration){
       return;
     }
-
-    const hours = (this.registration.hours ?? 0);
-
-    const ishour = hours >= 1;
-
-    const formatter = new Intl.NumberFormat(undefined, {
-      style: 'unit',
-      unit: ishour ? 'hour' : 'minute',
-      unitDisplay: "long"
-    });
     return html`
   <details>
     <summary>
-      ${formatter.format(ishour ? hours : hours * 60)}
+      ${this.formatTime(this.registration.hours)}
       <span>-</span>
       ${this.registration.description}
     </summary>
@@ -42,6 +32,23 @@ export class TimeRegistration extends LitElement {
     if(this.registration?.editing){
       return html`
         <gronia-edit-time-registration .registration="${this.registration}"></gronia-edit-time-registration>`;
+    }
+  }
+
+  private formatTime(time? : number) {
+    const hours = (time ?? 0);
+    const ishour = hours >= 1;
+    try {
+      const formatter = new Intl.NumberFormat(undefined, {
+        style: 'unit',
+        unit: ishour ? 'hour' : 'minute',
+        unitDisplay: "long"
+      });
+
+      return formatter.format(ishour ? hours : hours * 60);
+    }
+    catch {
+      return `${hours} hours`;
     }
   }
 }

@@ -11,6 +11,10 @@
     "src": "/assets/clock-512.png",
     "type": "image/png",
     "sizes": "512x512"
+  },{
+    "src": "/assets/clock-64.png",
+    "type": "image/png",
+    "sizes": "64x64"
   }],
   "theme_color": "#003366",
   "background_color": "#003366"
