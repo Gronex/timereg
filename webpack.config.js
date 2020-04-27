@@ -79,7 +79,6 @@ module.exports = function (_, env) {
       new HtmlPlugin({
         filename: path.join(__dirname, 'build/index.html'),
         template: 'src/index.html',
-        excludeChunks: ['ws'],
         minify: isProd && {
           collapseWhitespace: true,
           removeScriptTypeAttributes: true,
@@ -87,7 +86,7 @@ module.exports = function (_, env) {
           removeRedundantAttributes: true,
           removeComments: true
         },
-        manifest: 'src/manifest.json',
+        manifest: 'src/manifest.webmanifest',
         inject: 'body'
       }),
 
@@ -101,7 +100,7 @@ module.exports = function (_, env) {
 
       // Copying files via Webpack allows them to be served dynamically by `webpack serve`
       new CopyPlugin([
-        { from: 'src/manifest.json', to: 'manifest.json' },
+        { from: 'src/manifest.webmanifest', to: 'manifest.webmanifest' },
         { from: 'src/assets', to: 'assets' }
       ]),
 

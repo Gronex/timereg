@@ -1,0 +1,17 @@
+{
+  "name": "Timereg",
+  "start_url": ".",
+  "display": "standalone",
+  "description": "Quick timeregistration app. To help remember what you did.",
+  "icons": [{
+    "src": "/assets/clock-192.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  },{
+    "src": "/assets/clock-512.png",
+    "type": "image/png",
+    "sizes": "512x512"
+  }],
+  "theme_color": "#003366",
+  "background_color": "#003366"
+}
