@@ -2,6 +2,7 @@ import { LitElement, html, css, TemplateResult } from 'lit-element';
 import { Repository } from '../shared/repository';
 import { TimeRegistrationViewModel } from './models/timeRegistrationViewModel';
 import { EditTimeRegistrationEvent } from './EditTimeRegistration';
+import { formatTime } from './util';
 
 export class Timereg extends LitElement {
   private registrations: TimeRegistrationViewModel[];
@@ -81,9 +82,12 @@ export class Timereg extends LitElement {
     const grouped = this.groupByDate(this.registrations);
 
     for (const [key, registrations] of grouped) {
+      var totalHours = registrations.reduce((sum, registration) => (registration.hours ?? 0) + sum, 0);
+
       yield html`
         <div>
           <span>${formatter.format(key)}</span>
+          <span>${formatTime(totalHours)}</span>
           ${registrations.map(registration => html`
             <gronia-time-registration
               @save="${(e : EditTimeRegistrationEvent) => this.saveRegistration(e, registration.id)}"
