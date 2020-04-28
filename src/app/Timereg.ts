@@ -71,6 +71,7 @@ export class Timereg extends LitElement {
           <summary>Add</summary>
           <gronia-edit-time-registration @save="${this.saveRegistration}"></gronia-edit-time-registration>
         </details>
+        <hr/>
         ${this.renderRegistrations()}
       </main>
     `;
@@ -86,7 +87,7 @@ export class Timereg extends LitElement {
 
       yield html`
         <div>
-          <span>${formatter.format(key)}</span>
+          <h3>${formatter.format(key)}</h3>
           <span>${formatTime(totalHours)}</span>
           ${registrations.map(registration => html`
             <gronia-time-registration
@@ -95,6 +96,7 @@ export class Timereg extends LitElement {
             </gronia-time-registration>`)
           }
         </div>
+        <hr/>
       `
     }
 
