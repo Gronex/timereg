@@ -3,7 +3,7 @@ import { Repository } from '../shared/repository';
 import { TimeRegistrationViewModel } from './models/timeRegistrationViewModel';
 import { EditTimeRegistrationEvent } from './EditTimeRegistration';
 
-export class GroniaTimereg extends LitElement {
+export class Timereg extends LitElement {
   private registrations: TimeRegistrationViewModel[];
   private repository: Repository;
 

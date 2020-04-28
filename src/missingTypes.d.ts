@@ -1,5 +1,4 @@
 declare var VERSION: string;
-declare var ASSETS: string[];
 
 declare namespace Intl {
   interface NumberFormatOptions {

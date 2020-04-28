@@ -16,10 +16,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="Clock.svg"
-   inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\clock-64.png"
-   inkscape:export-xdpi="9.3100004"
-   inkscape:export-ydpi="9.3100004">
+   sodipodi:docname="Clock.svg">
   <title
      id="title6569">Clock</title>
   <defs
@@ -120,24 +117,15 @@
        id="path3787"
        cx="-526.78143"
        cy="151.86584"
-       r="79.769897"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png" />
+       r="79.769897"/>
     <circle
        cy="151.86584"
        cx="-526.78143"
        id="circle6040"
        style="fill:none;stroke:#626262;stroke-width:1.86407757;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       r="86.115875"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png" />
+       r="86.115875"/>
     <g
-       id="g6850"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png">
+       id="g6850">
       <rect
          inkscape:tile-y0="72.754316"
          inkscape:tile-x0="-527.18392"
@@ -876,10 +864,7 @@
          inkscape:tile-y0="72.754316" />
     </g>
     <g
-       id="g6382"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png">
+       id="g6382">
       <path
          inkscape:tile-y0="72.754316"
          inkscape:tile-x0="-528.92411"
@@ -1020,10 +1005,7 @@
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="-527.26715"
        y="94.333031"
-       id="text6573"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       id="text6573"><tspan
          sodipodi:role="line"
          id="tspan6571"
          x="-528.3255"
@@ -1034,10 +1016,7 @@
        y="102.78493"
        x="-495.25229"
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       xml:space="preserve"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       xml:space="preserve"><tspan
          style="font-size:17.63888931px;text-align:center;letter-spacing:-2.11666656px;text-anchor:middle;fill:#aa87de;stroke-width:0.26458332"
          y="102.78493"
          x="-496.31061"
@@ -1048,10 +1027,7 @@
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="-471.58667"
        y="126.04858"
-       id="text6594"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       id="text6594"><tspan
          sodipodi:role="line"
          id="tspan6592"
          x="-472.64499"
@@ -1062,10 +1038,7 @@
        y="157.83966"
        x="-462.88376"
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       xml:space="preserve"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       xml:space="preserve"><tspan
          style="font-size:17.63888931px;text-align:center;letter-spacing:-2.11666656px;text-anchor:middle;fill:#aa87de;stroke-width:0.26458332"
          y="157.83966"
          x="-463.94208"
@@ -1076,10 +1049,7 @@
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="-471.00549"
        y="189.74036"
-       id="text6610"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       id="text6610"><tspan
          sodipodi:role="line"
          id="tspan6608"
          x="-472.06381"
@@ -1090,10 +1060,7 @@
        y="213.25015"
        x="-494.7764"
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       xml:space="preserve"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       xml:space="preserve"><tspan
          style="font-size:17.63888931px;text-align:center;letter-spacing:-2.11666656px;text-anchor:middle;fill:#aa87de;stroke-width:0.26458332"
          y="213.25015"
          x="-495.83475"
@@ -1104,10 +1071,7 @@
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="-526.50232"
        y="222.19716"
-       id="text6626"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       id="text6626"><tspan
          sodipodi:role="line"
          id="tspan6624"
          x="-527.56067"
@@ -1118,10 +1082,7 @@
        y="213.84932"
        x="-558.51813"
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       xml:space="preserve"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       xml:space="preserve"><tspan
          style="font-size:17.63888931px;text-align:center;letter-spacing:-2.11666656px;text-anchor:middle;fill:#aa87de;stroke-width:0.26458332"
          y="213.84932"
          x="-559.57642"
@@ -1132,10 +1093,7 @@
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="-581.90363"
        y="190.67863"
-       id="text6642"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       id="text6642"><tspan
          sodipodi:role="line"
          id="tspan6640"
          x="-582.96198"
@@ -1146,10 +1104,7 @@
        y="158.87141"
        x="-590.62738"
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       xml:space="preserve"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       xml:space="preserve"><tspan
          style="font-size:17.63888931px;text-align:center;letter-spacing:-2.11666656px;text-anchor:middle;fill:#aa87de;stroke-width:0.26458332"
          y="158.87141"
          x="-591.68573"
@@ -1160,10 +1115,7 @@
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="-582.81128"
        y="126.14609"
-       id="text6658"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       id="text6658"><tspan
          sodipodi:role="line"
          id="tspan6656"
          x="-583.86963"
@@ -1174,10 +1126,7 @@
        y="103.02091"
        x="-559.21881"
        style="font-style:normal;font-weight:normal;font-size:21.16666603px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       xml:space="preserve"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png"><tspan
+       xml:space="preserve"><tspan
          style="font-size:17.63888931px;text-align:center;letter-spacing:-2.11666656px;text-anchor:middle;fill:#aa87de;stroke-width:0.26458332"
          y="103.02091"
          x="-560.27716"
@@ -1193,10 +1142,7 @@
        ry="2.6458333"
        inkscape:transform-center-x="8.509302"
        inkscape:transform-center-y="-19.380882"
-       transform="rotate(-23.704392)"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png" />
+       transform="rotate(-23.704392)" />
     <rect
        style="opacity:1;fill:#87de87;fill-opacity:1;stroke:none;stroke-width:3.24876904;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect6708-6"
@@ -1207,9 +1153,6 @@
        ry="2.6458333"
        inkscape:transform-center-x="-11.918176"
        inkscape:transform-center-y="5.7417492"
-       transform="rotate(115.72295)"
-       inkscape:export-xdpi="74.699997"
-       inkscape:export-ydpi="74.699997"
-       inkscape:export-filename="C:\Users\Mads\projects\gronia-timereg\src\assets\Clock-512.png" />
+       transform="rotate(115.72295)" />
   </g>
 </svg>
