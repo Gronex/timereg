@@ -14,7 +14,7 @@ export class EditTimeRegistration extends LitElement {
     <form @submit="${this.onSubmit}">
       <div>
         <label for='date'>Date</label>
-        <input type='date' name='date' value='${this.formatDate(this.registration?.date)}' />
+        <input type='date' name='date' value='${this.formatDate(this.registration?.date)}' required />
       </div>
       <div>
         <label for='description'>Description</label>
@@ -26,16 +26,16 @@ export class EditTimeRegistration extends LitElement {
       </div>
       <div>
         <label for='hours'>Hours</label>
-        <input type='number' name='hours' value='${this.registration?.hours ?? ''}' />
+        <input type='number' step="0.01" name='hours' value='${this.registration?.hours ?? ''}' />
       </div>
-      <div>
+      <!-- <div>
         <label for='timeFrom'>From</label>
         <input type='time' name='timeFrom' value='${this.formatTime(this.registration?.timeFrom)}' />
       </div>
       <div>
         <label for='timeTo'>To</label>
         <input type='time' name='timeTo' value='${this.formatTime(this.registration?.timeTo)}' />
-      </div>
+      </div> -->
       <button type="submit">Save</button>
     </form>
     `;
@@ -55,6 +55,9 @@ export class EditTimeRegistration extends LitElement {
         composed: true,
         data: model,
       }));
+
+      // Reset the form
+      this.requestUpdate();
     }
 
     return false;
@@ -78,8 +81,8 @@ export class EditTimeRegistration extends LitElement {
   }
 
   private formatDate(date? : Date) {
-    let dateString = date?.toISOString();
-    return dateString?.substring(0, dateString.indexOf('T')) ?? '';
+    let dateString = (date ?? new Date()).toISOString();
+    return dateString.substring(0, dateString.indexOf('T'));
   }
 
   private formatTime(time? : number) {
