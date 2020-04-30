@@ -47,6 +47,8 @@ export class Repository {
    * getRegistrations
    */
   public async getRegistrations() : Promise<TimeRegistration[]> {
-    return await this.db.getAll('registrations');
+    return await this.db
+      .getAll('registrations')
+      .then(data => data.sort((timereg1, timereg2) => (timereg2.date.getTime() - timereg1.date.getTime())));
   }
 }
