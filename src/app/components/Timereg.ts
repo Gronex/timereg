@@ -1,8 +1,10 @@
-import { LitElement, html, css, TemplateResult } from 'lit-element';
-import { Repository } from '../shared/repository';
-import { TimeRegistrationViewModel } from './models/timeRegistrationViewModel';
+import { LitElement, html, TemplateResult } from 'lit-element';
+import { Repository } from '../../shared/repository';
+import { TimeRegistrationViewModel } from '../models/timeRegistrationViewModel';
 import { EditTimeRegistrationEvent } from './EditTimeRegistration';
-import { formatTime } from './util';
+import { formatTime } from '../util';
+
+import App from '../app.scss';
 
 export class Timereg extends LitElement {
   private registrations: TimeRegistrationViewModel[];
@@ -26,7 +28,7 @@ export class Timereg extends LitElement {
   }
 
   static get styles() {
-    return css``;
+    return [App];
   }
 
   async firstUpdated() {

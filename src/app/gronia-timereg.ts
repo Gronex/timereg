@@ -1,6 +1,6 @@
-import { Timereg } from './Timereg';
-import { TimeRegistration } from './TimeRegistration';
-import { EditTimeRegistration } from './EditTimeRegistration';
+import { Timereg } from './components/Timereg';
+import { TimeRegistration } from './components/TimeRegistration';
+import { EditTimeRegistration } from './components/EditTimeRegistration';
 
 customElements.define('gronia-timereg', Timereg);
 customElements.define('gronia-time-registration', TimeRegistration);

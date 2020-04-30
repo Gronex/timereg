@@ -1,10 +1,16 @@
 import { LitElement, html, property } from 'lit-element';
-import { TimeRegistrationViewModel } from './models/timeRegistrationViewModel';
+import { TimeRegistrationViewModel } from '../models/timeRegistrationViewModel';
+
+import App from '../app.scss';
 
 export class EditTimeRegistration extends LitElement {
 
   @property({type: Object})
   registration?: TimeRegistrationViewModel;
+
+  static get styles() {
+    return [App];
+  }
 
   render() {
     let dateString = this.registration?.date.toISOString();
@@ -36,7 +42,10 @@ export class EditTimeRegistration extends LitElement {
         <label for='timeTo'>To</label>
         <input type='time' name='timeTo' value='${this.formatTime(this.registration?.timeTo)}' />
       </div> -->
-      <button type="submit">Save</button>
+      <button class="mdc-button mdc-button--raised" type="submit">
+        <div class="mdc-button__ripple"></div>
+        <span class="mdc-button__label">Save</span>
+      </button>
     </form>
     `;
   }

@@ -1,6 +1,6 @@
 import { LitElement, html, css, property } from 'lit-element';
-import { TimeRegistrationViewModel } from './models/timeRegistrationViewModel';
-import { formatTime } from './util';
+import { TimeRegistrationViewModel } from '../models/timeRegistrationViewModel';
+import { formatTime } from '../util';
 
 export class TimeRegistration extends LitElement {
 

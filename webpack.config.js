@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /* eslint-disable func-names */
 const path = require('path');
 const webpack = require('webpack');
@@ -41,6 +42,27 @@ module.exports = function (_, env) {
             system: false,
             requireJs: false
           }
+        },
+        {
+          test: /\.s[ac]ss$/i,
+          use: [
+            'lit-scss-loader',
+            'extract-loader',
+            // Creates `style` nodes from JS strings
+            //'style-loader',
+            // Translates CSS into CommonJS
+            'css-loader',
+            // Compiles Sass to CSS
+            {
+              loader: 'sass-loader',
+              options: {
+                implementation: require('sass'),
+                sassOptions: {
+                  includePaths: ['./node_modules']
+                }
+              }
+            }
+          ]
         },
         {
           test: /\.tsx?$/,

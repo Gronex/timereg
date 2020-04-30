@@ -6,3 +6,7 @@ declare namespace Intl {
     unitDisplay?: 'long' | 'short' | 'narrow';
   }
 }
+
+
+// declaration.d.ts
+declare module '*.scss';
