@@ -22,7 +22,7 @@ export class EditTimeRegistration extends LitElement {
       </div>
       <div>
         <label for='project'>Project</label>
-        <input type='text' name='project' value='${this.registration?.description ?? ''}' />
+        <input type='text' name='project' value='${this.registration?.project ?? ''}' />
       </div>
       <div>
         <label for='hours'>Hours</label>
