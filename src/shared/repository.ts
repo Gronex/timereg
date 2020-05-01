@@ -51,4 +51,15 @@ export class Repository {
       .getAll('registrations')
       .then(data => data.sort((timereg1, timereg2) => (timereg2.date.getTime() - timereg1.date.getTime())));
   }
+
+  /**
+   * getRegistrationsByDate
+   */
+  public async getRegistrationsByDate(date : Date) {
+    const registrations =
+      await this.db
+        .getAll('registrations');
+
+    return registrations.filter(x => x.date.toDateString() === date.toDateString());
+  }
 }

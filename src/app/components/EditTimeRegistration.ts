@@ -1,11 +1,11 @@
 import { LitElement, html, property } from 'lit-element';
-import { TimeRegistrationViewModel } from '../models/timeRegistrationViewModel';
 import '@material/mwc-button';
+import { TimeRegistration } from '../../shared/models/timeRegistration';
 
 export class EditTimeRegistration extends LitElement {
 
   @property({type: Object})
-  registration?: TimeRegistrationViewModel;
+  registration?: TimeRegistration;
 
   static get styles() {
     return [];

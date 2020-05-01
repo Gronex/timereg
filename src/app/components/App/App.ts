@@ -3,6 +3,7 @@ import '../Header/Header';
 import { Router } from "../../router";
 
 import './app-styles.scss';
+import '../TimeRegistrationList'
 
 export class App extends LitElement {
 
@@ -11,12 +12,19 @@ export class App extends LitElement {
 
   private router: Router;
 
-  /**
-   *
-   */
   constructor() {
     super();
     this.router = new Router();
+    this.router
+      .add({
+        path: '/',
+        callback: () => html`<timereg-day-list></timereg-day-list>`
+      })
+      .add({
+        path: '/(.*)',
+        callback: (...date) => html`<timereg-registration-list date="${date[0]}" ></timereg-registration-list>`
+      })
+      .startRouting();
   }
 
   static get styles() {
@@ -27,7 +35,7 @@ export class App extends LitElement {
     console.log(this.appTitle);
     return html`
     <timereg-header appTitle="${this.appTitle}"></timereg-header>
-    ${this.router.renderRoute()}
+    ${this.router.outlet}
     `
   }
 }
