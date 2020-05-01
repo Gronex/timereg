@@ -1,4 +1,4 @@
-import "./gronia-timereg";
+import './components/App/App';
 
 if ('serviceWorker' in navigator) {
   let newWorker : ServiceWorker | null;
@@ -15,7 +15,7 @@ if ('serviceWorker' in navigator) {
               setTimeout(() => {
                 console.log("GOGOGO!");
                 newWorker?.postMessage({ action: 'skipWaiting' });
-              }, 5000);
+              }, 1);
               console.log('installed');
             }
             break;

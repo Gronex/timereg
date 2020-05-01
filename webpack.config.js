@@ -7,6 +7,7 @@ const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { InjectManifest } = require('workbox-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 
@@ -46,10 +47,14 @@ module.exports = function (_, env) {
         {
           test: /\.s[ac]ss$/i,
           use: [
-            'lit-scss-loader',
-            'extract-loader',
-            // Creates `style` nodes from JS strings
-            //'style-loader',
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: !isProd,
+                // if hmr does not work, this is a forceful method.
+                reloadAll: true,
+              }
+            },
             // Translates CSS into CommonJS
             'css-loader',
             // Compiles Sass to CSS
@@ -96,6 +101,13 @@ module.exports = function (_, env) {
       new webpack.WatchIgnorePlugin([
         /(c|sc|sa)ss\.d\.ts$/
       ]),
+
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
 
       // For now we're not doing SSR.
       new HtmlPlugin({

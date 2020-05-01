@@ -2,11 +2,12 @@ import { LitElement, html, TemplateResult } from 'lit-element';
 import { Repository } from '../../shared/repository';
 import { TimeRegistrationViewModel } from '../models/timeRegistrationViewModel';
 import { EditTimeRegistrationEvent } from './EditTimeRegistration';
+import './TimeRegistration';
 import { formatTime } from '../util';
 
-import App from '../app.scss';
+import '@material/mwc-list'
 
-export class Timereg extends LitElement {
+export class TimeregList extends LitElement {
   private registrations: TimeRegistrationViewModel[];
   private repository: Repository;
 
@@ -28,7 +29,7 @@ export class Timereg extends LitElement {
   }
 
   static get styles() {
-    return [App];
+    return [];
   }
 
   async firstUpdated() {
@@ -71,7 +72,7 @@ export class Timereg extends LitElement {
         <h1>${this.title}</h1>
         <details>
           <summary>Add</summary>
-          <gronia-edit-time-registration @save="${this.saveRegistration}"></gronia-edit-time-registration>
+          <timereg-edit-registration @save="${this.saveRegistration}"></timereg-edit-registration>
         </details>
         <hr/>
         ${this.renderRegistrations()}
@@ -92,10 +93,10 @@ export class Timereg extends LitElement {
           <h3>${formatter.format(key)}</h3>
           <span>${formatTime(totalHours)}</span>
           ${registrations.map(registration => html`
-            <gronia-time-registration
+            <timereg-registration
               @save="${(e : EditTimeRegistrationEvent) => this.saveRegistration(e, registration.id)}"
               .registration="${registration}">
-            </gronia-time-registration>`)
+            </timereg-registration>`)
           }
         </div>
         <hr/>
@@ -120,3 +121,5 @@ export class Timereg extends LitElement {
     }, map);
   }
 }
+
+customElements.define('timereg-list', TimeregList);

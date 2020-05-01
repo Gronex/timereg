@@ -1,7 +1,6 @@
 import { LitElement, html, property } from 'lit-element';
 import { TimeRegistrationViewModel } from '../models/timeRegistrationViewModel';
-
-import App from '../app.scss';
+import '@material/mwc-button';
 
 export class EditTimeRegistration extends LitElement {
 
@@ -9,7 +8,7 @@ export class EditTimeRegistration extends LitElement {
   registration?: TimeRegistrationViewModel;
 
   static get styles() {
-    return [App];
+    return [];
   }
 
   render() {
@@ -42,10 +41,7 @@ export class EditTimeRegistration extends LitElement {
         <label for='timeTo'>To</label>
         <input type='time' name='timeTo' value='${this.formatTime(this.registration?.timeTo)}' />
       </div> -->
-      <button class="mdc-button mdc-button--raised" type="submit">
-        <div class="mdc-button__ripple"></div>
-        <span class="mdc-button__label">Save</span>
-      </button>
+      <mwc-button @click="${this.onSubmit}" outlined label="Save"></mwc-button>
     </form>
     `;
   }
@@ -107,6 +103,8 @@ export class EditTimeRegistration extends LitElement {
     return `${hourString}:${minString}`;
   }
 }
+
+customElements.define('timereg-edit-registration', EditTimeRegistration);
 
 interface TimeRegistrationForm {
   hours: number;
