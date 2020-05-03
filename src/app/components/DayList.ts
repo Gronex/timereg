@@ -1,67 +1,45 @@
-import { LitElement, html, TemplateResult, css } from 'lit-element';
-import { Repository } from '../../shared/repository';
-import { EditTimeRegistrationEvent } from './EditTimeRegistration';
+import { LitElement, html, TemplateResult, property } from 'lit-element';
 import './TimeRegistrationList';
 import { formatTime } from '../util';
 
 import '@material/mwc-list';
 import '@material/mwc-list/mwc-list-item';
 import { TimeRegistration } from '../../shared/models/timeRegistration';
+import { hiddenLinkStyles } from '../styles';
 
 export class DayList extends LitElement {
-  private registrations: TimeRegistration[];
-  private repository: Repository;
 
-  static get properties() {
-    return {
-      title: { type: String },
-      page: { type: String },
-      registrations: {type: Array}
-    };
-  }
+  @property({type: Array})
+  registrations: TimeRegistration[];
 
-  /**
-   *
-   */
   constructor() {
     super();
     this.registrations = [];
-    this.repository = new Repository();
   }
 
   static get styles() {
-    return css`
-      a {
-        text-decoration: none;
-      }
-    `;
+    return [hiddenLinkStyles()]
   }
 
-  async firstUpdated() {
-    await this.repository.initialize();
-    this.registrations = await this.repository
-      .getRegistrations();
-  }
+  // async saveRegistration(event : EditTimeRegistrationEvent, id? : number) {
+  //   await this.repository.updateRegistration({
+  //     description: event.data.description,
+  //     hours: event.data.hours,
+  //     timeFrom: event.data.timeFrom,
+  //     timeTo: event.data.timeTo,
+  //     project: event.data.project,
+  //     date: event.data.date,
+  //     id
+  //   });
 
-  async saveRegistration(event : EditTimeRegistrationEvent, id? : number) {
-    await this.repository.updateRegistration({
-      description: event.data.description,
-      hours: event.data.hours,
-      timeFrom: event.data.timeFrom,
-      timeTo: event.data.timeTo,
-      project: event.data.project,
-      date: event.data.date,
-      id
-    });
-
-    const dbRegistrations = await this.repository.getRegistrations();
-    this.registrations = dbRegistrations.map(x => {
-      return {
-        ...x,
-        editing: false
-      }
-    });
-  }
+  //   const dbRegistrations = await this.repository.getRegistrations();
+  //   this.registrations = dbRegistrations.map(x => {
+  //     return {
+  //       ...x,
+  //       editing: false
+  //     }
+  //   });
+  // }
 
   render() {
     return html`
@@ -95,12 +73,6 @@ export class DayList extends LitElement {
         </a>
         <li divider role="separator"></li>
       `
-          // ${registrations.map(registration => html`
-          //   <timereg-registration
-          //     @save="${(e : EditTimeRegistrationEvent) => this.saveRegistration(e, registration.id)}"
-          //     .registration="${registration}">
-          //   </timereg-registration>`)
-          // }
     }
 
   }

@@ -15,7 +15,7 @@ export class EditTimeRegistration extends LitElement {
     let dateString = this.registration?.date.toISOString();
     dateString = dateString?.substring(0, dateString.indexOf('T')) ?? '';
 
-    return html`<h2>Edit</h2>
+    return html`
     <form @submit="${this.onSubmit}">
       <div>
         <label for='date'>Date</label>

@@ -1,9 +1,10 @@
 import { LitElement, html, property } from "lit-element";
-import '../Header/Header';
+import '../Header';
 import { Router } from "../../router";
-
+import '@material/mwc-fab';
+import '@material/mwc-icon';
 import './app-styles.scss';
-import '../TimeRegistrationList'
+import '../../Pages';
 
 export class App extends LitElement {
 
@@ -18,11 +19,19 @@ export class App extends LitElement {
     this.router
       .add({
         path: '/',
-        callback: () => html`<timereg-day-list></timereg-day-list>`
+        callback: () => html`<timereg-overview-page></timereg-overview-page>`
       })
       .add({
-        path: '/(.*)',
-        callback: (...date) => html`<timereg-registration-list date="${date[0]}" ></timereg-registration-list>`
+        path: '/(\\d{4}-\\d{2}-\\d{2})',
+        callback: (...args) => html`<timereg-registration-list-page date="${args[0]}"></timereg-registration-list-page>`
+      })
+      .add({
+        path: '/edit/(.*)',
+        callback: (...args) => html`<timereg-edit-page registrationId="${args[0]}"></timereg-edit-page>`
+      })
+      .add({
+        path: '/new',
+        callback: () => html`<timereg-new-page></timereg-new-page>`
       })
       .startRouting();
   }
@@ -36,6 +45,7 @@ export class App extends LitElement {
     return html`
     <timereg-header appTitle="${this.appTitle}"></timereg-header>
     ${this.router.outlet}
+    <mwc-fab label="add" icon="add" @click="${() => window.history.pushState(null, 'Add', '/new')}"></mwc-fab>
     `
   }
 }

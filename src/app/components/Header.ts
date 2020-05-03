@@ -1,4 +1,4 @@
-import { LitElement, html, property } from "lit-element";
+import { LitElement, html, property, css } from "lit-element";
 import '@material/mwc-top-app-bar';
 
 export class Header extends LitElement {
@@ -7,13 +7,18 @@ export class Header extends LitElement {
   appTitle?: string;
 
   static get styles() {
-    return [];
+    return css`
+    a {
+      text-decoration: inherit;
+      color: inherit;
+    }
+    `;
   }
 
   render() {
     return html`
     <mwc-top-app-bar>
-      <div slot="title">${this.appTitle}</div>
+      <a href="/" slot="title">${this.appTitle}</a>
     </mwc-top-app-bar>
     `
   }
