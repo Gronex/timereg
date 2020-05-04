@@ -53,6 +53,7 @@
     "@material/mwc-fab": "^0.14.1",
     "@material/mwc-icon": "^0.14.1",
     "@material/mwc-list": "^0.14.1",
+    "@material/mwc-textfield": "^0.14.1",
     "@material/mwc-top-app-bar": "^0.14.1",
     "idb": "^5.0.2",
     "lit-element": "^2.0.1",

@@ -1,14 +1,32 @@
-import { LitElement, html, property } from 'lit-element';
+import { LitElement, html, property, query, css } from 'lit-element';
 import '@material/mwc-button';
+import '@material/mwc-textfield';
 import { TimeRegistration } from '../../shared/models/timeRegistration';
+import { TextField } from '@material/mwc-textfield';
 
 export class EditTimeRegistration extends LitElement {
 
   @property({type: Object})
   registration?: TimeRegistration;
 
+  @query('#date')
+  private date!: TextField
+
+  @query('#description')
+  private description!: TextField
+
+  @query('#project')
+  private project!: TextField
+
+  @query('#hours')
+  private hours!: TextField
+
   static get styles() {
-    return [];
+    return css`
+      form {
+        align-content: center;
+      }
+    `;
   }
 
   render() {
@@ -18,29 +36,13 @@ export class EditTimeRegistration extends LitElement {
     return html`
     <form @submit="${this.onSubmit}">
       <div>
-        <label for='date'>Date</label>
-        <input type='date' name='date' value='${this.formatDate(this.registration?.date)}' required />
+        <mwc-textfield icon="event" label="Date" type='date' id='date' value='${this.formatDate(this.registration?.date)}' ></mwc-textfield>
+        <mwc-textfield label="Description" type='text' id='description' value='${this.registration?.description ?? ''}' ></mwc-textfield>
+        <mwc-textfield label="Project" type='text' id='project' value='${this.registration?.project ?? ''}' ></mwc-textfield>
+        <mwc-textfield label="Hours" type='number' id='hours' step="0.01" value='${this.registration?.hours ?? 0}' ></mwc-textfield>
+        <!-- <mwc-textfield label="From" type='time' id='timeFrom' fullWidth value='${this.formatTime(this.registration?.timeFrom)}' ></mwc-textfield>
+        <mwc-textfield label="To" type='time' id='timeTo' fullWidth value='${this.formatTime(this.registration?.timeTo)}' ></mwc-textfield> -->
       </div>
-      <div>
-        <label for='description'>Description</label>
-        <input type='text' name='description' value='${this.registration?.description ?? ''}' />
-      </div>
-      <div>
-        <label for='project'>Project</label>
-        <input type='text' name='project' value='${this.registration?.project ?? ''}' />
-      </div>
-      <div>
-        <label for='hours'>Hours</label>
-        <input type='number' step="0.01" name='hours' value='${this.registration?.hours ?? ''}' />
-      </div>
-      <!-- <div>
-        <label for='timeFrom'>From</label>
-        <input type='time' name='timeFrom' value='${this.formatTime(this.registration?.timeFrom)}' />
-      </div>
-      <div>
-        <label for='timeTo'>To</label>
-        <input type='time' name='timeTo' value='${this.formatTime(this.registration?.timeTo)}' />
-      </div> -->
       <mwc-button @click="${this.onSubmit}" outlined icon="save" label="Save"></mwc-button>
       ${this.registration ? html`<mwc-button @click="${this.onDelete}" outlined icon="delete" label="Delete"></mwc-button>` : ''}
     </form>
@@ -79,19 +81,13 @@ export class EditTimeRegistration extends LitElement {
   }
 
   private convertToObject(form : HTMLFormElement) : TimeRegistrationForm {
-
-    let date = (form["date"] as HTMLInputElement)?.valueAsDate;
-    if(!date){
-      throw new Error('Date element was not found');
-    }
-
     return {
-      description: (form["description"] as HTMLInputElement)?.value ?? NaN,
-      timeFrom: (form["timeFrom"] as HTMLInputElement)?.valueAsNumber ?? NaN,
-      timeTo: (form["timeTo"] as HTMLInputElement)?.valueAsNumber ?? NaN,
-      hours: (form["hours"] as HTMLInputElement)?.valueAsNumber,
-      project: (form["project"] as HTMLInputElement)?.value,
-      date: date
+      description: this.description.value ?? '',
+      timeFrom: NaN,
+      timeTo: NaN,
+      hours: Number.parseFloat(this.hours.value),
+      project: this.project.value,
+      date: new Date(this.date.value)
     };
   }
 
