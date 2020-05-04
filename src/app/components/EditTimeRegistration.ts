@@ -23,9 +23,26 @@ export class EditTimeRegistration extends LitElement {
 
   static get styles() {
     return css`
-      form {
-        align-content: center;
-      }
+    .centering {
+      text-align: center;
+    }
+
+    mwc-button {
+      margin: 10px 5% 10px 5%;
+    }
+
+    .align-left {
+      float: left;
+    }
+
+    .align-right {
+      float: right;
+    }
+
+    mwc-textfield {
+      margin: 10px;
+      width: 90%
+    }
     `;
   }
 
@@ -34,18 +51,18 @@ export class EditTimeRegistration extends LitElement {
     dateString = dateString?.substring(0, dateString.indexOf('T')) ?? '';
 
     return html`
-    <form @submit="${this.onSubmit}">
-      <div>
-        <mwc-textfield icon="event" label="Date" type='date' id='date' value='${this.formatDate(this.registration?.date)}' ></mwc-textfield>
-        <mwc-textfield label="Description" type='text' id='description' value='${this.registration?.description ?? ''}' ></mwc-textfield>
-        <mwc-textfield label="Project" type='text' id='project' value='${this.registration?.project ?? ''}' ></mwc-textfield>
-        <mwc-textfield label="Hours" type='number' id='hours' step="0.01" value='${this.registration?.hours ?? 0}' ></mwc-textfield>
-        <!-- <mwc-textfield label="From" type='time' id='timeFrom' fullWidth value='${this.formatTime(this.registration?.timeFrom)}' ></mwc-textfield>
-        <mwc-textfield label="To" type='time' id='timeTo' fullWidth value='${this.formatTime(this.registration?.timeTo)}' ></mwc-textfield> -->
-      </div>
-      <mwc-button @click="${this.onSubmit}" outlined icon="save" label="Save"></mwc-button>
-      ${this.registration ? html`<mwc-button @click="${this.onDelete}" outlined icon="delete" label="Delete"></mwc-button>` : ''}
-    </form>
+        <form @submit="${this.onSubmit}">
+          <div class="centering">
+            <mwc-textfield icon="event" label="Date" type='date' id='date' value='${this.formatDate(this.registration?.date)}'></mwc-textfield>
+            <mwc-textfield icon="description" label="Description" type='text' id='description' value='${this.registration?.description ?? ''}'></mwc-textfield>
+            <mwc-textfield icon="domain" label="Project" type='text' id='project' value='${this.registration?.project ?? ''}'></mwc-textfield>
+            <mwc-textfield icon="timer" label="Hours" type='number' id='hours' step="0.01" value='${this.registration?.hours ?? ''}'></mwc-textfield>
+            <!-- <mwc-textfield label="From" type='time' id='timeFrom' fullWidth value='${this.formatTime(this.registration?.timeFrom)}' ></mwc-textfield>
+            <mwc-textfield label="To" type='time' id='timeTo' fullWidth value='${this.formatTime(this.registration?.timeTo)}' ></mwc-textfield> -->
+          </div>
+          <mwc-button class="align-left" raised @click="${this.onSubmit}" icon="save" label="Save"></mwc-button>
+          ${this.registration ? html`<mwc-button class="align-right" @click="${this.onDelete}" outlined icon="delete" trailingIcon label="Delete"></mwc-button>` : ''}
+        </form>
     `;
   }
 

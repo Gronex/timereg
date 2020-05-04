@@ -21,26 +21,6 @@ export class DayList extends LitElement {
     return [hiddenLinkStyles()]
   }
 
-  // async saveRegistration(event : EditTimeRegistrationEvent, id? : number) {
-  //   await this.repository.updateRegistration({
-  //     description: event.data.description,
-  //     hours: event.data.hours,
-  //     timeFrom: event.data.timeFrom,
-  //     timeTo: event.data.timeTo,
-  //     project: event.data.project,
-  //     date: event.data.date,
-  //     id
-  //   });
-
-  //   const dbRegistrations = await this.repository.getRegistrations();
-  //   this.registrations = dbRegistrations.map(x => {
-  //     return {
-  //       ...x,
-  //       editing: false
-  //     }
-  //   });
-  // }
-
   render() {
     return html`
       <mwc-list>

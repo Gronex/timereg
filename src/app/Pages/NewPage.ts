@@ -5,7 +5,6 @@ import { Repository } from "../../shared/repository";
 
 export class NewPage extends LitElement {
 
-
   render() {
     return html`
     <h2>New Registration</h2>
