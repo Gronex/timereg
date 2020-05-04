@@ -41,7 +41,8 @@ export class EditTimeRegistration extends LitElement {
         <label for='timeTo'>To</label>
         <input type='time' name='timeTo' value='${this.formatTime(this.registration?.timeTo)}' />
       </div> -->
-      <mwc-button @click="${this.onSubmit}" outlined label="Save"></mwc-button>
+      <mwc-button @click="${this.onSubmit}" outlined icon="save" label="Save"></mwc-button>
+      ${this.registration ? html`<mwc-button @click="${this.onDelete}" outlined icon="delete" label="Delete"></mwc-button>` : ''}
     </form>
     `;
   }
@@ -54,11 +55,11 @@ export class EditTimeRegistration extends LitElement {
     }
     if (form.reportValidity()){
       const model = this.convertToObject(form);
-      this.dispatchEvent(new EditTimeRegistrationEvent('save', {
+      this.dispatchEvent(new CustomEvent('save', {
         bubbles: true,
         cancelable: true,
         composed: true,
-        data: model,
+        detail: model,
       }));
 
       // Reset the form
@@ -66,6 +67,15 @@ export class EditTimeRegistration extends LitElement {
     }
 
     return false;
+  }
+
+  onDelete(event : Event) {
+    this.dispatchEvent(new CustomEvent('delete', {
+      detail: this.registration?.id,
+      bubbles: true,
+      cancelable: true,
+      composed: true
+    }));
   }
 
   private convertToObject(form : HTMLFormElement) : TimeRegistrationForm {
@@ -106,23 +116,11 @@ export class EditTimeRegistration extends LitElement {
 
 customElements.define('timereg-edit-registration', EditTimeRegistration);
 
-interface TimeRegistrationForm {
+export interface TimeRegistrationForm {
   hours: number;
   timeFrom: number;
   timeTo: number;
   description?: string;
   project?: string;
   date : Date;
-}
-
-export class EditTimeRegistrationEvent extends Event {
-
-  data : TimeRegistrationForm
-  /**
-   *
-   */
-  constructor(type : string, eventInitDict: EventInit & {data: TimeRegistrationForm}) {
-    super(type, eventInitDict);
-    this.data = eventInitDict.data;
-  }
 }

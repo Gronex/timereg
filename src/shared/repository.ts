@@ -3,7 +3,6 @@ import { TimeregDB } from './TimeregDB';
 import { TimeRegistration } from './models/timeRegistration';
 
 export class Repository {
-
   private static _current : Repository;
   public static async getCurrent() {
     if (!this._current){
@@ -50,6 +49,10 @@ export class Repository {
         serverId: registration.serverId
       });
     }
+  }
+
+  public async remove(id: number) {
+    await this.db.delete('registrations', id);
   }
 
   /**

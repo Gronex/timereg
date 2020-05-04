@@ -1,4 +1,4 @@
-import { LitElement, html, property } from "lit-element";
+import { LitElement, html, property, css } from "lit-element";
 import '../Header';
 import { Router } from "../../router";
 import '@material/mwc-fab';
@@ -37,7 +37,13 @@ export class App extends LitElement {
   }
 
   static get styles() {
-    return [];
+    return css`
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
+    `;
   }
 
   render() {
@@ -45,7 +51,7 @@ export class App extends LitElement {
     return html`
     <timereg-header appTitle="${this.appTitle}"></timereg-header>
     ${this.router.outlet}
-    <mwc-fab label="add" icon="add" @click="${() => window.history.pushState(null, 'Add', '/new')}"></mwc-fab>
+    <mwc-fab class="fab" label="add" icon="add" @click="${() => window.history.pushState(null, 'Add', '/new')}"></mwc-fab>
     `
   }
 }

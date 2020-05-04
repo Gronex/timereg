@@ -1,6 +1,6 @@
 import { LitElement, html, TemplateResult, property } from 'lit-element';
 import './TimeRegistrationList';
-import { formatTime } from '../util';
+import { formatTime, formatDateUrl } from '../util';
 
 import '@material/mwc-list';
 import '@material/mwc-list/mwc-list-item';
@@ -53,13 +53,6 @@ export class DayList extends LitElement {
 
     const formatter = new Intl.DateTimeFormat();
     const grouped = this.groupByDate(this.registrations);
-
-    const formatDateUrl = (date : number | Date) => {
-      date = new Date(date);
-
-      const isoString = date.toISOString();
-      return isoString.split('T')[0];
-    }
 
     for (const [key, registrations] of grouped) {
       var totalHours = registrations.reduce((sum, registration) => (registration.hours ?? 0) + sum, 0);
