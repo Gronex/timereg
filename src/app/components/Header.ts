@@ -1,5 +1,6 @@
 import { LitElement, html, property, css } from "lit-element";
 import '@material/mwc-top-app-bar';
+import { Router } from "../router";
 
 export class Header extends LitElement {
 
@@ -18,7 +19,7 @@ export class Header extends LitElement {
   render() {
     return html`
     <mwc-top-app-bar>
-      <a href="/" slot="title">${this.appTitle}</a>
+      <a href="/" slot="title" @click="${(event : MouseEvent) => Router.current.onNavigate(event, '/')}" >${this.appTitle}</a>
     </mwc-top-app-bar>
     `
   }

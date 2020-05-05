@@ -2,6 +2,7 @@ import { LitElement, html } from "lit-element";
 import '../components/EditTimeRegistration';
 import { TimeRegistrationForm } from "../components/EditTimeRegistration";
 import { Repository } from "../../shared/repository";
+import { Router } from "../router";
 
 export class NewPage extends LitElement {
 
@@ -23,8 +24,7 @@ export class NewPage extends LitElement {
       timeFrom: NaN,
       timeTo: NaN
     });
-
-    window.history.pushState(null, 'home', '/');
+    Router.current.navigate('/');
   }
 }
 

@@ -4,6 +4,7 @@ import { TimeRegistration } from "../../shared/models/timeRegistration";
 import '../components/EditTimeRegistration';
 import { formatDateUrl } from "../util";
 import { TimeRegistrationForm } from "../components/EditTimeRegistration";
+import { Router } from "../router";
 
 export class EditPage extends LitElement {
 
@@ -22,7 +23,7 @@ export class EditPage extends LitElement {
     }
     finally {
       if(!id) {
-        window.history.pushState(null, 'home', '');
+        Router.current.navigate('/');
       }
       this.registration = await repo.getRegistration(id);
       this.requestUpdate();
@@ -42,7 +43,7 @@ export class EditPage extends LitElement {
     const repo = await Repository.getCurrent();
 
     await repo.remove(event.detail);
-    window.history.pushState(null, 'home', '/');
+    Router.current.navigate('/');
   }
 
   async save(event : CustomEvent<TimeRegistrationForm>) {
@@ -59,7 +60,7 @@ export class EditPage extends LitElement {
       timeTo: NaN
     });
 
-    window.history.pushState(null, 'home', `/${formatDateUrl(data.date)}`);
+    Router.current.navigate(`/${formatDateUrl(data.date)}`);
   }
 }
 

@@ -6,6 +6,7 @@ import '@material/mwc-list';
 import '@material/mwc-list/mwc-list-item';
 import { TimeRegistration } from '../../shared/models/timeRegistration';
 import { hiddenLinkStyles } from '../styles';
+import { Router } from '../router';
 
 export class DayList extends LitElement {
 
@@ -38,7 +39,7 @@ export class DayList extends LitElement {
       var totalHours = registrations.reduce((sum, registration) => (registration.hours ?? 0) + sum, 0);
 
       yield html`
-        <a href="/${formatDateUrl(key)}">
+        <a href="/${formatDateUrl(key)}" @click="${(event : MouseEvent) => Router.current.onNavigate(event, `/${formatDateUrl(key)}`)}">
           <mwc-list-item twoline>
             <span>${formatter.format(key)}</span>
             <span slot="secondary">${formatTime(totalHours)}</span>

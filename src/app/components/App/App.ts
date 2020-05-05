@@ -15,23 +15,27 @@ export class App extends LitElement {
 
   constructor() {
     super();
-    this.router = new Router();
+    this.router = new Router(this.requestUpdate.bind(this));
     this.router
       .add({
         path: '/',
-        callback: () => html`<timereg-overview-page></timereg-overview-page>`
+        callback: () => html`<timereg-overview-page></timereg-overview-page>`,
+        name: 'Home'
       })
       .add({
         path: '/(\\d{4}-\\d{2}-\\d{2})',
-        callback: (...args) => html`<timereg-registration-list-page date="${args[0]}"></timereg-registration-list-page>`
+        callback: (...args) => html`<timereg-registration-list-page date="${args[0]}"></timereg-registration-list-page>`,
+        name: 'Registrations'
       })
       .add({
         path: '/edit/(.*)',
-        callback: (...args) => html`<timereg-edit-page registrationId="${args[0]}"></timereg-edit-page>`
+        callback: (...args) => html`<timereg-edit-page registrationId="${args[0]}"></timereg-edit-page>`,
+        name: 'Edit'
       })
       .add({
         path: '/new',
-        callback: () => html`<timereg-new-page></timereg-new-page>`
+        callback: () => html`<timereg-new-page></timereg-new-page>`,
+        name: 'New'
       })
       .startRouting();
   }
@@ -47,11 +51,10 @@ export class App extends LitElement {
   }
 
   render() {
-    console.log(this.appTitle);
     return html`
     <timereg-header appTitle="${this.appTitle}"></timereg-header>
     ${this.router.outlet}
-    <mwc-fab class="fab" label="add" icon="add" @click="${() => window.history.pushState(null, 'Add', '/new')}"></mwc-fab>
+    <mwc-fab class="fab" label="add" icon="add" @click="${() => Router.current.navigate('/new')}"></mwc-fab>
     `
   }
 }
