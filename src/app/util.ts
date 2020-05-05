@@ -21,3 +21,10 @@ export function formatTime(time?: number) {
     return `${time} hours`;
   }
 }
+
+export function formatDateUrl(date : number | Date) {
+  date = new Date(date);
+
+  const isoString = date.toISOString();
+  return isoString.split('T')[0];
+}
