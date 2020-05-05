@@ -1,20 +1,34 @@
-import { LitElement, html, property, css } from "lit-element";
+import { LitElement, html, property, css, customElement, query } from "lit-element";
 import '../Header';
 import { Router } from "../../router";
 import '@material/mwc-fab';
 import '@material/mwc-icon';
 import './app-styles.scss';
 import '../../Pages';
+import '@material/mwc-snackbar';
+import '@material/mwc-button';
+import '@material/mwc-icon-button';
+import { Snackbar } from "@material/mwc-snackbar";
 
+@customElement('timereg-app')
 export class App extends LitElement {
 
   @property()
   appTitle!: string;
 
-  private router: Router;
+  @query('#update-notification')
+  updateNotification!: Snackbar
+
+  private newWorker? : ServiceWorker;
+
+  private router!: Router;
 
   constructor() {
     super();
+    this.setupRouter();
+  }
+
+  private setupRouter() {
     this.router = new Router(this.requestUpdate.bind(this));
     this.router
       .add({
@@ -55,8 +69,22 @@ export class App extends LitElement {
     <timereg-header appTitle="${this.appTitle}"></timereg-header>
     ${this.router.outlet}
     <mwc-fab class="fab" label="add" icon="add" @click="${() => Router.current.navigate('/new')}"></mwc-fab>
+    <mwc-snackbar id="update-notification" labelText="Update available!" timeoutMs="-1">
+      <mwc-button label="Update" @click="${this.doUpdate}" slot="action"></mwc-button>
+      <mwc-icon-button icon="close" slot="dismiss"></mwc-icon-button>
+    </mwc-snackbar>
     `
   }
-}
 
-customElements.define('timereg-app', App);
+  public notifyUpdate(newWorker? : ServiceWorker) {
+    this.newWorker = newWorker;
+    this.updateNotification.open();
+    console.log('Popup sent');
+  }
+
+  doUpdate() {
+    console.log("Doing update!");
+    this.newWorker?.postMessage({ action: 'skipWaiting' });
+    window.location.reload();
+  }
+}
