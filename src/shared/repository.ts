@@ -3,17 +3,25 @@ import { TimeregDB } from './TimeregDB';
 import { TimeRegistration } from './models/timeRegistration';
 
 export class Repository {
+  private static _current : Repository;
+  public static async getCurrent() {
+    if (!this._current){
+      this._current = new Repository();
+      await this._current.initialize();
+    }
+    return this._current;
+  }
 
   private db! : IDBPDatabase<TimeregDB>;
 
   constructor() {
-
   }
 
   /**
    * initialize
    */
   public async initialize() {
+    console.log('initializing repo')
     this.db = await openDB<TimeregDB>('timeRegistrations', 1, {
       upgrade (db) {
         db.createObjectStore('registrations',{
@@ -43,6 +51,10 @@ export class Repository {
     }
   }
 
+  public async remove(id: number) {
+    await this.db.delete('registrations', id);
+  }
+
   /**
    * getRegistrations
    */
@@ -50,5 +62,23 @@ export class Repository {
     return await this.db
       .getAll('registrations')
       .then(data => data.sort((timereg1, timereg2) => (timereg2.date.getTime() - timereg1.date.getTime())));
+  }
+
+  /**
+   * getRegistrationsByDate
+   */
+  public async getRegistrationsByDate(date : Date) {
+    const registrations =
+      await this.db
+        .getAll('registrations');
+
+    return registrations.filter(x => x.date.toDateString() === date.toDateString());
+  }
+
+  /**
+   * getRegistration
+   */
+  public async getRegistration(id: number) {
+    return await this.db.get('registrations', id);
   }
 }

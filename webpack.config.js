@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /* eslint-disable func-names */
 const path = require('path');
 const webpack = require('webpack');
@@ -6,6 +7,7 @@ const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { InjectManifest } = require('workbox-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 
@@ -43,6 +45,31 @@ module.exports = function (_, env) {
           }
         },
         {
+          test: /\.s[ac]ss$/i,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: !isProd,
+                // if hmr does not work, this is a forceful method.
+                reloadAll: true,
+              }
+            },
+            // Translates CSS into CommonJS
+            'css-loader',
+            // Compiles Sass to CSS
+            {
+              loader: 'sass-loader',
+              options: {
+                implementation: require('sass'),
+                sassOptions: {
+                  includePaths: ['./node_modules']
+                }
+              }
+            }
+          ]
+        },
+        {
           test: /\.tsx?$/,
           exclude: nodeModules,
           loader: 'ts-loader',
@@ -74,6 +101,13 @@ module.exports = function (_, env) {
       new webpack.WatchIgnorePlugin([
         /(c|sc|sa)ss\.d\.ts$/
       ]),
+
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
 
       // For now we're not doing SSR.
       new HtmlPlugin({
