@@ -106,10 +106,6 @@ module.exports = function (_, env) {
         beforeEmit: true
       }),
 
-      // Automatically split code into async chunks.
-      // See: https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-      isProd && new webpack.optimize.SplitChunksPlugin({}),
-
       // These plugins fix infinite loop in typings-for-css-modules-loader.
       // See: https://github.com/Jimdo/typings-for-css-modules-loader/issues/35
       new webpack.WatchIgnorePlugin([
@@ -164,6 +160,12 @@ module.exports = function (_, env) {
       }),
     ].filter(Boolean), // Filter out any falsey plugin array entries.
 
+    optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all',
+      }
+    },
 
         // Turn off various NodeJS environment polyfills Webpack adds to bundles.
     // They're supposed to be added only when used, but the heuristic is loose
