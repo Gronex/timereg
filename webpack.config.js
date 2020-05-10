@@ -10,8 +10,8 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
-
-const VERSION = require('./package.json').version;
+// eslint-disable-next-line import/no-unresolved
+const VERSION = require('./timereg.version.json');
 
 module.exports = function (_, env) {
   const isProd = env.mode === 'production';

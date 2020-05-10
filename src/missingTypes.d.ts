@@ -1,4 +1,3 @@
-declare var VERSION: string;
 
 declare namespace Intl {
   interface NumberFormatOptions {
@@ -10,3 +9,14 @@ declare namespace Intl {
 
 // declaration.d.ts
 declare module '*.scss';
+
+declare interface VersionInfo {
+  readonly Major : number;
+  readonly Minor : number;
+  readonly Patch : number;
+  readonly PreRelease : string;
+  readonly Build : string;
+  readonly Full : string;
+}
+
+declare const VERSION: VersionInfo;
