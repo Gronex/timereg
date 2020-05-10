@@ -9,9 +9,23 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { InjectManifest } = require('workbox-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const VERSION = (() => {
+  try{
+    // eslint-disable-next-line import/no-unresolved
+    return require('./timereg.version.json');
+  } catch {
+    return {
+      Major: 0,
+      Minor: 0,
+      Patch: 0,
+      PreRelease: "development",
+      Full: "0.0.0-development"
+    }
+  };
+}).apply();
 
-
-const VERSION = require('./package.json').version;
+// eslint-disable-next-line no-console
+console.log(VERSION);
 
 module.exports = function (_, env) {
   const isProd = env.mode === 'production';

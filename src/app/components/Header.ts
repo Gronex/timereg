@@ -20,7 +20,7 @@ export class Header extends LitElement {
     return html`
     <mwc-top-app-bar>
       <a href="/" slot="title" @click="${(event : MouseEvent) => Router.current.onNavigate(event, '/')}" >${this.appTitle}</a>
-      <div slot="actionItems">Version: ${VERSION}</div>
+      <div slot="actionItems">Version: ${VERSION.Major}.${VERSION.Minor}.${VERSION.Patch}</div>
     </mwc-top-app-bar>
     `
   }
