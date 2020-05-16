@@ -33,10 +33,35 @@ export class DayList extends LitElement {
   *renderRegistrations() : IterableIterator<TemplateResult> {
 
     const formatter = new Intl.DateTimeFormat();
+    const monthFormatter = new Intl.DateTimeFormat('default', {
+      month: 'long'
+    });
     const grouped = this.groupByDate(this.registrations);
 
+    const weeks = new Set<number>();
+    const today = new Date();
     for (const [key, registrations] of grouped) {
-      var totalHours = registrations.reduce((sum, registration) => (registration.hours ?? 0) + sum, 0);
+      const totalHours = registrations.reduce((sum, registration) => (registration.hours ?? 0) + sum, 0);
+
+      const weekStart = this.getStartOfWeekIndex(key);
+      if (!weeks.has(weekStart)){
+        if (weeks.size < 2 || today.getMonth() === new Date(weekStart).getMonth()) {
+          yield html`
+            <mwc-list-item graphic="icon" noninteractive>
+              <b>Week of ${formatter.format(weekStart)}</b>
+              <mwc-icon slot="graphic">calendar_today</mwc-icon>
+            </mwc-list-item>
+          `
+        } else {
+          yield html`
+            <mwc-list-item graphic="icon" noninteractive>
+              <b>${monthFormatter.format(weekStart)}</b>
+              <mwc-icon slot="graphic">calendar_today</mwc-icon>
+            </mwc-list-item>
+          `
+        }
+        weeks.add(weekStart);
+      }
 
       yield html`
         <a href="/${formatDateUrl(key)}" @click="${(event : MouseEvent) => Router.current.onNavigate(event, `/${formatDateUrl(key)}`)}">
@@ -49,6 +74,13 @@ export class DayList extends LitElement {
       `
     }
 
+  }
+
+  private getStartOfWeekIndex(date : number) {
+    const typedDate = new Date(date);
+
+    const dayOffset = typedDate.getDay() - 1; // TODO: configurable
+    return typedDate.setDate(typedDate.getDate() - dayOffset);
   }
 
   private groupByDate(registrations : TimeRegistration[]) {

@@ -196,7 +196,10 @@ module.exports = function (_, env) {
       // Supress the extensive stats normally printed after a dev build (since sizes are mostly useless):
       stats: 'minimal',
       // Don't embed an error overlay ("redbox") into the client bundle:
-      overlay: false
+      overlay: false,
+      host: "0.0.0.0",
+      port: 8080,
+      disableHostCheck: true
     }
   };
 };
