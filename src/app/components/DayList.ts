@@ -41,22 +41,25 @@ export class DayList extends LitElement {
     const weeks = new Set<number>();
     const today = new Date();
     for (const [key, registrations] of grouped) {
-      const totalHours = registrations.reduce((sum, registration) => (registration.hours ?? 0) + sum, 0);
+      const totalHours = registrations.reduce((sum, registration) => (Number.isNaN(registration.hours) ? 0 : registration.hours) + sum, 0);
 
       const weekStart = this.getStartOfWeekIndex(key);
       if (!weeks.has(weekStart)){
         if (weeks.size < 2 || today.getMonth() === new Date(weekStart).getMonth()) {
           yield html`
-            <mwc-list-item graphic="icon" noninteractive>
+            <mwc-list-item graphic="icon" noninteractive twoline>
               <b>Week of ${formatter.format(weekStart)}</b>
               <mwc-icon slot="graphic">calendar_today</mwc-icon>
+              <span slot="secondary">${formatTime(this.summarizeTime('week', key))}</span>
+              <span></span>
             </mwc-list-item>
           `
         } else {
           yield html`
-            <mwc-list-item graphic="icon" noninteractive>
+            <mwc-list-item graphic="icon" noninteractive twoline>
               <b>${monthFormatter.format(weekStart)}</b>
               <mwc-icon slot="graphic">calendar_today</mwc-icon>
+              <span slot="secondary">${formatTime(this.summarizeTime('month', key))}</span>
             </mwc-list-item>
           `
         }
@@ -73,10 +76,30 @@ export class DayList extends LitElement {
         <li divider role="separator"></li>
       `
     }
-
   }
 
-  private getStartOfWeekIndex(date : number) {
+  private summarizeTime(filter: 'week' | 'month', relativeTo : number) {
+    return this.registrations
+      .filter(registration => {
+        let selector = (date : number | Date) => {
+          date = new Date(date);
+          switch (filter) {
+            case 'week':
+              return this.getStartOfWeekIndex(date)
+            case 'month':
+              return date.getMonth();
+            default:
+              throw 'Filter not supported';
+          }
+        }
+        return selector(relativeTo) === selector(registration.date);
+      })
+      .reduce((sum, registration) => {
+        return sum + (Number.isNaN(registration.hours) ? 0 : registration.hours);
+      }, 0);
+  }
+
+  private getStartOfWeekIndex(date : number | Date) {
     const typedDate = new Date(date);
 
     const dayOffset = typedDate.getDay() - 1; // TODO: configurable
