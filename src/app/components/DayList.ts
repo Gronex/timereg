@@ -39,13 +39,15 @@ export class DayList extends LitElement {
     const grouped = this.groupByDate(this.registrations);
 
     const weeks = new Set<number>();
+    const months = new Set<number>();
     const today = new Date();
     for (const [key, registrations] of grouped) {
       const totalHours = registrations.reduce((sum, registration) => (Number.isNaN(registration.hours) ? 0 : registration.hours) + sum, 0);
 
       const weekStart = this.getStartOfWeekIndex(key);
-      if (!weeks.has(weekStart)){
-        if (weeks.size < 2 || today.getMonth() === new Date(weekStart).getMonth()) {
+      const month =new Date(weekStart).getMonth();
+      if (!weeks.has(weekStart) && !months.has(month)){
+        if (weeks.size < 2 || today.getMonth() === month) {
           yield html`
             <mwc-list-item graphic="icon" noninteractive twoline>
               <b>Week of ${formatter.format(weekStart)}</b>
@@ -62,6 +64,7 @@ export class DayList extends LitElement {
               <span slot="secondary">${formatTime(this.summarizeTime('month', key))}</span>
             </mwc-list-item>
           `
+          months.add(month);
         }
         weeks.add(weekStart);
       }
