@@ -1,4 +1,4 @@
-import { LitElement, html, property } from 'lit-element';
+import { LitElement, html, property, css } from 'lit-element';
 import { formatTime } from '../util';
 
 import '@material/mwc-list';
@@ -18,7 +18,15 @@ export class TimeRegistrationList extends LitElement {
   }
 
   static get styles(){
-    return [hiddenLinkStyles()];
+    return [hiddenLinkStyles(), this.localStyles()];
+  }
+
+  static localStyles() {
+    return css`
+      .unfocus {
+        color: rgba(0,0,0,.54)
+      }
+    `;
   }
 
   render() {
@@ -26,11 +34,12 @@ export class TimeRegistrationList extends LitElement {
       <mwc-list>
         ${this.registrations.map(reg => html`
         <a href="/edit/${reg.id}" @click="${(event : MouseEvent) => Router.current.onNavigate(event, `/edit/${reg.id}`)}">
-          <mwc-list-item twoline>
-            <span>${reg.description}</span>
+          <mwc-list-item twoline >
+            <span>
+              <span class="unfocus">${reg.project} - </span>
+              <span>${reg.description}</span>
+            </span>
             <span slot="secondary">
-              <span>${reg.project}</span>
-              <br/>
               <span>${formatTime(reg.hours)}</span>
             </span>
           </mwc-list-item>
