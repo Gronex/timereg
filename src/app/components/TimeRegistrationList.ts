@@ -28,7 +28,11 @@ export class TimeRegistrationList extends LitElement {
         <a href="/edit/${reg.id}" @click="${(event : MouseEvent) => Router.current.onNavigate(event, `/edit/${reg.id}`)}">
           <mwc-list-item twoline>
             <span>${reg.description}</span>
-            <span slot="secondary">${formatTime(reg.hours)}</span>
+            <span slot="secondary">
+              <span>${reg.project}</span>
+              <br/>
+              <span>${formatTime(reg.hours)}</span>
+            </span>
           </mwc-list-item>
           <li divider role="separator"></li>
         </a>`

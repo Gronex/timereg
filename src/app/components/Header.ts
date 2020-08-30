@@ -1,5 +1,7 @@
 import { LitElement, html, property, css } from "lit-element";
 import '@material/mwc-top-app-bar';
+import '@material/mwc-icon';
+import '@material/mwc-icon-button';
 import { Router } from "../router";
 
 export class Header extends LitElement {
@@ -20,7 +22,10 @@ export class Header extends LitElement {
     return html`
     <mwc-top-app-bar>
       <a href="/" slot="title" @click="${(event : MouseEvent) => Router.current.onNavigate(event, '/')}" >${this.appTitle}</a>
-      <div slot="actionItems">Version: ${VERSION.Major}.${VERSION.Minor}.${VERSION.Patch}</div>
+      <div slot="actionItems">V${VERSION.Major}.${VERSION.Minor}.${VERSION.Patch}</div>
+      <a href="https://github.com/Gronex/timereg/issues" slot="actionItems" target="_blank">
+        <mwc-icon-button label="Github Issues" icon="bug_report"></mwc-icon-button>
+      </a>
     </mwc-top-app-bar>
     `
   }

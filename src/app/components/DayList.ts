@@ -47,7 +47,7 @@ export class DayList extends LitElement {
       const weekStart = this.getStartOfWeekIndex(key);
       const month =new Date(weekStart).getMonth();
       if (!weeks.has(weekStart) && !months.has(month)){
-        if (weeks.size < 2 || today.getMonth() === month) {
+        if (weeks.size < 1 || today.getMonth() === month) {
           yield html`
             <mwc-list-item graphic="icon" noninteractive twoline>
               <b>Week of ${formatter.format(weekStart)}</b>
