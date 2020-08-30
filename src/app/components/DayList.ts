@@ -105,7 +105,11 @@ export class DayList extends LitElement {
   private getStartOfWeekIndex(date : number | Date) {
     const typedDate = new Date(date);
 
-    const dayOffset = typedDate.getDay() - 1; // TODO: configurable
+    let dayOffset = typedDate.getDay() - 1; // TODO: configurable
+    if(dayOffset < 0) {
+      dayOffset = 6;
+    }
+
     return typedDate.setDate(typedDate.getDate() - dayOffset);
   }
 
