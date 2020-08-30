@@ -1,5 +1,6 @@
 {
   "name": "Timereg",
+  "short-name": "Timereg",
   "start_url": ".",
   "display": "standalone",
   "description": "Quick timeregistration app. To help remember what you did.",
