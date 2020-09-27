@@ -1,10 +1,12 @@
 {
   "scripts": {
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
+    "lint": "eslint --ext .js,.html .",
     "format:prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore",
     "format": "npm run format:eslint && npm run format:prettier",
     "start": "webpack-dev-server",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "release": "standard-version --dry-run"
   },
   "devDependencies": {
     "@open-wc/eslint-config": "^2.0.0",
@@ -23,6 +25,7 @@
     "mini-css-extract-plugin": "^0.9.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
+    "standard-version": "^9.0.0",
     "style-loader": "^1.2.1",
     "ts-loader": "^7.0.0",
     "typescript": "^3.8.3",
@@ -45,7 +48,7 @@
     }
   },
   "name": "timereg",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "license": "MIT",
   "private": true,
   "dependencies": {
