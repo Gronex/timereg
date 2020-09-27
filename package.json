@@ -6,13 +6,17 @@
     "format": "npm run format:eslint && npm run format:prettier",
     "start": "webpack-dev-server",
     "build": "webpack --mode=production",
-    "release": "standard-version"
+    "release": "standard-version",
+    "commit": "cz"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@open-wc/eslint-config": "^2.0.0",
     "@open-wc/prettier-config": "^0.1.10",
     "@types/serviceworker-webpack-plugin": "^1.0.1",
     "clean-webpack-plugin": "^3.0.0",
+    "commitizen": "^4.2.1",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.5.3",
     "es-dev-server": "^1.5.0",
@@ -42,9 +46,15 @@
     ]
   },
   "prettier": "@open-wc/prettier-config",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "name": "timereg",
