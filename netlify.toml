@@ -18,6 +18,3 @@
 
   [headers.values]
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-
-[[redirects]]
-/*    /index.html   200
