@@ -22,7 +22,7 @@ export class Header extends LitElement {
     return html`
     <mwc-top-app-bar>
       <a href="/" slot="title" @click="${(event : MouseEvent) => Router.current.onNavigate(event, '/')}" >${this.appTitle}</a>
-      <div slot="actionItems">V${VERSION.Major}.${VERSION.Minor}.${VERSION.Patch}</div>
+      <div slot="actionItems">v${VERSION}</div>
       <a href="https://github.com/Gronex/timereg/issues" slot="actionItems" target="_blank">
         <mwc-icon-button label="Github Issues" icon="bug_report"></mwc-icon-button>
       </a>

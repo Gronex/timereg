@@ -28,10 +28,6 @@ jobs:
     - name: Restore dependencies
       run: npm ci
 
-    - name: Set version
-      run: ./tools/Get-Version.ps1
-      shell: pwsh
-
     - name: Build
       run: npm run build --if-present
 
