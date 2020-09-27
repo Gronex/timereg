@@ -133,7 +133,8 @@ module.exports = function (_, env) {
       new CopyPlugin({
         patterns: [
           { from: 'src/manifest.webmanifest', to: 'manifest.webmanifest' },
-          { from: 'src/assets', to: 'assets' }
+          { from: 'src/assets', to: 'assets' },
+          { from: '_redirects', to: '.' },
         ]
       }),
 
