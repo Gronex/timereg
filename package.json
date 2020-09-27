@@ -6,7 +6,7 @@
     "format": "npm run format:eslint && npm run format:prettier",
     "start": "webpack-dev-server",
     "build": "webpack --mode=production",
-    "release": "standard-version --dry-run"
+    "release": "standard-version"
   },
   "devDependencies": {
     "@open-wc/eslint-config": "^2.0.0",
