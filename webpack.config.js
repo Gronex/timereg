@@ -130,10 +130,12 @@ module.exports = function (_, env) {
       }),
 
       // Copying files via Webpack allows them to be served dynamically by `webpack serve`
-      new CopyPlugin([
-        { from: 'src/manifest.webmanifest', to: 'manifest.webmanifest' },
-        { from: 'src/assets', to: 'assets' }
-      ]),
+      new CopyPlugin({
+        patterns: [
+          { from: 'src/manifest.webmanifest', to: 'manifest.webmanifest' },
+          { from: 'src/assets', to: 'assets' }
+        ]
+      }),
 
       // For production builds, output module size analysis to build/report.html
       isProd && new BundleAnalyzerPlugin({
