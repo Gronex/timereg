@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/Gronex/timereg/compare/v2.0.2...v2.1.0) (2020-09-27)
+
+
+### Features
+
+* **version:** link to change log via version ([9dd0792](https://github.com/Gronex/timereg/commit/9dd07927c83e1b94ee95f5e6ca9d1c538d214892)), closes [#2](https://github.com/Gronex/timereg/issues/2)
+
 ### [2.0.2](https://github.com/Gronex/timereg/compare/v2.0.1...v2.0.2) (2020-09-27)
 
 
