@@ -1,25 +1,44 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+
+import Overview from './Overview/Overview';
+import DayList from './DayList/DayList';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route, Link
+} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <Router>
+      <header>
+        <nav className="navbar is-primary">
+          <div className="container">
+            <div className="navbar-brand">
+              <Link className="navbar-item" to="/">
+                <img src={logo} width="32" height="32" alt="Timereg" />
+                Timereg
+              </Link>
+            </div>
+          </div>
+        </nav>
       </header>
-    </div>
+      <main>
+        <div className="container is-max-desktop">
+          <Switch>
+            <Route path="/:date">
+              <DayList />
+            </Route>
+            <Route path="/">
+              <Overview />
+            </Route>
+          </Switch>
+        </div>
+      </main>
+    </Router>
   );
 }
 
