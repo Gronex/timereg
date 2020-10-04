@@ -1,22 +1,22 @@
 {
+  "short_name": "Timereg",
   "name": "Timereg",
-  "short-name": "Timereg",
-  "start_url": ".",
-  "display": "standalone",
   "description": "Quick timeregistration app. To help remember what you did.",
   "icons": [{
-    "src": "/assets/clock-192.png",
+    "src": "clock-192.png",
     "type": "image/png",
     "sizes": "192x192"
   },{
-    "src": "/assets/clock-512.png",
+    "src": "clock-512.png",
     "type": "image/png",
     "sizes": "512x512"
   },{
-    "src": "/assets/clock-64.png",
+    "src": "clock-64.png",
     "type": "image/png",
     "sizes": "64x64"
   }],
-  "theme_color": "#003366",
-  "background_color": "#003366"
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }
