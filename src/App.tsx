@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.scss';
 
 import Overview from './Overview/Overview';
@@ -13,32 +13,31 @@ import {
 
 function App() {
   return (
-    <Router>
-      <header>
-        <nav className="navbar is-primary">
-          <div className="container">
-            <div className="navbar-brand">
-              <Link className="navbar-item" to="/">
-                <img src={logo} width="32" height="32" alt="Timereg" />
-                Timereg
-              </Link>
+      <Router>
+        <header>
+          <nav className="navbar is-primary">
+            <div className="container">
+              <div className="navbar-brand">
+                <Link className="navbar-item" to="/">
+                  <img src={logo} alt="Timereg" />
+                </Link>
+              </div>
             </div>
+          </nav>
+        </header>
+        <main>
+          <div className="container is-max-desktop">
+            <Switch>
+              <Route path="/:date">
+                <DayList />
+              </Route>
+              <Route path="/">
+                <Overview />
+              </Route>
+            </Switch>
           </div>
-        </nav>
-      </header>
-      <main>
-        <div className="container is-max-desktop">
-          <Switch>
-            <Route path="/:date">
-              <DayList />
-            </Route>
-            <Route path="/">
-              <Overview />
-            </Route>
-          </Switch>
-        </div>
-      </main>
-    </Router>
+        </main>
+      </Router>
   );
 }
 
