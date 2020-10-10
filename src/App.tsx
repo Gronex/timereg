@@ -1,30 +1,20 @@
 import React from 'react';
-import logo from './logo.png';
 import './App.css';
 
 import Overview from './Overview/Overview';
 import DayList from './DayList/DayList';
+import Header from './Header/Header';
 
 import {
   BrowserRouter as Router,
   Switch,
-  Route, Link
+  Route
 } from "react-router-dom";
 
 function App() {
   return (
       <Router>
-        <header>
-          <nav className="navbar is-primary">
-            <div className="container">
-              <div className="navbar-brand">
-                <Link className="navbar-item" to="/">
-                  <img src={logo} alt="Timereg" />
-                </Link>
-              </div>
-            </div>
-          </nav>
-        </header>
+        <Header />
         <main>
           <div className="container is-max-desktop">
             <Switch>

@@ -4,7 +4,7 @@ export interface RegistrationState {
 
 export interface Registration {
     id: string;
-    date : Date;
+    date : string;
     project : string;
     description : string;
     time : number;

@@ -8,14 +8,15 @@ interface DispatchProps {
     addRegistration: (registration : Registration) => void;
     registrations: Registration[];
 }
+let id = 1;
 
 const Overview: React.FC<DispatchProps> = props => {
     const {addRegistration, registrations} = props;
 
     const handleAdd = () => {
         addRegistration({
-            id: "1",
-            date: new Date(),
+            id: `${id++}`,
+            date: new Date().toISOString(),
             description: "",
             project: "",
             time: 1
@@ -25,7 +26,7 @@ const Overview: React.FC<DispatchProps> = props => {
     return (
         <div>
             <h1>Registrations:</h1>
-            {registrations.map(r => <p>{r.date.toString()}</p>)}
+            {registrations.map(r => <p key={r.id}>{r.date}</p>)}
             <button onClick={handleAdd}>Add</button>
         </div>
     )

@@ -11,21 +11,20 @@
     "@types/node": "^12.12.62",
     "@types/react": "^16.9.50",
     "@types/react-dom": "^16.9.8",
-    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
     "redux-devtools-extension": "^2.13.8",
     "tailwindcss": "^1.8.13",
     "typescript": "^4.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "npm run server",
+    "server": "web-dev-server",
+    "server:watch": "web-dev-server --watch",
+    "build": "rollup --config",
+    "build:watch": "rollup --config --watch",
     "commit": "cz"
   },
   "config": {
@@ -56,12 +55,22 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-html": "^0.2.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-replace": "^2.3.3",
+    "@rollup/plugin-typescript": "^6.0.0",
     "@types/react-redux": "^7.1.9",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.5",
+    "@web/dev-server": "0.0.13",
+    "@web/rollup-plugin-import-meta-assets": "^1.0.2",
     "commitizen": "^4.2.1",
     "husky": "^4.3.0",
     "redux-devtools": "^3.7.0",
+    "rollup": "^2.29.0",
+    "rollup-plugin-postcss": "^3.1.8",
     "standard-version": "^9.0.0"
   }
 }
