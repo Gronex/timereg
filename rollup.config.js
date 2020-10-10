@@ -22,6 +22,10 @@ export default {
         typescript(),
         html({
             title: 'Timereg',
+            meta: [
+                {name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover'},
+                {name: 'name', content: 'Quick timeregistration app. To help remember what you did.'}
+            ]
         }),
         resolve(),
         commonjs(),
