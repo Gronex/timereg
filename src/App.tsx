@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.png';
-import './App.scss';
+import './App.css';
 
 import Overview from './Overview/Overview';
 import DayList from './DayList/DayList';
