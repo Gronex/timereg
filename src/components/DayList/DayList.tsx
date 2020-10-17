@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Registration, RegistrationState } from '../redux/store/registration/types';
-import { addRegistration } from '../redux/store/registration/actions';
-import { RootState } from '../redux/store';
+import { Registration } from '../../redux/store/registration/types';
+import { addRegistration } from '../../redux/store/registration/actions';
+import { RootState } from '../../redux/store';
 import List, {Item} from '../List/List';
 import { match, withRouter } from 'react-router';
 

@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import { connect } from 'react-redux';
-import { Registration } from '../redux/store/registration/types';
-import { editRegistration, addRegistration } from '../redux/store/registration/actions';
-import { RootState } from '../redux/store';
+import { Registration } from '../../redux/store/registration/types';
+import { editRegistration, addRegistration } from '../../redux/store/registration/actions';
+import { RootState } from '../../redux/store';
 import { withRouter } from 'react-router';
 import { useHistory } from "react-router-dom";
 
