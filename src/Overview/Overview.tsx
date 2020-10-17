@@ -10,23 +10,11 @@ interface OverviewRegistration extends Registration {
 }
 
 interface DispatchProps {
-    addRegistration: (registration : Registration) => void;
     registrations: OverviewRegistration[];
 }
-let id = 1;
 
 const Overview: React.FC<DispatchProps> = props => {
-    const {addRegistration, registrations} = props;
-
-    const handleAdd = () => {
-        addRegistration({
-            id: `${id++}`,
-            dateStamp: Date.now(),
-            description: "",
-            project: "",
-            time: 1
-        });
-    }
+    const {registrations} = props;
 
     const days = new Map<number, {hours: number}>();
     registrations.forEach(registration => {
@@ -46,13 +34,13 @@ const Overview: React.FC<DispatchProps> = props => {
     days.forEach((value, key) => {
         dayItems.push({
             text: `${new Date(key).toDateString()} - ${value.hours}`,
-            to: key.toString()
+            to: key.toString(),
+            id: key
         });
     })
     return (
         <div>
             <List items={dayItems} />
-            <button onClick={handleAdd}>Add</button>
         </div>
     )
 }
@@ -64,7 +52,6 @@ const mapState = (state: RootState) => ({
 });
 
 const mapDispatch = {
-    addRegistration
 }
 
 export default connect(mapState, mapDispatch)(Overview);

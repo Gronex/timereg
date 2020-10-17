@@ -1,5 +1,6 @@
 export interface RegistrationState {
-    registrations: Registration[]
+    registrations: Registration[],
+    editing?: Registration
 }
 
 export interface Registration {
@@ -12,10 +13,11 @@ export interface Registration {
 
 export const ADD_REGISTRATION = 'ADD_REGISTRATION';
 export const DELETE_REGISTRATION = 'DELETE_REGISTRATION';
+export const EDIT_REGISTRATION_FIELD = 'EDIT_REGISTRATION_FIELD';
+export const SUBMIT_REGISTRATION = 'SUBMIT_REGISTRATION';
 
 interface AddRegistrationAction {
-    type: typeof ADD_REGISTRATION,
-    registration: Registration
+    type: typeof ADD_REGISTRATION
 }
 
 interface DeleteRegistrationAction {
@@ -23,4 +25,12 @@ interface DeleteRegistrationAction {
     id: string
 }
 
-export type RegistrationActionTypes = AddRegistrationAction | DeleteRegistrationAction
+interface EditField {
+    type: typeof EDIT_REGISTRATION_FIELD,
+    registration: Registration
+}
+
+interface SubmitRegistration {
+    type: typeof SUBMIT_REGISTRATION
+}
+export type RegistrationActionTypes = AddRegistrationAction | DeleteRegistrationAction | EditField | SubmitRegistration

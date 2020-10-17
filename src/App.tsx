@@ -10,6 +10,8 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import AddButton from './AddButton/AddButton';
+import EditRegistration from './EditRegistration/EditRegistration';
 
 function App() {
   return (
@@ -18,6 +20,12 @@ function App() {
         <main>
           <div className="container is-max-desktop">
             <Switch>
+              <Route path="/edit/:id">
+                <EditRegistration />
+              </Route>
+              <Route path="/new">
+                <EditRegistration />
+              </Route>
               <Route path="/:date">
                 <DayList />
               </Route>
@@ -25,6 +33,7 @@ function App() {
                 <Overview />
               </Route>
             </Switch>
+            <AddButton />
           </div>
         </main>
       </Router>
