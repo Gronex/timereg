@@ -17,7 +17,7 @@ const Overview: React.FC<DispatchProps> = props => {
 
     const days = new Map<number, {hours: number}>();
     registrations.forEach(registration => {
-        const key = new Date(registration.dateStamp).setUTCHours(0, 0, 0, 0);
+        const key = new Date(registration.dateStamp).setHours(0, 0, 0, 0);
         var day = days.get(key);
         if(day){
             day.hours += registration.time;
@@ -50,7 +50,4 @@ const mapState = (state: RootState) => ({
     })
 });
 
-const mapDispatch = {
-}
-
-export default connect(mapState, mapDispatch)(Overview);
+export default connect(mapState)(Overview);

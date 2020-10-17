@@ -4,15 +4,18 @@ import { Registration } from '../../redux/store/registration/types';
 import { addRegistration } from '../../redux/store/registration/actions';
 import { RootState } from '../../redux/store';
 import List, {Item} from '../List/List';
-import { match, withRouter } from 'react-router';
+import { match, RouteComponentProps, useParams, withRouter } from 'react-router';
+
+interface Params {
+    date: string;
+}
 
 interface DispatchProps {
     registrations: Registration[];
     date : Date;
 }
 
-interface OwnProps {
-    date?: Date
+interface OwnProps extends RouteComponentProps<Params> {
 }
 
 const DayList: React.FC<DispatchProps> = (props) => {
@@ -35,13 +38,16 @@ const DayList: React.FC<DispatchProps> = (props) => {
     )
 }
 
-const mapState = (state: RootState, ownProps : OwnProps) => ({
-    registrations: state.timeRegistration.registrations,
-    date: ownProps.date ?? new Date()
-});
+const mapStateToProps = (state: RootState, ownProps : OwnProps) => {
+    const timeStamp = Number.parseInt(ownProps.match.params.date);
+    return {
+        registrations: state.timeRegistration.registrations.filter(x => x.dateStamp == timeStamp),
+        date: new Date(timeStamp)
+    };
+}
 
 const mapDispatch = {
     addRegistration
 }
 
-export default withRouter(connect(mapState, mapDispatch)(DayList));
+export default withRouter(connect(mapStateToProps, mapDispatch)(DayList));

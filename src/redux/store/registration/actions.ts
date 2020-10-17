@@ -1,6 +1,5 @@
 import { RootState } from '..';
 import { Repository } from '../../../services/repository';
-import { registrationReducer } from './reducers';
 import { ADD_REGISTRATION, DELETE_REGISTRATION, EDIT_REGISTRATION_FIELD, Registration, SUBMIT_REGISTRATION } from './types';
 
 export function addRegistration() {

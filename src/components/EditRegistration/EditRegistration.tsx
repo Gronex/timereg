@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Registration } from '../../redux/store/registration/types';
 import { editRegistration, addRegistration } from '../../redux/store/registration/actions';
 import { RootState } from '../../redux/store';
-import { withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { useHistory } from "react-router-dom";
 
 interface DispatchProps {
@@ -13,8 +13,12 @@ interface DispatchProps {
     addRegistration: () => void;
 }
 
-interface OwnProps {
+interface Params {
     id?: string
+}
+
+interface OwnProps extends RouteComponentProps<Params>{
+    
 }
 
 const EditRegistration: React.FC<DispatchProps> = (props) => {
@@ -98,15 +102,18 @@ const EditRegistration: React.FC<DispatchProps> = (props) => {
     )
 }
 
-const mapState = (state: RootState, ownProps : OwnProps) => ({
-    registration: (ownProps.id 
-        ? state.timeRegistration.registrations.find(x => x.id === ownProps.id)
-        : state.timeRegistration.editing) ?? {
-            dateStamp: Date.now(),
-            time: 0
-        },
-    edit: ownProps.id !== undefined
-});
+const mapState = (state: RootState, ownProps : OwnProps) => {
+    const id = ownProps.match.params.id ? Number.parseInt(ownProps.match.params.id) : undefined;
+    return {
+        registration: (
+            id ? state.timeRegistration.registrations.find(x => x.id === id)
+            : state.timeRegistration.editing) ?? {
+                dateStamp: Date.now(),
+                time: 0
+            },
+        edit: id !== undefined
+    };
+}
 
 const mapDispatch = {
     editRegistration,
