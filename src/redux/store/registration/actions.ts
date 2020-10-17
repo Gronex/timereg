@@ -1,8 +1,28 @@
+import { RootState } from '..';
+import { Repository } from '../../../services/repository';
+import { registrationReducer } from './reducers';
 import { ADD_REGISTRATION, DELETE_REGISTRATION, EDIT_REGISTRATION_FIELD, Registration, SUBMIT_REGISTRATION } from './types';
 
 export function addRegistration() {
-    return {
-        type: ADD_REGISTRATION
+    return async (dispatch : (event : any) => void, getState : () => RootState) => {
+        const registration = getState().timeRegistration.editing;
+        let newId = registration?.id;
+        if(registration) {
+            const repo = await Repository.getCurrent();
+            newId = await repo.updateRegistration({
+                date: new Date(registration.dateStamp),
+                hours: registration.time,
+                timeFrom: 0,
+                timeTo: registration.time,
+                description: registration.description,
+                project: registration.project,
+                id: registration.id
+            });
+        }
+        return dispatch({
+            type: ADD_REGISTRATION,
+            id: newId
+        });
     }
 }
 

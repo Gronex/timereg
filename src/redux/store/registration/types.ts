@@ -4,10 +4,10 @@ export interface RegistrationState {
 }
 
 export interface Registration {
-    id: string;
+    id?: number;
     dateStamp : number;
-    project : string;
-    description : string;
+    project?: string;
+    description?: string;
     time : number;
 }
 
@@ -17,12 +17,13 @@ export const EDIT_REGISTRATION_FIELD = 'EDIT_REGISTRATION_FIELD';
 export const SUBMIT_REGISTRATION = 'SUBMIT_REGISTRATION';
 
 interface AddRegistrationAction {
-    type: typeof ADD_REGISTRATION
+    type: typeof ADD_REGISTRATION,
+    id: number
 }
 
 interface DeleteRegistrationAction {
     type: typeof DELETE_REGISTRATION,
-    id: string
+    id: number
 }
 
 interface EditField {

@@ -103,9 +103,6 @@ const mapState = (state: RootState, ownProps : OwnProps) => ({
         ? state.timeRegistration.registrations.find(x => x.id === ownProps.id)
         : state.timeRegistration.editing) ?? {
             dateStamp: Date.now(),
-            description: '',
-            project: '',
-            id: "undefined",
             time: 0
         },
     edit: ownProps.id !== undefined

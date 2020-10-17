@@ -12,7 +12,7 @@ export function registrationReducer(state = initialState, action: RegistrationAc
             }
             return {
                 editing: undefined,
-                registrations: [...state.registrations, {...state.editing, id: state.editing.id ? state.editing.id : (state.registrations.length + 1).toString()}]
+                registrations: [...state.registrations, {...state.editing, id: action.id}]
             };
 
         case "DELETE_REGISTRATION":

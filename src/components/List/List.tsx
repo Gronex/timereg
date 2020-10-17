@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export interface Item {
     to?: string;
     text: string;
-    id: string | number;
+    id?: string | number;
 }
 
 export interface Props {

@@ -20,7 +20,7 @@ const DayList: React.FC<DispatchProps> = (props) => {
 
     const regs: Item[] = registrations.map(registration => {
         return {
-            text: registration.description,
+            text: registration.description ?? registration.project ?? registration.id?.toString() ?? "",
             to: `/edit/${registration.id}`,
             id: registration.id
         };

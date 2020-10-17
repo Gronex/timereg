@@ -44,9 +44,9 @@ export class Repository {
    */
   public async updateRegistration(registration : TimeRegistration) {
     if (registration.id) {
-      await this.db.put('registrations', registration);
+      return await this.db.put('registrations', registration);
     } else {
-      await this.db.add('registrations', {
+      return await this.db.add('registrations', {
         date: registration.date,
         hours: registration.hours,
         timeFrom: registration.timeFrom,
