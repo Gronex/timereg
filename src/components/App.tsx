@@ -18,7 +18,7 @@ function App() {
       <Router>
         <Header />
         <main>
-          <div className="container is-max-desktop">
+          <div className="container mx-auto">
             <Switch>
               <Route path="/edit/:id">
                 <EditRegistration />

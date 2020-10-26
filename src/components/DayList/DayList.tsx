@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Registration } from '../../redux/store/registration/types';
 import { addRegistration } from '../../redux/store/registration/actions';
 import { RootState } from '../../redux/store';
-import List, {Item} from '../List/List';
-import { match, RouteComponentProps, useParams, withRouter } from 'react-router';
+import List, {createTimeListing, Item} from '../List/List';
+import { RouteComponentProps, useParams, withRouter } from 'react-router';
 
 interface Params {
     date: string;
@@ -23,16 +23,22 @@ const DayList: React.FC<DispatchProps> = (props) => {
 
     const regs: Item[] = registrations.map(registration => {
         return {
-            text: registration.description ?? registration.project ?? registration.id?.toString() ?? "",
+            title: registration.description ?? registration.project ?? registration.id?.toString() ?? "",
+            poject: registration.project,
             to: `/edit/${registration.id}`,
-            id: registration.id
+            id: registration.id,
+            time: registration.time,
+            listings: [
+                { text: registration.project ?? "", iconPath: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"},
+                createTimeListing(registration.time)
+            ]
         };
     });
     
     console.log(regs.length);
     return (
         <div>
-            <h1>{date.toDateString()}</h1>
+            <h1 className="text-xl font-bold pt-2 px-4">{date.toDateString()}</h1>
             <List items={regs} />
         </div>
     )
