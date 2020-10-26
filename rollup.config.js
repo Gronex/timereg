@@ -5,13 +5,16 @@ import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 import json from '@rollup/plugin-json';
-const html = require('@rollup/plugin-html');
+import html from '@open-wc/rollup-plugin-html';
+import copy from 'rollup-plugin-copy';
+
+const outDir = './dist';
 
 export default {
-    input: './src/index.tsx',
+    //input: './src/index.tsx',
+    input: './src/index.html',
     output: {
-        dir: './dist',
-        format: 'iife'
+        dir: outDir
     },
     plugins: [
         json(),
@@ -20,12 +23,14 @@ export default {
         }),
         importMetaAssets(),
         typescript(),
-        html({
-            title: 'Timereg',
-            meta: [
-                {name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover'},
-                {name: 'name', content: 'Quick timeregistration app. To help remember what you did.'}
+        copy({
+            targets: [
+                { src: './public/**/*', dest: outDir },
             ]
+        }),
+        html({
+            inject: true,
+            minify: process.env.BUILD === 'production'
         }),
         resolve(),
         commonjs(),

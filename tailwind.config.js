@@ -5,7 +5,11 @@ module.exports = {
   },
   purge: [],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'light-mode': { raw: '(prefers-color-scheme: light)'}
+      }
+    },
   },
   variants: {},
   plugins: [],

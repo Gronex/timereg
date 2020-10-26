@@ -21,7 +21,7 @@
     "typescript": "^4.0.3"
   },
   "scripts": {
-    "start": "npm run server",
+    "start": "npm-run-all --parallel build:watch server:watch",
     "server": "web-dev-server",
     "server:watch": "web-dev-server --watch",
     "build": "rollup --config",
@@ -56,8 +56,8 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@open-wc/rollup-plugin-html": "^1.2.5",
     "@rollup/plugin-commonjs": "^15.1.0",
-    "@rollup/plugin-html": "^0.2.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-replace": "^2.3.3",
@@ -69,8 +69,10 @@
     "@web/rollup-plugin-import-meta-assets": "^1.0.2",
     "commitizen": "^4.2.1",
     "husky": "^4.3.0",
+    "npm-run-all": "^4.1.5",
     "redux-devtools": "^3.7.0",
     "rollup": "^2.29.0",
+    "rollup-plugin-copy": "^3.3.0",
     "rollup-plugin-postcss": "^3.1.8",
     "standard-version": "^9.0.0"
   }
