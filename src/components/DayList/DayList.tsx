@@ -5,6 +5,7 @@ import { addRegistration } from '../../redux/store/registration/actions';
 import { RootState } from '../../redux/store';
 import List, {createTimeListing, Item} from '../List/List';
 import { RouteComponentProps, useParams, withRouter } from 'react-router';
+import { renderHeadline } from '../Helpers';
 
 interface Params {
     date: string;
@@ -38,7 +39,7 @@ const DayList: React.FC<DispatchProps> = (props) => {
     console.log(regs.length);
     return (
         <div>
-            <h1 className="text-xl font-bold pt-2 px-4">{date.toDateString()}</h1>
+            {renderHeadline(date.toDateString())}
             <List items={regs} />
         </div>
     )

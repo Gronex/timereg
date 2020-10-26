@@ -5,6 +5,7 @@ import { editRegistration, addRegistration } from '../../redux/store/registratio
 import { RootState } from '../../redux/store';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { useHistory } from "react-router-dom";
+import { renderHeadline } from '../Helpers';
 
 interface DispatchProps {
     registration: Registration;
@@ -25,13 +26,7 @@ const EditRegistration: React.FC<DispatchProps> = (props) => {
     const {editRegistration, addRegistration, registration, edit } = props;
     const history = useHistory();
 
-    const renderHeader = () => {
-        if(edit) {
-            return (<h1>Edit {registration.description}</h1>);
-        } else {
-            return (<h1>New Registration</h1>);
-        }
-    }
+    const headline = edit ? `Edit ${registration.description}` : "New Registration";
 
     const handleInputChange = (event : ChangeEvent<HTMLInputElement>) => {
         switch(event.target.name){
@@ -78,27 +73,30 @@ const EditRegistration: React.FC<DispatchProps> = (props) => {
     }
 
     return (
-        <form onSubmit={sendForm}>
-            {renderHeader()}
-            <div>
-                <label htmlFor="date">Date</label>
-                <input name="date" id="date" type="date" value={registration.dateStamp} onChange={handleInputChange}/>
-            </div>
-            <div>
-                <label htmlFor="project">Project</label>
-                <input name="project" id="project" type="text" value={registration.project} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="description">Description</label>
-                <input name="description" id="description" type="text" value={registration.description} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="time">Time</label>
-                <input name="time" id="time" type="number" value={registration.time} onChange={handleInputChange} />
-            </div>
-            <button type="submit">Save</button>
-            {edit ? <button onClick={deleteRegistration}>Delete</button> : null}
-        </form>
+        <div className="pt-4">
+            {renderHeadline(headline)}
+
+            <form className="bg-gray-800 shadow-md" onSubmit={sendForm}>
+                <div>
+                    <label htmlFor="date">Date</label>
+                    <input name="date" id="date" type="date" value={registration.dateStamp} onChange={handleInputChange}/>
+                </div>
+                <div>
+                    <label htmlFor="project">Project</label>
+                    <input name="project" id="project" type="text" value={registration.project} onChange={handleInputChange} />
+                </div>
+                <div>
+                    <label htmlFor="description">Description</label>
+                    <input name="description" id="description" type="text" value={registration.description} onChange={handleInputChange} />
+                </div>
+                <div>
+                    <label htmlFor="time">Time</label>
+                    <input name="time" id="time" type="number" value={registration.time} onChange={handleInputChange} />
+                </div>
+                <button type="submit">Save</button>
+                {edit ? <button onClick={deleteRegistration}>Delete</button> : null}
+            </form>
+        </div>
     )
 }
 
