@@ -4,8 +4,9 @@ import { Registration } from '../../redux/store/registration/types';
 import { addRegistration } from '../../redux/store/registration/actions';
 import { RootState } from '../../redux/store';
 import List, {createTimeListing, Item} from '../List/List';
-import { RouteComponentProps, useParams, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { renderHeadline } from '../Helpers';
+import { DateTime } from 'luxon';
 
 interface Params {
     date: string;
@@ -13,7 +14,7 @@ interface Params {
 
 interface DispatchProps {
     registrations: Registration[];
-    date : Date;
+    date : DateTime;
 }
 
 interface OwnProps extends RouteComponentProps<Params> {
@@ -30,7 +31,7 @@ const DayList: React.FC<DispatchProps> = (props) => {
             id: registration.id,
             time: registration.time,
             listings: [
-                { text: registration.project ?? "", iconPath: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"},
+                { text: registration.project ?? "", iconPath: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4", ariaLabel: "Project"},
                 createTimeListing(registration.time)
             ]
         };
@@ -39,17 +40,17 @@ const DayList: React.FC<DispatchProps> = (props) => {
     console.log(regs.length);
     return (
         <div>
-            {renderHeadline(date.toDateString())}
+            {renderHeadline(date.toLocaleString())}
             <List items={regs} />
         </div>
     )
 }
 
 const mapStateToProps = (state: RootState, ownProps : OwnProps) => {
-    const timeStamp = Number.parseInt(ownProps.match.params.date);
+    const date = DateTime.fromISO(ownProps.match.params.date);
     return {
-        registrations: state.timeRegistration.registrations.filter(x => x.dateStamp == timeStamp),
-        date: new Date(timeStamp)
+        registrations: state.timeRegistration.registrations.filter(x => x.dateStamp === date.toMillis()),
+        date: date
     };
 }
 

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export interface Listing {
     iconPath: string;
     text: string;
+    ariaLabel: string;
     stroke?: "currentColor";
 }
 
@@ -39,7 +40,8 @@ export function createTimeListing(time : number) : Listing{
             13H2m5.11 5.37l-1.43 1.42A10.04
             10.04 0 0011 22v-2a8.063 8.063 0
             01-3.89-1.63z`,
-        text: time.toString()
+        text: time.toString(),
+        ariaLabel: "Time"
     };
 }
 
@@ -47,11 +49,11 @@ const List: React.FC<Props> = props => {
 
     const renderListing = (listing : Listing) => {
         return (
-            <div className="flex mr-6">
-                <svg className="h-5 w-5 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke={listing.stroke}>
+            <div className="flex mr-6" key={listing.ariaLabel}>
+                <svg aria-label={listing.ariaLabel} className="h-5 w-5 fill-current text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke={listing.stroke}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={listing.iconPath}></path>
                 </svg>
-                <span className="ml-2 text-sm light-mode:text-gray-600 text-gray-300 capitalize">
+                <span className="ml-2 text-sm light-mode:text-gray-600 text-green-500 capitalize">
                     {listing.text}
                 </span>
             </div>);
@@ -65,9 +67,9 @@ const List: React.FC<Props> = props => {
         const content = (
             <div key={item.id} className="flex flex-row mt-2">
                 <div className="flex w-full items-center justify-between 
-                    light-mode:bg-white bg-gray-800 px-8 py-6 border-l-4">
+                    light-mode:bg-white bg-gray-800 px-8 py-6 border-l-4 border-teal-800">
                     <div className="flex flex-col ml-6">
-                        <span className="text-lg font-bold">{item.title}</span>
+                        <span className="text-lg font-bold text-teal-500">{item.title}</span>
                         <div className="mt-4 flex">
                             {listings}
                         </div>
@@ -75,13 +77,12 @@ const List: React.FC<Props> = props => {
                 </div>
             </div>
         );
-        return item.to ? <Link to={item.to}>{content}</Link> : content;
+        return item.to ? <Link key={item.id} to={item.to}>{content}</Link> : content;
     }
 
     return (
         <div className="flex flex-col mt-2">
             {props.items.map(item => renderItem(item))}
-
         </div>
     )
 }

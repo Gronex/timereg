@@ -7,33 +7,23 @@ const initialState : RegistrationState = {
 export function registrationReducer(state = initialState, action: RegistrationActionTypes) : RegistrationState {
     switch(action.type){
         case "ADD_REGISTRATION":
-            if (!state.editing) {
-                return state;
-            }
             return {
-                editing: undefined,
-                registrations: [...state.registrations, {...state.editing, id: action.id}]
+                registrations: [...state.registrations, action.registration]
             };
 
         case "DELETE_REGISTRATION":
             return {
-                editing: undefined,
-                registrations: state.registrations.filter(x => x.id === action.id)
-            }
-        
-        case "EDIT_REGISTRATION_FIELD":
-            return {
-                ...state,
-                editing: action.registration
+                registrations: state.registrations.filter(x => x.id !== action.id)
             }
 
-        case "SUBMIT_REGISTRATION":
-            if (!state.editing) {
-                return state;
-            }
+        case "UPDATE_REGISTRATION":
+            var regIndex = state.registrations.findIndex(x => x.id === action.id);
             return {
-                registrations: [...state.registrations, state.editing],
-                editing: undefined
+                registrations: [
+                    ...state.registrations.slice(0, regIndex),
+                    action.registration,
+                    ...state.registrations.slice(regIndex + 1, state.registrations.length)
+                ]
             }
 
         default:

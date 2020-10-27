@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 
-import logo from 'url:./logo.png';
+import logo from 'url:../../public/clock.png';
 
 interface DispatchProps {
     version: string;
@@ -19,7 +19,7 @@ const Header: React.FC<DispatchProps> = props => {
                             <div className="flex-shrink-0">
                                 <Link to="/">
                                     <img className="h-8 w-8 inline-block" src={logo} alt="Timereg" />
-                                    <p className="text-white text-2xl font-semibold inline-block align-middle p-4">Timereg</p>
+                                    <p className="text-green-500 text-2xl font-semibold inline-block align-middle p-4">Timereg</p>
                                 </Link>
                             </div>
                         </div>

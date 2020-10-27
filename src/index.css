@@ -4,7 +4,7 @@
 
 .App {
     @apply bg-gray-900;
-    @apply text-white;
+    @apply text-teal-500;
 }
 
 @liht-mode {

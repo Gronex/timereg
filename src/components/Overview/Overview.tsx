@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Registration } from '../../redux/store/registration/types';
 import { RootState } from '../../redux/store';
 import List, {createTimeListing, Item} from '../List/List';
+import { DateTime } from 'luxon';
 
 interface OverviewRegistration extends Registration {
     date: Date;
@@ -15,9 +16,10 @@ interface DispatchProps {
 const Overview: React.FC<DispatchProps> = props => {
     const {registrations} = props;
 
-    const days = new Map<number, {hours: number, count: number}>();
+    const days = new Map<string, {hours: number, count: number, date: DateTime}>();
     registrations.forEach(registration => {
-        const key = new Date(registration.dateStamp).setHours(0, 0, 0, 0);
+        const date = DateTime.fromMillis(registration.dateStamp);
+        const key = date.toISODate();
         var day = days.get(key);
         if(day){
             day.hours += registration.time;
@@ -26,20 +28,21 @@ const Overview: React.FC<DispatchProps> = props => {
         else {
             days.set(key, {
                 hours: registration.time,
-                count: 1
+                count: 1,
+                date: date
             });
         }
     });
 
     const dayItems: Item[] = [];
-    days.forEach((value, key) => {
+    Array.from(days.values()).sort((x, y) => -x.date.diff(y.date, 'day').days).forEach(({date, hours, count}) => {
         dayItems.push({
-            title: `${new Date(key).toDateString()}`,
-            to: key.toString(),
-            id: key,
+            title: `${date.toLocaleString()}`,
+            to: date.toISODate(),
+            id: date.toMillis(),
             listings: [
-                createTimeListing(value.hours),
-                { iconPath: "M7 20l4-16m2 16l4-16M6 9h14M4 15h14", text: value.count.toString(), stroke: "currentColor"}
+                createTimeListing(hours),
+                { iconPath: "M7 20l4-16m2 16l4-16M6 9h14M4 15h14", text: count.toString(), ariaLabel: "Count", stroke: "currentColor"}
             ]
         });
     })
