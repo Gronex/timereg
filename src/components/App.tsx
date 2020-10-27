@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 
 import Overview from './Overview/Overview';
 import DayList from './DayList/DayList';

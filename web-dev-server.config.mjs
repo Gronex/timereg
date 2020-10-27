@@ -1,7 +1,8 @@
 export default {
-    open: true,
+    open: '/',
     rootDir: 'dist',
     plugins: [
-    ]
+    ],
+    appIndex: 'dist/index.html'
   };
   
