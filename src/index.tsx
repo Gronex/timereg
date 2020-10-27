@@ -7,15 +7,13 @@ import configureStore from './redux/store';
 import { Provider } from 'react-redux';
 
 configureStore().then(store => {
-  const div = document.createElement('div');
-  document.body.appendChild(div);
   ReactDOM.render(
     <Provider store={store}>
       <React.StrictMode>
         <App />
       </React.StrictMode>
     </Provider>,
-    div
+    document.getElementById('root')
   );
 });
 

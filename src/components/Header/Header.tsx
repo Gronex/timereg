@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 
+import logo from 'url:./logo.png';
+
 interface DispatchProps {
     version: string;
 }
-const logo = new URL('../../../public/logo.png', import.meta.url).href;
 
 const Header: React.FC<DispatchProps> = props => {
     return (
