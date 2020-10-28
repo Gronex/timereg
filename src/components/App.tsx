@@ -20,12 +20,23 @@ function App() {
         <main>
           <div className="container mx-auto">
             <Switch>
-              <Route path="/" exact component={Overview} />
-              <Route path="/edit/:id" component={EditRegistration} />
-              <Route path="/new" component={EditRegistration} />
-              <Route path="/:date" component={DayList} />
+              <Route path="/" exact >
+                <Overview />
+                <AddButton />
+              </Route>
+              <Route path="/edit/:id" >
+                <EditRegistration />
+                <AddButton />
+              </Route>
+              <Route path="/new" >
+                <EditRegistration />
+                <AddButton />
+              </Route>
+              <Route path="/:date">
+                <DayList/>
+                <AddButton />
+              </Route>
             </Switch>
-            <AddButton />
           </div>
         </main>
       </Router>

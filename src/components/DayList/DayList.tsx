@@ -7,6 +7,7 @@ import List, {createTimeListing, Item} from '../List/List';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { renderHeadline } from '../Helpers';
 import { DateTime } from 'luxon';
+import { getRegistrations } from '../../redux/store/registration/reducers';
 
 interface Params {
     date: string;
@@ -36,8 +37,7 @@ const DayList: React.FC<DispatchProps> = (props) => {
             ]
         };
     });
-    
-    console.log(regs.length);
+
     return (
         <div>
             {renderHeadline(date.toLocaleString())}
@@ -49,7 +49,7 @@ const DayList: React.FC<DispatchProps> = (props) => {
 const mapStateToProps = (state: RootState, ownProps : OwnProps) => {
     const date = DateTime.fromISO(ownProps.match.params.date);
     return {
-        registrations: state.timeRegistration.registrations.filter(x => x.dateStamp === date.toMillis()),
+        registrations: getRegistrations(state).filter(x => x.dateStamp === date.toMillis()),
         date: date
     };
 }

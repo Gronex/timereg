@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Registration } from '../../redux/store/registration/types';
 import { editRegistration, addRegistration, removeRegistration } from '../../redux/store/registration/actions';
@@ -7,6 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { useHistory } from "react-router-dom";
 import { renderHeadline } from '../Helpers';
 import { DateTime } from 'luxon';
+import { getRegistrations } from '../../redux/store/registration/reducers';
 
 interface DispatchProps {
     registration: Registration;
@@ -86,7 +87,7 @@ const EditRegistration: React.FC<DispatchProps> = (props) => {
     }
 
     return (
-        <div className="pt-4">
+        <div className="pt-4 px-2">
             {renderHeadline(headline)}
 
             <div className="bg-gray-800 rounded-lg">
@@ -149,10 +150,11 @@ const EditRegistration: React.FC<DispatchProps> = (props) => {
 
 const mapState = (state: RootState, ownProps : OwnProps) => {
     const id = ownProps.match.params.id ? Number.parseInt(ownProps.match.params.id) : undefined;
+    const date = new URLSearchParams(ownProps.location.search).get('date');
     return {
-        registration: state.timeRegistration.registrations.find(x => x.id === id) 
+        registration: getRegistrations(state).find(x => x.id === id) 
             ?? {
-                dateStamp: Date.now(),
+                dateStamp: date ? DateTime.fromISO(date).toMillis() : Date.now(),
                 time: 0
             },
         edit: id !== undefined

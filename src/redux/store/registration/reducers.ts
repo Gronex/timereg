@@ -1,3 +1,4 @@
+import { RootState } from '..';
 import { RegistrationActionTypes, RegistrationState } from './types';
 
 const initialState : RegistrationState = {
@@ -30,3 +31,5 @@ export function registrationReducer(state = initialState, action: RegistrationAc
             return state;
     }
 }
+
+export const getRegistrations = (state : RootState) => state.timeRegistration.registrations;
