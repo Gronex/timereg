@@ -1,7 +1,7 @@
-import { RootState } from '..';
 import { TimeRegistration } from '../../../models/timeRegistration';
 import { Repository } from '../../../services/repository';
 import { ADD_REGISTRATION, DELETE_REGISTRATION, Registration, RegistrationActionTypes, UPDATE_REGISTRATION } from './types';
+import { DateTime } from 'luxon';
 
 function mapRegistration(registration : Registration) : TimeRegistration {
     return {
@@ -14,10 +14,14 @@ function mapRegistration(registration : Registration) : TimeRegistration {
     }
 }
 
+function normalizeDate(registration : Registration) {
+    registration.dateStamp = DateTime.fromMillis(registration.dateStamp).startOf('day').toMillis();
+}
+
 export function addRegistration(registration: Registration) {
     return async (dispatch : (event : RegistrationActionTypes) => void) => {
+        normalizeDate(registration);
         const repo = await Repository.getCurrent();
-        
         const newId = await repo.updateRegistration(mapRegistration(registration));
 
         return dispatch({
@@ -46,10 +50,10 @@ export function editRegistration(id : number, registration : Registration) {
 
     return async (dispatch : (event : RegistrationActionTypes) => void) => {
         const repo = await Repository.getCurrent();
+        normalizeDate(registration);
         const timeRegistration = mapRegistration(registration);
         timeRegistration.id = id;
         registration.id = await repo.updateRegistration(timeRegistration);
-        registration.dateStamp = new Date(registration.dateStamp).setHours(0, 0, 0, 0);
 
         return dispatch({
             type: UPDATE_REGISTRATION,

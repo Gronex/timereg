@@ -3,6 +3,7 @@ import { registrationReducer } from "./registration/reducers";
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import loggerMiddleware from '../middleware/logger';
 import { systemReducer } from "./system/reducer";
+import { DateTime } from 'luxon';
 
 import { Repository } from '../../services/repository';
 
@@ -12,7 +13,7 @@ async function preloadState() {
   return {
     timeRegistration: {
       registrations: registrations.map(x => ({
-        dateStamp: x.date.setHours(0, 0, 0, 0),
+        dateStamp: DateTime.fromJSDate(x.date).startOf('day').toMillis(),
         time: x.hours,
         description: x.description,
         id: x.id,
