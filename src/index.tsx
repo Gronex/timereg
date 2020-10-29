@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
-//import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './serviceWorker';
 import configureStore from './redux/store';
 import { Provider } from 'react-redux';
 
@@ -21,3 +21,5 @@ configureStore().then(store => {
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 //serviceWorker.unregister();
+
+serviceWorker.register();
