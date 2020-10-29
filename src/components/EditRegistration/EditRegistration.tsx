@@ -67,7 +67,6 @@ const EditRegistration: React.FC<DispatchProps> = (props) => {
 
     const sendForm = (event : FormEvent<Element>) => {
         event.preventDefault();
-        console.log("save!!");
         edit 
             ? editRegistration(reg.id!, reg)
             : addRegistration(reg);
@@ -134,7 +133,10 @@ const EditRegistration: React.FC<DispatchProps> = (props) => {
                     </div>
 
                     <div className="grid grid-cols-6 gap-4 mt-2">
-                        <button className="lg:col-start-2 lg:col-span-2 col-span-3 shadow bg-green-700 hover:bg-green-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">Save</button>
+                        <button 
+                            className="lg:col-start-2 lg:col-span-2 col-span-3 shadow bg-green-700 hover:bg-green-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                            type="submit"
+                            onSubmit={sendForm}>Save</button>
                         {edit 
                             ? <button
                                 className="lg:col-end-6 lg:col-span-2 col-span-3 shadow bg-red-700 hover:bg-red-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
