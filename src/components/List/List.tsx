@@ -1,3 +1,4 @@
+import { DateTime, Duration } from 'luxon';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -20,6 +21,31 @@ export interface Props {
 }
 
 export function createTimeListing(time : number) : Listing{
+    const hours = Math.floor(time);
+    const minutes = (time % 1) * 60;
+    const duration = Duration.fromObject({hours, minutes}).normalize();
+    let durationText;
+    try{
+        const minFormat = new Intl.NumberFormat(undefined, {
+            style: 'unit',
+            unit: 'minute',
+            unitDisplay: 'long'
+        });
+    
+        const hourFormat = new Intl.NumberFormat(undefined, {
+            style: 'unit',
+            unit: 'hour',
+            unitDisplay: 'long'
+        });
+
+        durationText = `${hourFormat.format(duration.hours)} and ${minFormat.format(duration.minutes)}`;
+    }
+    catch {
+        durationText = `${duration.hours} hour(s) and ${duration.minutes} minute(s)`;
+    }
+
+
+
     return {
         iconPath: `M13 2.05v2.02c3.95.49 7 3.85 7
             7.93 0 3.21-1.92 6-4.72 7.28L13
@@ -40,25 +66,24 @@ export function createTimeListing(time : number) : Listing{
             13H2m5.11 5.37l-1.43 1.42A10.04
             10.04 0 0011 22v-2a8.063 8.063 0
             01-3.89-1.63z`,
-        text: time.toString(),
+        text: durationText,
         ariaLabel: "Time"
     };
 }
 
+export function renderListing(listing : Listing) {
+    return (
+        <div className="flex mr-6" key={listing.ariaLabel}>
+            <svg aria-label={listing.ariaLabel} className="h-5 w-5 fill-current text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke={listing.stroke}>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={listing.iconPath}></path>
+            </svg>
+            <span className="ml-2 text-sm light-mode:text-gray-600 text-orange-600 capitalize">
+                {listing.text}
+            </span>
+        </div>);
+}
+
 const List: React.FC<Props> = props => {
-
-    const renderListing = (listing : Listing) => {
-        return (
-            <div className="flex mr-6" key={listing.ariaLabel}>
-                <svg aria-label={listing.ariaLabel} className="h-5 w-5 fill-current text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke={listing.stroke}>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={listing.iconPath}></path>
-                </svg>
-                <span className="ml-2 text-sm light-mode:text-gray-600 text-green-500 capitalize">
-                    {listing.text}
-                </span>
-            </div>);
-    }
-
     const renderItem = (item : Item) => {
 
         const listings = item.listings?.map(renderListing) ?? [];
