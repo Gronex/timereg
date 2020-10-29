@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/Gronex/timereg/compare/v2.1.0...v3.0.0) (2020-10-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **project:** The whole app is replaced
+
+### Features
+
+* **add:** style add button ([4a41749](https://github.com/Gronex/timereg/commit/4a41749e7158580a841a69eadae323eb5f86e022))
+* **edit:** normalize headers ([3c3166b](https://github.com/Gronex/timereg/commit/3c3166b2901efcc54c44c8c4045a901f8a9a5b40))
+* **edit:** rework the edit form ([23a2e35](https://github.com/Gronex/timereg/commit/23a2e35829b85d42594bec13e0ccaa4da63a8494))
+* **grouping:** grouping registrations on summary page ([f101cff](https://github.com/Gronex/timereg/commit/f101cff59496d5918677dc08a0aa9c5688f37df9))
+* **idb:** store registrations in indexed db ([210a5c2](https://github.com/Gronex/timereg/commit/210a5c29f65f82a12706307dfa78177383527490))
+* **list:** display lists in a styled way ([f302130](https://github.com/Gronex/timereg/commit/f302130fddcd669228f3417e793e5cf1028fad61))
+* **list:** list component ([213452f](https://github.com/Gronex/timereg/commit/213452f999c73ce497dce81470b6b22532bac2c9))
+* **new:** remember date on list when creating new ([11d056d](https://github.com/Gronex/timereg/commit/11d056d0e44519f1d8eb8a301f568ae7f028622a))
+* **offline:** add service worker to support offline first ([9137653](https://github.com/Gronex/timereg/commit/91376539ab723e1a1e7ef9bd64b41f709bd60bc7))
+* **update:** update banner ([d3eeddd](https://github.com/Gronex/timereg/commit/d3eeddd01de734edd154407da252cf97c93ff1bc))
+* **version:** display version in header ([e531513](https://github.com/Gronex/timereg/commit/e531513f69b255590da70b29f61f551e6bc7449a))
+
+
+### Bug Fixes
+
+* **routing:** access route params properly ([fd6fc9e](https://github.com/Gronex/timereg/commit/fd6fc9e4199f3dcbe2cde2df75ac614deb9e6b78))
+* **submit:** allow next submit on phone keyboard ([8b92279](https://github.com/Gronex/timereg/commit/8b92279c9adf1654d3e0f9c97d30a56ee41fc5e6)), closes [#1](https://github.com/Gronex/timereg/issues/1)
+
+
+* **project:** initialize new react app ([ac6625f](https://github.com/Gronex/timereg/commit/ac6625fff903882a1398baa932bd84ca48774999))
+
 ## [2.1.0](https://github.com/Gronex/timereg/compare/v2.0.2...v2.1.0) (2020-09-27)
 
 
