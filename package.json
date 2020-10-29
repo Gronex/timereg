@@ -25,7 +25,8 @@
   "scripts": {
     "start": "parcel serve ./src/index.html",
     "build": "parcel build ./src/index.html",
-    "commit": "cz"
+    "commit": "cz",
+    "release": "standard-version"
   },
   "config": {
     "commitizen": {
