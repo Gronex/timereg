@@ -21,7 +21,7 @@ export class Repository {
 
   private db! : IDBPDatabase<TimeregDB>;
 
-  constructor() {
+  private constructor() {
   }
 
   /**

@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 const AddButton: React.FC = _props => {
     let { date } = useParams<{date?: string}>();
     return (
-        <div className="py-6 px-6 sticky bottom-0 float-right">
+        <div className="py-6 px-6 fixed right-0 bottom-0 z-10">
             <Link to={{pathname: '/new', search: date ? `?date=${date}` : undefined}}
                 className="inline-block p-0 w-12 h-12 bg-blue-600 hover:bg-blue-400 rounded-full mouse shadow active:shadow-lg transition ease-in duration-200 focus:outline-none">
                 <svg aria-label="Add" viewBox="0 0 20 20" className="inline-block">

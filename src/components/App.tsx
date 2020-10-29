@@ -12,8 +12,14 @@ import {
 } from "react-router-dom";
 import AddButton from './AddButton/AddButton';
 import EditRegistration from './EditRegistration/EditRegistration';
+import UpdateBanner from './UpdateBanner/UpdateBanner';
 
-function App() {
+interface Properties {
+  onUpdateAccept: () => void,
+  newVersion?: string
+}
+
+function App(props : Properties) {
   return (
       <Router>
         <Header />
@@ -38,6 +44,7 @@ function App() {
               </Route>
             </Switch>
           </div>
+          <UpdateBanner onUpdateAccepted={props.onUpdateAccept} version={props.newVersion} />
         </main>
       </Router>
   );
