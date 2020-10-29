@@ -19,8 +19,18 @@ const Header: React.FC<DispatchProps> = props => {
                             <div className="flex-shrink-0">
                                 <Link to="/">
                                     <img className="h-8 w-8 inline-block" src={logo} alt="Timereg" />
-                                    <p className="text-green-500 text-2xl font-semibold inline-block align-middle p-4">Timereg</p>
+                                    <span className="text-green-500 text-2xl font-semibold inline-block align-middle p-4">Timereg</span>
                                 </Link>
+                            </div>
+                        </div>
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0">
+                                <a href="https://github.com/Gronex/timereg/blob/master/CHANGELOG.md" target="_blank">
+                                    <span className="text-lg align-middle">Version {props.version}</span>
+                                </a>
+                                <a href="https://github.com/Gronex/timereg/issues" target="_blank">
+                                    <span aria-label="Github issues" className="pl-2 material-icons text-4xl inline-block align-middle">bug_report</span>
+                                </a>
                             </div>
                         </div>
                     </div>
