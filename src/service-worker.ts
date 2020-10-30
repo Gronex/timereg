@@ -33,13 +33,11 @@ self.addEventListener('fetch', (event : FetchEvent) => {
             } catch {
                 response = undefined;
             }
-
-            if(!response) {
-                console.log('caching response from ', event.request.url);
-                response = await fetch(event.request);
-                cache.put(event.request, response.clone());
-            }
-            return response
+            const fetchPromise = fetch(event.request).then(networkResponse => {
+                cache.put(event.request, networkResponse.clone());
+                return networkResponse;
+            });
+            return response || fetchPromise;
         })
     );
 });
