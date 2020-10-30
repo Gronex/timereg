@@ -1,4 +1,4 @@
-import { SettingsRepository } from "./services/SettingsRepository";
+import { setValue } from "./services/SettingsRepository";
 import { version } from '../package.json';
 
 export default null;
@@ -9,9 +9,8 @@ declare var self: ServiceWorkerGlobalScope;
 const cacheName = 'timereg-resource-cache';
 
 self.addEventListener('install', async _ => {
-    const settings = await SettingsRepository.getCurent();
     console.log('setting version to ', version);
-    await settings.setValue('newVersion', version);
+    await setValue('newVersion', version);
     // maybe install static resources
 });
 

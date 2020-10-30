@@ -1,4 +1,4 @@
-import { SettingsRepository } from "./services/SettingsRepository";
+import { getSetting } from "./services/SettingsRepository";
 
 export async function register(promptCallback : ((version?: string) => void)) {
   if('serviceWorker' in navigator) {
@@ -36,7 +36,6 @@ navigator.serviceWorker.addEventListener('controllerchange',
 );
 
 async function promptUserToRefresh(promptCallback : ((version?: string) => void)) {
-  const settingsRepo = await SettingsRepository.getCurent();
-  const version = await settingsRepo.getSetting('newVersion');
+  const version = await getSetting('newVersion');
   promptCallback(version);
 }

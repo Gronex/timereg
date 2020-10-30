@@ -1,4 +1,4 @@
-import { DBSchema, IDBPDatabase, openDB } from "idb";
+import { DBSchema, openDB } from "idb";
 
 interface SettingsDB extends DBSchema {
     settings: {
@@ -7,38 +7,26 @@ interface SettingsDB extends DBSchema {
     }
 }
 
-export class SettingsRepository {
-    private static _curent : SettingsRepository;
 
-    public static async getCurent() {
-        if(!this._curent) {
-            this._curent = new SettingsRepository();
-            await this._curent.initialize();
+async function getDb() {
+    return await openDB<SettingsDB>('settings', 1, {
+        upgrade (db) {
+            db.createObjectStore('settings');
         }
-        return this._curent;
-    }
+    })
+}
 
-    private db!: IDBPDatabase<SettingsDB>;
+export async function getSetting(key : string) {
+    const db = await getDb();
+    return db.get('settings', key);
+}
 
-    private constructor() {
+export async function setValue(key : string, value : string) {
+    const db = await getDb();
+    await db.put('settings', value, key);
+}
 
-    }
-
-    private async initialize() {
-        console.log('initializing settigns repo');
-
-        this.db = await openDB<SettingsDB>('settings', 1, {
-            upgrade (db) {
-                db.createObjectStore('settings');
-            }
-        })
-    }
-
-    public getSetting(key : string) {
-        return this.db.get('settings', key);
-    }
-
-    public async setValue(key : string, value : string) {
-        await this.db.put('settings', value, key);
-    }
+export default {
+    getSetting,
+    setValue
 }

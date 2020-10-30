@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 let newVersion: string | undefined = undefined;
 function queryUpdate(version? : string) {
   newVersion = version;
-  console.log('new version!!');
+  console.log('new version!!', version);
 }
 
 serviceWorker.register(queryUpdate).then(update => {
