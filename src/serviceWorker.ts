@@ -36,6 +36,7 @@ navigator.serviceWorker.addEventListener('controllerchange',
 );
 
 async function promptUserToRefresh(promptCallback : ((version?: string) => void)) {
-  const version = await (await SettingsRepository.getCurent()).getSetting('newVersion');
+  const settingsRepo = await SettingsRepository.getCurent();
+  const version = await settingsRepo.getSetting('newVersion');
   promptCallback(version);
 }
