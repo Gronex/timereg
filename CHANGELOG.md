@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/Gronex/timereg/compare/v3.0.1...v3.0.2) (2020-10-30)
+
+
+### Bug Fixes
+
+* simplify settings repo ([4c1f6fc](https://github.com/Gronex/timereg/commit/4c1f6fc7ccd7f3cec0005253c08c4955e396de20))
+
 ### [3.0.1](https://github.com/Gronex/timereg/compare/v3.0.0...v3.0.1) (2020-10-30)
 
 
