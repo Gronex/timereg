@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.3](https://github.com/Gronex/timereg/compare/v3.0.2...v3.0.3) (2020-10-30)
+
+
+### Bug Fixes
+
+* support null in time ([298ca1a](https://github.com/Gronex/timereg/commit/298ca1a64b446fd160228ee95c16655ccb20b149))
+
 ### [3.0.2](https://github.com/Gronex/timereg/compare/v3.0.1...v3.0.2) (2020-10-30)
 
 
