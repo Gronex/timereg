@@ -20,7 +20,8 @@ export interface Props {
     items: Item[];
 }
 
-export function createTimeListing(time : number) : Listing{
+export function createTimeListing(time?: number) : Listing{
+    time = time ?? 0;
     const hours = Math.floor(time);
     const minutes = (time % 1) * 60;
     const duration = Duration.fromObject({hours, minutes}).normalize();
