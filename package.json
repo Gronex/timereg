@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "parcel serve ./src/index.html",
-    "build": "parcel build ./src/index.html --no-scope-hoist",
+    "build": "parcel build ./src/index.html --no-scope-hoist && node ./build/copy-static-files.js",
     "commit": "cz",
     "release": "standard-version"
   },
