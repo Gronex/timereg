@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/Gronex/timereg/compare/v3.0.3...v3.1.0) (2020-11-03)
+
+
+### Features
+
+* **caching:** use state while revalidate aproach ([9d2220b](https://github.com/Gronex/timereg/commit/9d2220b7400221ccffaacf579e418724faa45df2))
+
 ### [3.0.3](https://github.com/Gronex/timereg/compare/v3.0.2...v3.0.3) (2020-10-30)
 
 
