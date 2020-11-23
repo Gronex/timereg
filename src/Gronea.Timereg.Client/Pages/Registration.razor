@@ -1,0 +1,80 @@
+﻿@using Gronea.Timereg.Application
+@using Gronea.Timereg.Client.ViewModels
+@using Microsoft.Extensions.Logging
+
+@page "/edit/{id:guid?}"
+
+@inject HttpClient Http
+@inject ITimeRegistrationRepository Repo
+@inject ILogger<Registration> Logger
+@inject NavigationManager NavManger
+
+<h1>@Id</h1>
+
+@if (_timeRegistration is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="@_timeRegistration" OnValidSubmit="SubmitForm">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputDate @bind-Value="@_timeRegistration.Date" />
+        <InputText @bind-Value="@_timeRegistration.Project" />
+        <InputTextArea @bind-Value="@_timeRegistration.Description" />
+        <InputTime @bind-Value="@_timeRegistration.Time" />
+        <InputTime @bind-Value="_timeRegistration.StartTime" />
+        <InputTime @bind-Value="_timeRegistration.StopTime" />
+
+        <input type="submit" value="Save"/>
+    </EditForm>
+
+    @_timeRegistration.StartTime
+    @_timeRegistration.StopTime
+}
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    private TimeRegistrationViewModel? _timeRegistration;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id.HasValue)
+        {
+            var registration = await Repo.GetRegistrationAsync(Id.Value);
+            if (registration is null)
+            {
+                Logger.LogError("Unable to find registration with id {id}", Id);
+                NavManger.NavigateTo("/");
+                return;
+            }
+            _timeRegistration = new TimeRegistrationViewModel(registration);
+        }
+        else
+        {
+            _timeRegistration = new TimeRegistrationViewModel
+            {
+                Date = DateTimeOffset.UtcNow.Date
+            };
+        }
+    }
+
+    protected async Task SubmitForm()
+    {
+        Logger.LogInformation("Submitting {registration} with {id}", _timeRegistration, Id);
+        if (Id.HasValue)
+        {
+            await Repo.UpdateRegistrationAsync(Id.Value, _timeRegistration!.ToDomainModel());
+        }
+        else
+        {
+            await Repo.CreateRegistrationAsync(_timeRegistration!.ToDomainModel());
+        }
+
+        NavManger.NavigateTo("/");
+    }
+}

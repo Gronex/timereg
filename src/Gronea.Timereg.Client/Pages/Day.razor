@@ -1,0 +1,31 @@
+@using Gronea.Timereg.Application
+@using Gronea.Timereg.Client.ViewModels
+
+
+@page "/{date:datetime}"
+@inject ITimeRegistrationRepository Repo
+
+<h1>@Date</h1>
+
+@foreach(var registration in _registrations)
+{
+    <div>
+        <a href="/edit/@registration.Id">@registration.Id</a>
+        <p>@registration.Project</p>
+        <p style="white-space: pre-line">@registration.Description</p>
+        <p>@registration.Time</p>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public DateTime Date { get; set; }
+
+    IEnumerable<TimeRegistrationViewModel> _registrations = Enumerable.Empty<TimeRegistrationViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var registrations = await Repo.GetAllRegistrationAsync();
+        _registrations = registrations.Where(x => x.Date == Date).Select(x => new TimeRegistrationViewModel(x)).ToList();
+    }
+}

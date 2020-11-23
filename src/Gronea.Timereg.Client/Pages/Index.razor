@@ -1,0 +1,27 @@
+﻿@using Gronea.Timereg.Application
+@using Gronea.Timereg.Domain
+@using Gronea.Timereg.Client.ViewModels
+
+@page "/"
+@inject ITimeRegistrationRepository Repo
+
+
+@foreach (var group in registrations.GroupBy(x => x.Date).OrderByDescending(x => x.Key))
+{
+    <a href="/@group.Key.ToString("s", System.Globalization.CultureInfo.InvariantCulture)">
+        <h2>@group.Key.ToString("D")</h2>
+        <div>
+            <p>@group.Sum(x => x.Time?.TotalHours)</p>
+        </div>
+    </a>
+
+}
+
+@code{
+    private IEnumerable<TimeRegistrationViewModel> registrations = Enumerable.Empty<TimeRegistrationViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        registrations = (await Repo.GetAllRegistrationAsync()).Select(x => new TimeRegistrationViewModel(x));
+    }
+}
