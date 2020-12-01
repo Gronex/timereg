@@ -1,14 +1,17 @@
 ﻿@using Gronea.Timereg.Application
 @using Gronea.Timereg.Domain
 @using Gronea.Timereg.Client.ViewModels
+@using Gronea.Timereg.Infrastructure
 
 @page "/"
+@inject RouteService Routes
 @inject ITimeRegistrationRepository Repo
 
 
 @foreach (var group in registrations.GroupBy(x => x.Date).OrderByDescending(x => x.Key))
 {
-    <a href="/@group.Key.ToString("s", System.Globalization.CultureInfo.InvariantCulture)">
+    /// @group.Key.ToString("s", System.Globalization.CultureInfo.InvariantCulture)
+    <a href="@Routes.GetDayRoute(group.Key.DateTime)">
         <h2>@group.Key.ToString("D")</h2>
         <div>
             <p>@group.Sum(x => x.Time?.TotalHours)</p>

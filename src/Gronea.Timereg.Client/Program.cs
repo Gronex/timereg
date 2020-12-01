@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Gronea.Timereg.Application;
 using Gronea.Timereg.Infrastructure;
+using Gronea.Timereg.Client.Pages;
 
 namespace Gronea.Timereg.Client
 {
@@ -30,6 +31,7 @@ namespace Gronea.Timereg.Client
         {
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             services.AddScoped<ITimeRegistrationRepository, TimeRegistrationRepository>();
+            services.AddSingleton<RouteService>();
         }
     }
 }

@@ -1,13 +1,15 @@
 ﻿@using Gronea.Timereg.Application
 @using Gronea.Timereg.Client.ViewModels
 @using Microsoft.Extensions.Logging
+@using Gronea.Timereg.Infrastructure
 
 @page "/edit/{id:guid?}"
 
 @inject HttpClient Http
 @inject ITimeRegistrationRepository Repo
-@inject ILogger<Registration> Logger
+@inject ILogger<Edit> Logger
 @inject NavigationManager NavManger
+@inject RouteService Routes
 
 <h1>@Id</h1>
 
@@ -28,7 +30,7 @@ else
         <InputTime @bind-Value="_timeRegistration.StartTime" />
         <InputTime @bind-Value="_timeRegistration.StopTime" />
 
-        <input type="submit" value="Save"/>
+        <input type="submit" value="Save" />
     </EditForm>
 
     @_timeRegistration.StartTime
@@ -49,7 +51,7 @@ else
             if (registration is null)
             {
                 Logger.LogError("Unable to find registration with id {id}", Id);
-                NavManger.NavigateTo("/");
+                NavManger.NavigateTo(Routes.GetHomeRoute());
                 return;
             }
             _timeRegistration = new TimeRegistrationViewModel(registration);
@@ -75,6 +77,6 @@ else
             await Repo.CreateRegistrationAsync(_timeRegistration!.ToDomainModel());
         }
 
-        NavManger.NavigateTo("/");
+        NavManger.NavigateTo(Routes.GetHomeRoute());
     }
 }

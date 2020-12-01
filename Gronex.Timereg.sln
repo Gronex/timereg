@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gronea.Timereg.Application"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gronea.Timereg.Infrastructure", "src\Gronea.Timereg.Infrastructure\Gronea.Timereg.Infrastructure.csproj", "{377BB48C-63A5-4151-9C4D-C6DCA5E04677}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{C678BFA1-F546-4D13-9AD5-32F5BB24368F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gronea.Timereg.RoutingGenerator", "src\Gronea.Timereg.RoutingGenerator\Gronea.Timereg.RoutingGenerator.csproj", "{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,18 @@ Global
 		{377BB48C-63A5-4151-9C4D-C6DCA5E04677}.Release|x64.Build.0 = Release|Any CPU
 		{377BB48C-63A5-4151-9C4D-C6DCA5E04677}.Release|x86.ActiveCfg = Release|Any CPU
 		{377BB48C-63A5-4151-9C4D-C6DCA5E04677}.Release|x86.Build.0 = Release|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Debug|x64.Build.0 = Debug|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Debug|x86.Build.0 = Debug|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Release|x64.ActiveCfg = Release|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Release|x64.Build.0 = Release|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Release|x86.ActiveCfg = Release|Any CPU
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +96,8 @@ Global
 		{B6D0740D-CDDD-41F4-AA6F-2975ADD32B08} = {A29D2423-DAE0-4966-A89A-D499EFC32FD3}
 		{4C8CB926-2658-4A1B-93F1-C11EFE8B4F35} = {A29D2423-DAE0-4966-A89A-D499EFC32FD3}
 		{377BB48C-63A5-4151-9C4D-C6DCA5E04677} = {A29D2423-DAE0-4966-A89A-D499EFC32FD3}
+		{C678BFA1-F546-4D13-9AD5-32F5BB24368F} = {A29D2423-DAE0-4966-A89A-D499EFC32FD3}
+		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7} = {C678BFA1-F546-4D13-9AD5-32F5BB24368F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61C34BC1-261F-40ED-BC8E-EC4B66F8F896}

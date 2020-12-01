@@ -22,4 +22,10 @@
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Gronea.Timereg.RoutingGenerator\Gronea.Timereg.RoutingGenerator.csproj"
+              OutputItemType="Analyzer"
+              ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
 </Project>
