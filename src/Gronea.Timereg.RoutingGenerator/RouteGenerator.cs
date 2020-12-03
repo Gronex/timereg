@@ -94,7 +94,7 @@ namespace {namespaceName}
                 {
                     (string TypeName, string ParameterName, bool Optional) parameter = GetParameter(token.ToString());
                     args.Add(parameter);
-                    template = template.Replace(token.ToString(), parameter.ParameterName);
+                    template = template.Replace(token.ToString(), RenderReplacementToken(parameter.TypeName, parameter.ParameterName, parameter.Optional));
                 }
             }
 
@@ -104,6 +104,22 @@ namespace {namespaceName}
             return $""{template}"";
         }}
 ");
+        }
+
+        private string RenderReplacementToken(string type, string parameterName, bool optional)
+        {
+            if (optional)
+            {
+                type = type.TrimEnd('?');
+            }
+
+            string formatter = (type) switch
+            {
+                nameof(DateTime) => $"{(optional ? "?" : string.Empty)}.ToString(\"d\", {typeof(System.Globalization.CultureInfo).FullName}.InvariantCulture)",
+                _ => string.Empty,
+            };
+
+            return $"{parameterName}{formatter}";
         }
 
         private string RenderParameter(string typeName, string parameterName, bool optional)
