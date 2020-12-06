@@ -12,7 +12,6 @@ src/Gronea.Timereg.Client/wwwroot/assets/
 /coverage
 
 # production
-/build
 /dist
 
 # misc

@@ -7,7 +7,7 @@
     "tailwindcss": "^1.9.6"
   },
   "scripts": {
-    "build": "rollup ./src/index.css -c ./rollup.config.js"
+    "build": "rollup ./src/index.css --config ./rollup.config.js --dir ./src/Gronea.Timereg.Client/wwwroot/assets"
   },
   "browserslist": {
     "production": [
