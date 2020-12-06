@@ -8,21 +8,59 @@
 @inject ITimeRegistrationRepository Repo
 
 
-@foreach (var group in registrations.GroupBy(x => x.Date).OrderByDescending(x => x.Key))
-{
-    /// @group.Key.ToString("s", System.Globalization.CultureInfo.InvariantCulture)
-    <a href="@Routes.GetDayRoute(group.Key.DateTime)">
-        <h2>@group.Key.ToString("D")</h2>
-        <div>
-            <p>@group.Sum(x => x.Time?.TotalHours)</p>
+<div>
+    <div class="ml-4">
+        <h3 class="text-xl">Grouping</h3>
+        <div class="mt-2">
+            <label htmlFor="week" class="inline-flex items-center">
+                <input class="form-radio" id="week" name="group" type="radio" value="week" checked="" />
+                <span class="ml-2">Week</span>
+            </label>
+            <label htmlFor="month" class="inline-flex items-center ml-6">
+                <input class="form-radio" id="month" name="group" type="radio" value="month" checked="" />
+                <span class="ml-2">Month</span>
+            </label>
         </div>
-    </a>
+    </div>
+    @foreach (var group in registrations.GroupBy(x => x.Date.Month).OrderByDescending(x => x.Key))
+    {
+        <div>
+            <div class="flex flex-col mt-2 -mb-2">
+                <div class="flex flex-row mt-2">
+                    <div class="flex w-full items-center justify-between px-8 py-6 bg-indigo-900">
+                        <div class="flex flex-col ml-6">
+                            <h3 class="text-lg font-bold text-teal-500">Week or month of @group.Key</h3>
+                            <div class="mt-4 flex">
+                                @*{listings.map(renderListing)}*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @foreach(var day in group.GroupBy(x => x.Date))
+            {
+                <a href="@Routes.GetDayRoute(day.Key.Date)">
+                    <div class="flex flex-row mt-2">
+                        <div class="flex w-full items-center justify-between light-mode:bg-white bg-gray-800 px-8 py-6 border-l-4 border-teal-800">
+                            <div class="flex flex-col ml-6">
+                                <span class="text-lg font-bold text-teal-500">@day.Key.ToString("D")</span>
+                                <div class="mt-4 flex">
+                                    @*{listings}*@
+                                    <p>@group.Sum(x => x.Time?.TotalHours)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+</div>
 
-}
 
 @code{
-    private IEnumerable<TimeRegistrationViewModel> registrations = Enumerable.Empty<TimeRegistrationViewModel>();
 
+    private IEnumerable<TimeRegistrationViewModel> registrations = Enumerable.Empty<TimeRegistrationViewModel>();
     protected override async Task OnInitializedAsync()
     {
         registrations = (await Repo.GetAllRegistrationAsync()).Select(x => new TimeRegistrationViewModel(x));

@@ -115,7 +115,7 @@ namespace {namespaceName}
 
             string formatter = (type) switch
             {
-                nameof(DateTime) => $"{(optional ? "?" : string.Empty)}.ToString(\"d\", {typeof(System.Globalization.CultureInfo).FullName}.InvariantCulture)",
+                nameof(DateTime) => $"{(optional ? "?" : string.Empty)}.ToString(\"s\", {typeof(System.Globalization.CultureInfo).FullName}.InvariantCulture)",
                 _ => string.Empty,
             };
 

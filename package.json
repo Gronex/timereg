@@ -1,0 +1,31 @@
+{
+  "name": "timereg",
+  "description": "Quick timeregistration app. To help remember what you did.",
+  "version": "3.1.1",
+  "private": true,
+  "dependencies": {
+    "tailwindcss": "^1.9.6"
+  },
+  "scripts": {
+    "build": "rollup ./src/index.css -c ./rollup.config.js"
+  },
+  "browserslist": {
+    "production": [
+      "last 2 chrome version",
+      "last 2 firefox version",
+      "last 2 safari version",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@tailwindcss/custom-forms": "github:tailwindcss/custom-forms",
+    "rollup": "^2.34.2",
+    "rollup-plugin-postcss": "^3.1.8"
+  }
+}

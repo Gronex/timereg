@@ -1,27 +1,30 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Gronea.Timereg.Client</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+﻿@using Gronea.Timereg.Client.Pages; 
+
+@inject RouteService Routes
+
+<div>
+    <nav class="bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <NavLink href="@Routes.GetHomeRoute()" Match="NavLinkMatch.All">
+                            <img class="h-8 w-8 inline-block" src="" alt="Timereg" />
+                            <span class="text-green-500 text-2xl font-semibold inline-block align-middle p-4">Timereg</span>
+                        </NavLink>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="https://github.com/Gronex/timereg/blob/master/CHANGELOG.md" target="_blank">
+                            <span class="text-lg align-middle">Version TODO</span>
+                        </a>
+                        <a href="https://github.com/Gronex/timereg/issues" target="_blank">
+                            <span aria-label="Github issues" className="pl-2 material-icons text-4xl inline-block align-middle">bug_report</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 </div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-    </ul>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}

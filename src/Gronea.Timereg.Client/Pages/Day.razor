@@ -5,15 +5,26 @@
 @inject ITimeRegistrationRepository Repo
 @inject RouteService Routes
 
-<h1>@Date</h1>
+<h1 class="text-xl font-bold pt-2 px-4">@Date.Date.ToShortDateString()</h1>
 
 @foreach(var registration in _registrations)
 {
     <div>
-        <a href="@Routes.GetEditRoute(registration.Id)">@registration.Id</a>
-        <p>@registration.Project</p>
-        <p style="white-space: pre-line">@registration.Description</p>
-        <p>@registration.Time</p>
+        <a href="@Routes.GetEditRoute(registration.Id)">
+            <div class="flex flex-row mt-2">
+                <div class="flex w-full items-center justify-between 
+                    light-mode:bg-white bg-gray-800 px-8 py-6 border-l-4 border-teal-800">
+                    <div class="flex flex-col ml-6">
+                        <span class="text-lg font-bold text-teal-500">@registration.Description</span>
+                        <div class="mt-4 flex">
+                            <p>@registration.Project</p>
+                            <p style="white-space: pre-line">@registration.Description</p>
+                            <p>@registration.Time</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
     </div>
 }
 

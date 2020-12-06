@@ -11,31 +11,69 @@
 @inject NavigationManager NavManger
 @inject RouteService Routes
 
-<h1>@Id</h1>
+<h1 class="text-xl font-bold pt-2 px-4">@Id</h1>
 
-@if (_timeRegistration is null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <EditForm Model="@_timeRegistration" OnValidSubmit="SubmitForm">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+<div class="pt-4 px-2">
+    @if (_timeRegistration is null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <div class="bg-gray-800 rounded-lg">
+            <EditForm Model="@_timeRegistration" OnValidSubmit="SubmitForm" class="mx-8 my-6 py-6">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="mb-5">
+                    <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="date">Date</label>
+                    <InputDate @bind-Value="@_timeRegistration.Date"
+                               class="shadow bg-gray-800 border-gray-600 appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+                <div class="mb-5">
+                    <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="project">Project</label>
+                    <InputText @bind-Value="@_timeRegistration.Project"
+                               class="shadow bg-gray-800 border-gray-600 appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+                <div class="mb-5">
+                    <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="description">Description</label>
+                    <InputTextArea @bind-Value="@_timeRegistration.Description"
+                                   class="shadow bg-gray-800 border-gray-600 appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+                <div class="mb-5">
+                    <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="time">Time</label>
+                    <InputTime @bind-Value="@_timeRegistration.Time"
+                               class="shadow bg-gray-800 border-gray-600 border appearance-none rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
 
-        <InputDate @bind-Value="@_timeRegistration.Date" />
-        <InputText @bind-Value="@_timeRegistration.Project" />
-        <InputTextArea @bind-Value="@_timeRegistration.Description" />
-        <InputTime @bind-Value="@_timeRegistration.Time" />
-        <InputTime @bind-Value="_timeRegistration.StartTime" />
-        <InputTime @bind-Value="_timeRegistration.StopTime" />
+                <div class="mb-5">
+                    <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="time">Time From</label>
+                    <InputTime @bind-Value="@_timeRegistration.StartTime"
+                               class="shadow bg-gray-800 border-gray-600 border appearance-none rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
 
-        <input type="submit" value="Save" />
-    </EditForm>
+                <div class="mb-5">
+                    <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="time">Time To</label>
+                    <InputTime @bind-Value="@_timeRegistration.StopTime"
+                               class="shadow bg-gray-800 border-gray-600 border appearance-none rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
 
-    @_timeRegistration.StartTime
-    @_timeRegistration.StopTime
-}
+                <div class="grid grid-cols-6 gap-4 mt-2">
+                    <button class="lg:col-start-2 lg:col-span-2 col-span-3 shadow bg-green-700 hover:bg-green-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                            type="submit">
+                        Save
+                    </button>
+                    @if (Id.HasValue)
+                    {
+                        <button class="lg:col-end-6 lg:col-span-2 col-span-3 shadow bg-red-700 hover:bg-red-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                type="button">
+                            TODO: Delete
+                        </button>
+                    }
+                </div>
+            </EditForm>
+        </div>
+    }
+</div>
 
 @code {
     [Parameter]

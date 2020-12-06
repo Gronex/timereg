@@ -23,9 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Gronea.Timereg.RoutingGenerator\Gronea.Timereg.RoutingGenerator.csproj"
-              OutputItemType="Analyzer"
-              ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Gronea.Timereg.RoutingGenerator\Gronea.Timereg.RoutingGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
 </Project>
