@@ -94,4 +94,17 @@ class Build : NukeBuild
                 .EnableNoRestore());
         });
 
+    Target Publish => _ => _
+        .DependsOn(Clean, CleanFrontend)
+        .DependsOn(Compile, BuildFrontend)
+        .Executes(() =>
+        {
+            DotNetPublish(s => s
+                .SetProject(Solution)
+                .SetConfiguration(Configuration)
+                .EnableNoRestore()
+                .EnableNoBuild()
+                .SetOutput(ArtifactsDirectory)
+                );
+        });
 }
