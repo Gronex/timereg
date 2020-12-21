@@ -49,9 +49,9 @@ namespace Gronea.Timereg.Infrastructure
             return Task.FromResult(id);
         }
 
-        public Task<IEnumerable<TimeRegistration>> GetAllRegistrationAsync()
+        public Task<IEnumerable<TimeRegistration>> GetAllRegistrationAsync(DateTime? date)
         {
-            return Task.FromResult(_registrations.AsEnumerable());
+            return Task.FromResult(_registrations.Where(x => !date.HasValue || x.Date == date.Value.Date));
         }
 
         public Task<TimeRegistration?> GetRegistrationAsync(Guid id)

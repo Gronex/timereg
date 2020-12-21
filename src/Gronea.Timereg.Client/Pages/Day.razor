@@ -1,5 +1,6 @@
 @using Gronea.Timereg.Application
 @using Gronea.Timereg.Client.ViewModels
+@using Gronea.Timereg.Client.Components
 
 @page "/{date:datetime}"
 @inject ITimeRegistrationRepository Repo
@@ -7,36 +8,22 @@
 
 <h1 class="text-xl font-bold pt-2 px-4">@Date.Date.ToShortDateString()</h1>
 
-@foreach(var registration in _registrations)
-{
-    <div>
-        <a href="@Routes.GetEditRoute(registration.Id)">
-            <div class="flex flex-row mt-2">
-                <div class="flex w-full items-center justify-between 
-                    light-mode:bg-white bg-gray-800 px-8 py-6 border-l-4 border-teal-800">
-                    <div class="flex flex-col ml-6">
-                        <span class="text-lg font-bold text-teal-500">@registration.Description</span>
-                        <div class="mt-4 flex">
-                            <p>@registration.Project</p>
-                            <p style="white-space: pre-line">@registration.Description</p>
-                            <p>@registration.Time</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
-}
+<List Items="_listItems" />
 
 @code {
     [Parameter]
     public DateTime Date { get; set; }
 
-    IEnumerable<TimeRegistrationViewModel> _registrations = Enumerable.Empty<TimeRegistrationViewModel>();
+    IEnumerable<ListItemViewModel> _listItems = Enumerable.Empty<ListItemViewModel>();
 
     protected override async Task OnInitializedAsync()
     {
-        var registrations = await Repo.GetAllRegistrationAsync();
-        _registrations = registrations.Where(x => x.Date == Date).Select(x => new TimeRegistrationViewModel(x)).ToList();
+        var registrations = await Repo.GetAllRegistrationAsync(Date);
+        _listItems = registrations
+            .Select(x => new ListItemViewModel(x.Description, new IconViewModel[]
+            {
+                new IconViewModel(x.Project, ViewModels.Icon.Project, "Project"),
+                new IconViewModel((x.StopTime - x.StartTime).ToString(), ViewModels.Icon.Time, "Hours"),
+            }, Routes.GetEditRoute(x.Id))).ToList();
     }
 }

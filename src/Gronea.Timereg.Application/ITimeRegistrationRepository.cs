@@ -11,7 +11,7 @@ namespace Gronea.Timereg.Application
     {
         Task<TimeRegistration?> GetRegistrationAsync(Guid id);
 
-        Task<IEnumerable<TimeRegistration>> GetAllRegistrationAsync();
+        Task<IEnumerable<TimeRegistration>> GetAllRegistrationAsync(DateTime? date = null);
 
         Task<Guid> CreateRegistrationAsync(TimeRegistration registration);
 
