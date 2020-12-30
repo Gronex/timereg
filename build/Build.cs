@@ -16,9 +16,19 @@ using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
+using Nuke.Common.CI.GitHubActions;
 
 [CheckBuildProjectConfigurations]
 [ShutdownDotNetAfterServerBuild]
+[GitHubActions("Continuous",
+    GitHubActionsImage.UbuntuLatest,
+    PublishArtifacts = true,
+    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
+    InvokedTargets = new[] { nameof(Publish) })]
+[GitHubActions("Deploy",
+    GitHubActionsImage.UbuntuLatest,
+    PublishArtifacts = false,
+    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" })]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -45,6 +55,11 @@ class Build : NukeBuild
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
     Project MainProject => Solution.GetProject("Gronea.Timereg.Client");
+
+    const string MasterBranch = "master";
+    const string DevelopBranch = "develop";
+    const string ReleaseBranchPrefix = "release";
+    const string HotfixBranchPrefix = "hotfix";
 
     IReadOnlyCollection<AbsolutePath> AditionalPaths = new[]
     {
