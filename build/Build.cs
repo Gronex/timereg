@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI;
@@ -42,6 +43,12 @@ class Build : NukeBuild
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
+
+    IReadOnlyCollection<AbsolutePath> AditionalPaths = new[]
+    {
+        RootDirectory / "netlify.toml",
+        RootDirectory / "_redirects",
+    };
 
     Target RestoreNpmPackages => _ => _
         .Executes(() =>
@@ -100,7 +107,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             DotNetPublish(s => s
-                .SetProject(Solution)
+                .SetProject(Solution.GetProject("Gronea.Timereg.Client").Path)
                 .SetConfiguration(Configuration)
                 .EnableNoRestore()
                 .EnableNoBuild()
