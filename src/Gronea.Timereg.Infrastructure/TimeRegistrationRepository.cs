@@ -49,6 +49,17 @@ namespace Gronea.Timereg.Infrastructure
             return Task.FromResult(id);
         }
 
+        public async Task DeleteRegistrationAsync(Guid id)
+        {
+            TimeRegistration? registration = await GetRegistrationAsync(id);
+            if(registration == null)
+            {
+                return;
+            }
+
+            _registrations.Remove(registration);
+        }
+
         public Task<IEnumerable<TimeRegistration>> GetAllRegistrationAsync(DateTime? date)
         {
             return Task.FromResult(_registrations.Where(x => !date.HasValue || x.Date == date.Value.Date));

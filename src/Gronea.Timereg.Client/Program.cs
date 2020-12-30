@@ -20,6 +20,8 @@ namespace Gronea.Timereg.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
+            builder.Services.AddLocalization();
+
             ConfigureServices(builder, builder.Services);
 
             await builder

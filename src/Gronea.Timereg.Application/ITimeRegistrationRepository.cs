@@ -16,5 +16,7 @@ namespace Gronea.Timereg.Application
         Task<Guid> CreateRegistrationAsync(TimeRegistration registration);
 
         Task UpdateRegistrationAsync(Guid id, TimeRegistration registration);
+
+        Task DeleteRegistrationAsync(Guid id);
     }
 }
