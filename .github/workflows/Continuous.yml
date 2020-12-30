@@ -21,6 +21,9 @@ on:
     branches:
       - master
       - release/*
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   ubuntu-latest:

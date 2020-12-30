@@ -17,10 +17,9 @@
 name: Deploy
 
 on:
-  push:
+  pull_request:
     branches:
       - master
-      - release/*
 
 jobs:
   ubuntu-latest:
@@ -28,5 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Run './build.cmd '
-        run: ./build.cmd 
+      - name: Run './build.cmd Deploy'
+        run: ./build.cmd Deploy
+      - uses: actions/upload-artifact@v1
+        with:
+          name: wwwroot
+          path: artifacts/wwwroot

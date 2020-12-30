@@ -22,13 +22,15 @@ using Nuke.Common.CI.GitHubActions;
 [ShutdownDotNetAfterServerBuild]
 [GitHubActions("Continuous",
     GitHubActionsImage.UbuntuLatest,
-    PublishArtifacts = true,
+    PublishArtifacts = false,
+    OnPullRequestBranches = new[] { DevelopBranch },
     OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
     InvokedTargets = new[] { nameof(Publish) })]
 [GitHubActions("Deploy",
     GitHubActionsImage.UbuntuLatest,
-    PublishArtifacts = false,
-    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" })]
+    PublishArtifacts = true,
+    OnPullRequestBranches = new [] { MasterBranch },
+    InvokedTargets = new[] { nameof(Deploy) })]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -61,6 +63,12 @@ class Build : NukeBuild
     const string ReleaseBranchPrefix = "release";
     const string HotfixBranchPrefix = "hotfix";
 
+    [Partition(1)]
+    Partition BuildPartition;
+
+    [Partition(1)]
+    Partition DeployPartition;
+
     IReadOnlyCollection<AbsolutePath> AditionalPaths = new[]
     {
         RootDirectory / "netlify.toml",
@@ -87,8 +95,6 @@ class Build : NukeBuild
         {
             NpmTasks.NpmRun(s => s
                 .SetCommand("build")
-                //.AddArguments(RootDirectory / "index.css")
-                //.AddArguments($"--config {RootDirectory / "rollup.config.js" }")
                 .AddArguments("--dir", $"{ MainProject.Directory / "wwwroot/assets" }")
                 .When(Configuration == Configuration.Release, config => config.AddArguments("--environment", "BUILD:production"))
                 .When(Configuration == Configuration.Release, config => config.SetProcessEnvironmentVariable("NODE_ENV", "production"))
@@ -126,6 +132,8 @@ class Build : NukeBuild
     Target Publish => _ => _
         .DependsOn(Clean, CleanFrontend)
         .DependsOn(Compile, BuildFrontend)
+        .Produces(ArtifactsDirectory / "wwwroot")
+        .Partition(() => BuildPartition)
         .Executes(() =>
         {
             DotNetPublish(s => s
@@ -135,5 +143,14 @@ class Build : NukeBuild
                 .EnableNoBuild()
                 .SetOutput(ArtifactsDirectory)
                 );
+        });
+
+    Target Deploy => _ => _
+        .Partition(() => DeployPartition)
+        .DependsOn(Publish)
+        .Executes(() =>
+        {
+            Logger.Error("Not implemented!!");
+            throw new NotImplementedException();
         });
 }
