@@ -44,6 +44,8 @@ class Build : NukeBuild
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
+    Project MainProject => Solution.GetProject("Gronea.Timereg.Client");
+
     IReadOnlyCollection<AbsolutePath> AditionalPaths = new[]
     {
         RootDirectory / "netlify.toml",
@@ -69,8 +71,13 @@ class Build : NukeBuild
         .Executes(() =>
         {
             NpmTasks.NpmRun(s => s
-                //.SetProcessEnvironmentVariable("PRODUCTION", )
-                .SetCommand("build"));
+                .SetCommand("build")
+                //.AddArguments(RootDirectory / "index.css")
+                //.AddArguments($"--config {RootDirectory / "rollup.config.js" }")
+                .AddArguments("--dir", $"{ MainProject.Directory / "wwwroot/assets" }")
+                .When(Configuration == Configuration.Release, config => config.AddArguments("--environment", "BUILD:production"))
+                .When(Configuration == Configuration.Release, config => config.SetProcessEnvironmentVariable("NODE_ENV", "production"))
+            );
         });
 
     Target Clean => _ => _
@@ -107,7 +114,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             DotNetPublish(s => s
-                .SetProject(Solution.GetProject("Gronea.Timereg.Client").Path)
+                .SetProject(MainProject.Path)
                 .SetConfiguration(Configuration)
                 .EnableNoRestore()
                 .EnableNoBuild()
