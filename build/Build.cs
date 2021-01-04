@@ -50,13 +50,13 @@ class Build : NukeBuild
     [GitRepository]
     readonly GitRepository GitRepository;
 
-    [GitVersion(Framework = "netcoreapp3.1")]
+    [GitVersion(Framework = "net5.0")]
     readonly GitVersion GitVersion;
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
-    Project MainProject => Solution.GetProject("Gronea.Timereg.Client");
+    Project MainProject => Solution.GetProject("Gronia.Timereg.Client");
 
     const string MasterBranch = "master";
     const string DevelopBranch = "develop";
