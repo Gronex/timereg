@@ -78,7 +78,7 @@ const Overview: React.FC<DispatchProps> = props => {
         ];
 
         return (
-        <div key={key}>
+        <div key={key.toString()}>
             <div className="flex flex-col mt-2 -mb-2">
                 <div className="flex flex-row mt-2">
                     <div className="flex w-full items-center justify-between px-8 py-6 bg-indigo-900">
@@ -110,11 +110,11 @@ const Overview: React.FC<DispatchProps> = props => {
     let groupPredicate;
     switch(group) {
         case 'month':
-            groupPredicate = (x : {date: DateTime}) => x.date.month + x.date.year * 100
+            groupPredicate = (x : {date: DateTime}) => DateTime.fromObject({year: x.date.year, month: x.date.month, day: 1}).toMillis();
             break;
         case 'week':
         default:
-            groupPredicate = (x : {date: DateTime}) => x.date.weekNumber + x.date.weekYear * 100
+            groupPredicate = (x : {date: DateTime}) => x.date.minus({days: x.date.weekday - 1}).toMillis();
             break;
     }
 
