@@ -9,14 +9,14 @@ namespace Gronia.Timereg.Application
 {
     public interface ITimeRegistrationRepository
     {
-        Task<TimeRegistration?> GetRegistrationAsync(Guid id);
+        ValueTask<TimeRegistration?> GetRegistrationAsync(Guid id);
 
-        Task<IEnumerable<TimeRegistration>> GetAllRegistrationAsync(DateTime? date = null);
+        ValueTask<IEnumerable<TimeRegistration>> GetAllRegistrationAsync(DateTime? date = null);
 
-        Task<Guid> CreateRegistrationAsync(TimeRegistration registration);
+        ValueTask<Guid> CreateRegistrationAsync(TimeRegistration registration);
 
-        Task UpdateRegistrationAsync(Guid id, TimeRegistration registration);
+        ValueTask UpdateRegistrationAsync(Guid id, TimeRegistration registration);
 
-        Task DeleteRegistrationAsync(Guid id);
+        ValueTask DeleteRegistrationAsync(Guid id);
     }
 }

@@ -11,45 +11,21 @@ namespace Gronia.Timereg.Infrastructure
 {
     public class TimeRegistrationRepository : ITimeRegistrationRepository
     {
-        private static List<TimeRegistration> _registrations = new List<TimeRegistration>
-        {
-            new TimeRegistration
-                {
-                    Id = Guid.NewGuid(),
-                    Date = DateTimeOffset.UtcNow.Date,
-                    Description = "Test 1",
-                    Project = "P1",
-                    StartTime = TimeSpan.Zero,
-                    StopTime = TimeSpan.FromHours(1.5)
-                },
-                new TimeRegistration
-                {
-                    Id = Guid.NewGuid(),
-                    Date = DateTimeOffset.UtcNow.Date.AddDays(1),
-                    Description = "Test 2",
-                    Project = "P1",
-                    StartTime = TimeSpan.Zero,
-                    StopTime = TimeSpan.FromHours(2)
-                },
-                new TimeRegistration
-                {
-                    Id = Guid.NewGuid(),
-                    Date = DateTimeOffset.UtcNow.Date,
-                    Description = "Test 3",
-                    Project = "P2",
-                    StartTime = TimeSpan.FromHours(5),
-                    StopTime = TimeSpan.FromHours(7)
-                }
-        };
+        private readonly IRegistrationDatabase _database;
 
-        public Task<Guid> CreateRegistrationAsync(TimeRegistration registration)
+        public TimeRegistrationRepository(IRegistrationDatabase database)
         {
-            var id = Guid.NewGuid();
-            _registrations.Add(registration with { Id = id });
-            return Task.FromResult(id);
+            _database = database;
         }
 
-        public async Task DeleteRegistrationAsync(Guid id)
+        public async ValueTask<Guid> CreateRegistrationAsync(TimeRegistration registration)
+        {
+            var id = Guid.NewGuid();
+            await _database.Put(registration with { Id = id });
+            return id;
+        }
+
+        public async ValueTask DeleteRegistrationAsync(Guid id)
         {
             TimeRegistration? registration = await GetRegistrationAsync(id);
             if(registration == null)
@@ -57,29 +33,28 @@ namespace Gronia.Timereg.Infrastructure
                 return;
             }
 
-            _registrations.Remove(registration);
+            await _database.Delete(id);
         }
 
-        public Task<IEnumerable<TimeRegistration>> GetAllRegistrationAsync(DateTime? date)
+        public async ValueTask<IEnumerable<TimeRegistration>> GetAllRegistrationAsync(DateTime? date)
         {
-            return Task.FromResult(_registrations.Where(x => !date.HasValue || x.Date == date.Value.Date));
+            IEnumerable<TimeRegistration> registrations = await _database.GetAll();
+            return registrations.Where(x => !date.HasValue || x.Date == date.Value.Date);
         }
 
-        public Task<TimeRegistration?> GetRegistrationAsync(Guid id)
+        public ValueTask<TimeRegistration?> GetRegistrationAsync(Guid id)
         {
-            return Task.FromResult(_registrations.FirstOrDefault(x => x.Id == id));
+            return _database.Get(id);
         }
 
-        public Task UpdateRegistrationAsync(Guid id, TimeRegistration registration)
+        public async ValueTask UpdateRegistrationAsync(Guid id, TimeRegistration registration)
         {
-            var reg = _registrations.FirstOrDefault(x => x.Id == id);
+            TimeRegistration? reg = await _database.Get(id);
             if(reg is null)
             {
                 throw new KeyNotFoundException($"Unable to find {id} in list of registrations");
             }
-            _registrations.Remove(reg);
-            _registrations.Add(registration with { Id = id });
-            return Task.CompletedTask;
+            await _database.Put(registration with { Id = id });
         }
     }
 }

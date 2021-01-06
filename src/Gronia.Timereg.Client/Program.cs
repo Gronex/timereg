@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Gronia.Timereg.Application;
 using Gronia.Timereg.Infrastructure;
 using Gronia.Timereg.Client.Pages;
+using Gronia.Timereg.Client.Shared;
 
 namespace Gronia.Timereg.Client
 {
@@ -34,6 +35,7 @@ namespace Gronia.Timereg.Client
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             services.AddScoped<ITimeRegistrationRepository, TimeRegistrationRepository>();
             services.AddSingleton<RouteService>();
+            services.AddSingleton<IRegistrationDatabase, RegistrationDatabase.RegistrationDatabase>();
         }
     }
 }
