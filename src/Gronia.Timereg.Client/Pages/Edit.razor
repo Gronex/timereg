@@ -22,39 +22,45 @@
     {
         <div class="bg-gray-800 rounded-lg">
             <EditForm Model="@_timeRegistration" OnValidSubmit="SubmitForm" class="mx-8 my-6 py-6">
+                <FluentValidator  />
                 <DataAnnotationsValidator />
-                <ValidationSummary />
                 <div class="mb-5">
                     <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="date">@Localizer["Date"]</label>
-                    <InputDate @bind-Value="@_timeRegistration.Date"
+                    <InputDate @bind-Value="@_timeRegistration.Date" DisplayName="@Localizer["Date"]"
                                class="shadow bg-gray-800 border-gray-600 appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                    <ValidationMessage For="() => _timeRegistration.Date"></ValidationMessage>
                 </div>
                 <div class="mb-5">
                     <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="project">@Localizer["Project"]</label>
-                    <InputText @bind-Value="@_timeRegistration.Project"
+                    <InputText @bind-Value="@_timeRegistration.Project" DisplayName="@Localizer["Project"]"
                                class="shadow bg-gray-800 border-gray-600 appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                    <ValidationMessage For="() => _timeRegistration.Project"></ValidationMessage>
                 </div>
                 <div class="mb-5">
                     <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="description">@Localizer["Description"]</label>
-                    <InputTextArea @bind-Value="@_timeRegistration.Description"
+                    <InputTextArea @bind-Value="@_timeRegistration.Description" DisplayName="@Localizer["Description"]"
                                    class="shadow bg-gray-800 border-gray-600 appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                    <ValidationMessage For="() => _timeRegistration.Description"></ValidationMessage>
                 </div>
                 <div class="mb-5">
                     <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="time">@Localizer["Time"]</label>
-                    <InputTime @bind-Value="@_timeRegistration.Time"
+                    <InputTime @bind-Value="@_timeRegistration.Time"  DisplayName="@Localizer["Time"]"
                                class="shadow bg-gray-800 border-gray-600 border appearance-none rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                    <ValidationMessage For="() => _timeRegistration.Time"></ValidationMessage>
                 </div>
 
                 <div class="mb-5">
                     <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="time">@Localizer["Time From"]</label>
-                    <InputTime @bind-Value="@_timeRegistration.StartTime"
+                    <InputTime @bind-Value="@_timeRegistration.StartTime" DisplayName="@Localizer["Time From"]"
                                class="shadow bg-gray-800 border-gray-600 border appearance-none rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                    <ValidationMessage For="() => _timeRegistration.StartTime"></ValidationMessage>
                 </div>
 
                 <div class="mb-5">
                     <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="time">@Localizer["Time To"]</label>
-                    <InputTime @bind-Value="@_timeRegistration.StopTime"
+                    <InputTime @bind-Value="@_timeRegistration.StopTime" DisplayName="@Localizer["Time To"]"
                                class="shadow bg-gray-800 border-gray-600 border appearance-none rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
+                    <ValidationMessage For="() => _timeRegistration.StopTime"></ValidationMessage>
                 </div>
 
                 <div class="grid grid-cols-6 gap-4 mt-2">

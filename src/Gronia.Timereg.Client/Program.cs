@@ -11,6 +11,9 @@ using Gronia.Timereg.Application;
 using Gronia.Timereg.Infrastructure;
 using Gronia.Timereg.Client.Pages;
 using Gronia.Timereg.Client.Shared;
+using FluentValidation;
+using Gronia.Timereg.Client.Validation;
+using Gronia.Timereg.Client.ViewModels;
 
 namespace Gronia.Timereg.Client
 {
@@ -36,6 +39,8 @@ namespace Gronia.Timereg.Client
             services.AddScoped<ITimeRegistrationRepository, TimeRegistrationRepository>();
             services.AddSingleton<RouteService>();
             services.AddSingleton<IRegistrationDatabase, RegistrationDatabase.RegistrationDatabase>();
+
+            services.AddTransient<IValidator<TimeRegistrationViewModel>, RegistrationValidator>();
         }
     }
 }

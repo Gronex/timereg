@@ -22,7 +22,8 @@ namespace Gronia.Timereg.Client.ViewModels
         {
             get
             {
-                return StopTime - StartTime;
+                TimeSpan? diff = (StopTime - StartTime);
+                return diff < TimeSpan.Zero ? TimeSpan.Zero : diff;
             }
             set
             {
