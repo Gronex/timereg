@@ -23,7 +23,7 @@
             .Select(x => new ListItemViewModel(x.Description, new IconViewModel[]
             {
                 new IconViewModel(x.Project, ViewModels.Icon.Project, "Project"),
-                new IconViewModel((x.StopTime - x.StartTime).ToString(), ViewModels.Icon.Time, "Hours"),
+                new IconViewModel((x.StopTime - x.StartTime)?.ToString() ?? TimeSpan.Zero.ToString(), ViewModels.Icon.Time, "Hours"),
             }, Routes.GetEditRoute(x.Id))).ToList();
     }
 }
