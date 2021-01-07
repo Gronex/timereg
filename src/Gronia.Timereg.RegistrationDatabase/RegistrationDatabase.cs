@@ -49,10 +49,10 @@ namespace Gronia.Timereg.RegistrationDatabase
             return await module.InvokeAsync<IEnumerable<TimeRegistration>>("getAll", StoreName);
         }
 
-        public async ValueTask<TimeRegistration> Put(TimeRegistration value)
+        public async ValueTask Put(TimeRegistration value)
         {
             IJSObjectReference module = await _moduleTask.Value;
-            return await module.InvokeAsync<TimeRegistration>("put", StoreName, value);
+            await module.InvokeVoidAsync("put", StoreName, value);
         }
 
         public async ValueTask Delete(Guid key)

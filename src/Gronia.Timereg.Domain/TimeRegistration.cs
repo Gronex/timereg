@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
+
+using Gronia.Timereg.Domain.Serialization;
 
 namespace Gronia.Timereg.Domain
 {
@@ -14,8 +17,10 @@ namespace Gronia.Timereg.Domain
 
         public string Description { get; init; } = string.Empty;
 
+        [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan StartTime { get; init; }
 
+        [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan? StopTime { get; init; }
 
     }

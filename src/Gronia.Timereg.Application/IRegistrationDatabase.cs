@@ -14,7 +14,7 @@ namespace Gronia.Timereg.Application
 
         ValueTask<IEnumerable<TimeRegistration>> GetAll();
 
-        ValueTask<TimeRegistration> Put(TimeRegistration value);
+        ValueTask Put(TimeRegistration value);
 
         ValueTask Delete(Guid key);
     }
