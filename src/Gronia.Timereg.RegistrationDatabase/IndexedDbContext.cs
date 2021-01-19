@@ -23,11 +23,11 @@ namespace Gronia.Timereg.IndexedDb
         private readonly Lazy<Task<IJSObjectReference>> _moduleTask;
         private readonly ILogger<IndexedDbContext<TModel, TKey>> _logger;
 
-        public IndexedDbContext(IJSRuntime jsRuntime, IOptions<IndexedDbSettings> options, ILogger<IndexedDbContext<TModel, TKey>> logger)
+        public IndexedDbContext(IJSRuntime jsRuntime, IOptionsSnapshot<IndexedDbSettings> options, ILogger<IndexedDbContext<TModel, TKey>> logger)
         {
             _moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
                "import", "./_content/Gronia.Timereg.IndexedDb/indexedDb.js").AsTask());
-            _settings = options.Value;
+            _settings = options.Get(typeof(TModel).Name);
             _logger = logger;
         }
 

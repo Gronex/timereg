@@ -43,11 +43,13 @@ namespace Gronia.Timereg.Client
 
             services.AddSingleton<RouteService>();
 
-            services.AddSingleton<IIndexedDbContext<TimeRegistration, Guid>, IndexedDbContext<TimeRegistration, Guid>>();
+            services.Configure<IndexedDbSettings>(nameof(TimeRegistration), builder.Configuration.GetSection("IndexedDb"));
+            services.AddScoped<IIndexedDbContext<TimeRegistration, Guid>, IndexedDbContext<TimeRegistration, Guid>>();
 
             services.AddTransient<IValidator<TimeRegistrationViewModel>, RegistrationValidator>();
 
-            services.Configure<IndexedDbSettings>(builder.Configuration.GetSection("IndexedDb"));
+            services.Configure<IndexedDbSettings>(nameof(OldTimeRegistration), builder.Configuration.GetSection("IndexedDbOld"));
+            services.AddScoped<IIndexedDbContext<OldTimeRegistration, int>, IndexedDbContext<OldTimeRegistration, int>>();
         }
     }
 }
