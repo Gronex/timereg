@@ -4,10 +4,11 @@ using System.Text;
 using System.Text.Json.Serialization;
 
 using Gronia.Timereg.Domain.Serialization;
+using Gronia.Timereg.IndexedDb;
 
 namespace Gronia.Timereg.Domain
 {
-    public record TimeRegistration
+    public record TimeRegistration : IDbModel<Guid>
     {
         public Guid Id { get; init; }
 

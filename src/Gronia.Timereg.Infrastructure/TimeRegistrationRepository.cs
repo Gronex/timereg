@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 using Gronia.Timereg.Application;
 using Gronia.Timereg.Domain;
+using Gronia.Timereg.IndexedDb;
 
 namespace Gronia.Timereg.Infrastructure
 {
     public class TimeRegistrationRepository : ITimeRegistrationRepository
     {
-        private readonly IRegistrationDatabase _database;
+        private readonly IIndexedDbContext<TimeRegistration, Guid> _database;
 
-        public TimeRegistrationRepository(IRegistrationDatabase database)
+        public TimeRegistrationRepository(IIndexedDbContext<TimeRegistration, Guid> database)
         {
             _database = database;
         }

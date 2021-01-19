@@ -14,6 +14,8 @@ using Gronia.Timereg.Client.Shared;
 using FluentValidation;
 using Gronia.Timereg.Client.Validation;
 using Gronia.Timereg.Client.ViewModels;
+using Gronia.Timereg.Domain;
+using Gronia.Timereg.IndexedDb;
 
 namespace Gronia.Timereg.Client
 {
@@ -41,9 +43,11 @@ namespace Gronia.Timereg.Client
 
             services.AddSingleton<RouteService>();
 
-            services.AddSingleton<IRegistrationDatabase, RegistrationDatabase.RegistrationDatabase>();
+            services.AddSingleton<IIndexedDbContext<TimeRegistration, Guid>, IndexedDbContext<TimeRegistration, Guid>>();
 
             services.AddTransient<IValidator<TimeRegistrationViewModel>, RegistrationValidator>();
+
+            services.Configure<IndexedDbSettings>(builder.Configuration.GetSection("IndexedDb"));
         }
     }
 }
