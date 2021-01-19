@@ -37,7 +37,10 @@ namespace Gronia.Timereg.Client
         {
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             services.AddScoped<ITimeRegistrationRepository, TimeRegistrationRepository>();
+            services.AddScoped<IDataMigrator, TimeRegistrationMigrator>();
+
             services.AddSingleton<RouteService>();
+
             services.AddSingleton<IRegistrationDatabase, RegistrationDatabase.RegistrationDatabase>();
 
             services.AddTransient<IValidator<TimeRegistrationViewModel>, RegistrationValidator>();

@@ -1,0 +1,43 @@
+﻿@using Gronia.Timereg.Application
+@using Microsoft.Extensions.Logging
+
+@inject IStringLocalizer<Settings> Localizer
+@inject IDataMigrator Migrator
+@inject ILogger<Settings> Logger
+
+@page "/settings"
+
+<h1>@Localizer["Settings"]</h1>
+
+<div>
+    <a href="https://github.com/Gronex/timereg/blob/master/CHANGELOG.md" target="_blank" rel="noreferrer">
+        <span class="text-lg align-middle">@Localizer["Version {0}", Version.Value.ToString(3)]</span>
+    </a>
+    <a href="https://github.com/Gronex/timereg/issues" target="_blank" rel="noreferrer">
+        <span aria-label="@Localizer["Github issues"]" class="pl-2 material-icons text-4xl inline-block align-middle">bug_report</span>
+    </a>
+</div>
+
+<div>
+    <button disabled="@_disableMigration" @onclick="@MigrateData">@Localizer["Migrate data"]</button>
+</div>
+
+@code {
+    private Lazy<Version> Version { get; } = new Lazy<Version>(GetVersion());
+
+    private bool _disableMigration = false;
+
+    private static Version GetVersion()
+    {
+        var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+        return assembly.GetName().Version ?? new System.Version(0, 0, 0, 0);
+    }
+
+    private async Task MigrateData()
+    {
+        Logger.LogInformation("Starting Migration");
+        _disableMigration = true;
+        await Migrator.MigrateTimeRegistrations();
+        Logger.LogInformation("Migration done");
+    }
+}

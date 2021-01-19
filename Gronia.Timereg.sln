@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gronia.Timereg.RoutingGener
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{3422ECFB-4AFB-4390-BAC8-9E15CFE57810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gronia.Timereg.RegistrationDatabase", "src\Gronia.Timereg.RegistrationDatabase\Gronia.Timereg.RegistrationDatabase.csproj", "{D098DEBE-D278-4E60-AAAB-65A288980594}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gronia.Timereg.RegistrationDatabase", "src\Gronia.Timereg.RegistrationDatabase\Gronia.Timereg.RegistrationDatabase.csproj", "{D098DEBE-D278-4E60-AAAB-65A288980594}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

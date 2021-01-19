@@ -20,12 +20,9 @@
             </div>
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <a href="https://github.com/Gronex/timereg/blob/master/CHANGELOG.md" target="_blank" rel="noreferrer">
-                        <span class="text-lg align-middle">@Localizer["Version {0}", Version]</span>
-                    </a>
-                    <a href="https://github.com/Gronex/timereg/issues" target="_blank" rel="noreferrer">
-                        <span aria-label="@Localizer["Github issues"]" class="pl-2 material-icons text-4xl inline-block align-middle">bug_report</span>
-                    </a>
+                    <NavLink href="@Routes.GetSettingsRoute()" Match="NavLinkMatch.Prefix">
+                        <span aria-label="@Localizer["Settings"]" class="pl-2 material-icons text-4xl inline-block align-middle">settings</span>
+                    </NavLink>
                 </div>
             </div>
         </div>
@@ -33,12 +30,4 @@
 </nav>
 
 @code {
-    public Lazy<Version> Version { get; } = new Lazy<Version>(GetVersion());
-
-
-    private static Version GetVersion()
-    {
-        var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-        return assembly.GetName().Version ?? new System.Version(0, 0, 0, 0);
-    }
 }
