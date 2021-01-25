@@ -31,7 +31,7 @@ namespace Gronia.Timereg.Infrastructure
             IEnumerable<OldTimeRegistration> registrations = await _dbContext.GetAll();
 
             IEnumerable<(OldTimeRegistration Old, TimeRegistration New)>? mappedRegistrations = registrations
-                .Where(x => x.NewId.HasValue)
+                .Where(x => !x.NewId.HasValue)
                 .Select(reg => (reg, new TimeRegistration
                 {
                     Id = Guid.NewGuid(),
