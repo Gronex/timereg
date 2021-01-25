@@ -12,7 +12,7 @@ namespace Gronia.Timereg.Client.ViewModels
         public string IconPath => 
             Icon switch
             {
-                Icon.Project => "",
+                Icon.Project => "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",
                 Icon.Time => @"M13 2.05v2.02c3.95.49 7 3.85 7
             7.93 0 3.21-1.92 6-4.72 7.28L13
             17v5h5l-1.22-1.22C19.91 19.07 22
@@ -39,7 +39,7 @@ namespace Gronia.Timereg.Client.ViewModels
         public string Stroke =>
             Icon switch
             {
-                Icon.Number => "currentColor",
+                Icon.Number | Icon.Project => "currentColor",
                 _ => string.Empty
             };
     }

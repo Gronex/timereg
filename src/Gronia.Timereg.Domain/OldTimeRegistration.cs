@@ -19,5 +19,7 @@ namespace Gronia.Timereg.Domain
         public string? Project { get; init; }
 
         public double Hours { get; init; }
+
+        public Guid? NewId { get; init; }
     }
 }

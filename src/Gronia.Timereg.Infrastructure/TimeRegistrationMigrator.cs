@@ -30,21 +30,26 @@ namespace Gronia.Timereg.Infrastructure
             _logger.LogInformation("Migrating...");
             IEnumerable<OldTimeRegistration> registrations = await _dbContext.GetAll();
 
-            IEnumerable<TimeRegistration> mappedRegistrations = registrations.Select(reg => new TimeRegistration
-            {
-                Id = Guid.NewGuid(),
-                Date = reg.Date,
-                Description = reg.Description ?? string.Empty,
-                Project = reg.Project ?? string.Empty,
-                StartTime = TimeSpan.Zero,
-                StopTime = TimeSpan.FromHours(reg.Hours)
-            });
+            IEnumerable<(OldTimeRegistration Old, TimeRegistration New)>? mappedRegistrations = registrations
+                .Where(x => x.NewId.HasValue)
+                .Select(reg => (reg, new TimeRegistration
+                {
+                    Id = Guid.NewGuid(),
+                    Date = reg.Date,
+                    Description = reg.Description ?? string.Empty,
+                    Project = reg.Project ?? string.Empty,
+                    StartTime = TimeSpan.Zero,
+                    StopTime = TimeSpan.FromHours(reg.Hours)
+                }));
 
 
-            foreach(TimeRegistration registration in mappedRegistrations)
+            foreach((OldTimeRegistration Old, TimeRegistration New) in mappedRegistrations)
             {
-                _logger.LogInformation("Adding {registration}", registration);
-                await _dbContextTarget.Put(registration);
+                _logger.LogInformation("Adding {registration}", New);
+                await _dbContextTarget.Put(New);
+
+                _logger.LogInformation("Updating {registration}", Old);
+                await _dbContext.Put(Old with { NewId = New.Id });
             }
 
             _logger.LogInformation("Migration done.");

@@ -11,7 +11,7 @@
 @inject IStringLocalizer<Edit> Localizer
 
 
-<h1 class="text-xl font-bold pt-2 px-4">@Id</h1>
+<h1 class="text-3xl font-bold pt-2 px-4">@GetTitle()</h1>
 
 <div class="pt-4 px-2">
     @if (_timeRegistration is null)
@@ -137,5 +137,18 @@
             await Repo.DeleteRegistrationAsync(Id.Value);
         }
         NavManger.NavigateTo(Routes.GetHomeRoute());
+    }
+
+    protected string GetTitle()
+    {
+        if (!string.IsNullOrWhiteSpace(_timeRegistration?.Description))
+        {
+            return _timeRegistration.Description;
+        }
+        if (!string.IsNullOrWhiteSpace(_timeRegistration?.Project))
+        {
+            return _timeRegistration.Project;
+        }
+        return _timeRegistration?.Id.ToString() ?? Id?.ToString() ?? string.Empty;
     }
 }
