@@ -26,11 +26,6 @@ using Nuke.Common.CI.GitHubActions;
     OnPullRequestBranches = new[] { DevelopBranch },
     OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
     InvokedTargets = new[] { nameof(Publish) })]
-[GitHubActions("Deploy",
-    GitHubActionsImage.UbuntuLatest,
-    PublishArtifacts = true,
-    OnPullRequestBranches = new [] { MasterBranch },
-    InvokedTargets = new[] { nameof(Deploy) })]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -43,6 +38,18 @@ class Build : NukeBuild
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+
+    [Parameter("If the deployaction should be run against prod")]
+    readonly bool Prod = false;
+
+    [Parameter("an access token to use when authenticating commands. Keep this value private.")]
+    readonly string NetlifyToken;
+
+    [Parameter("override any linked site in the current working directory.")]
+    readonly string NetlifySiteId;
+
+    [Parameter()]
+    readonly AbsolutePath DeployArtifactPath;
 
     [Solution]
     readonly Solution Solution;
@@ -146,11 +153,15 @@ class Build : NukeBuild
         });
 
     Target Deploy => _ => _
-        .Partition(() => DeployPartition)
-        .DependsOn(Publish)
         .Executes(() =>
         {
-            Logger.Error("Not implemented!!");
-            throw new NotImplementedException();
+            NpmTasks.NpmRun(s => s
+                .SetCommand("deploy")
+                .AddProcessEnvironmentVariable("NETLIFY_AUTH_TOKEN", NetlifyToken)
+                .AddProcessEnvironmentVariable("NETLIFY_SITE_ID", NetlifySiteId)
+                .AddArguments("--dir", DeployArtifactPath)
+                .When(!Prod, config => config.AddArguments("--alias", "QA"))
+                .When(Prod, config => config.AddArguments("--prod"))
+            );
         });
 }

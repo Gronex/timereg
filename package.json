@@ -7,7 +7,8 @@
     "tailwindcss": "^1.9.6"
   },
   "scripts": {
-    "build": "rollup ./src/index.css --config ./rollup.config.js"
+    "build": "rollup ./src/index.css --config ./rollup.config.js",
+    "deploy": "netlify deploy"
   },
   "browserslist": {
     "production": [
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "github:tailwindcss/custom-forms",
+    "netlify-cli": "^3.4.2",
     "rollup": "^2.34.2",
     "rollup-plugin-postcss": "^3.1.8"
   }
