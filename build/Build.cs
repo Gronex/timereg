@@ -42,12 +42,6 @@ class Build : NukeBuild
     [Parameter("If the deployaction should be run against prod")]
     readonly bool Prod = false;
 
-    [Parameter("an access token to use when authenticating commands. Keep this value private.")]
-    readonly string NetlifyToken;
-
-    [Parameter("override any linked site in the current working directory.")]
-    readonly string NetlifySiteId;
-
     [Parameter()]
     readonly AbsolutePath DeployArtifactPath;
 
@@ -157,8 +151,6 @@ class Build : NukeBuild
         {
             NpmTasks.NpmRun(s => s
                 .SetCommand("deploy")
-                .AddProcessEnvironmentVariable("NETLIFY_AUTH_TOKEN", NetlifyToken)
-                .AddProcessEnvironmentVariable("NETLIFY_SITE_ID", NetlifySiteId)
                 .AddArguments("--dir", DeployArtifactPath)
                 .When(!Prod, config => config.AddArguments("--alias", "QA"))
                 .When(Prod, config => config.AddArguments("--prod"))

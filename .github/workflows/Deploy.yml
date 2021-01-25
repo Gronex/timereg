@@ -35,7 +35,7 @@ jobs:
       with:
         name: $artifactName
     - name: Run './build.cmd Deploy'
-      run: ./build.cmd Deploy --Netlify-Site-Id $NETLIFY_SITE_ID --netlify-token $NETLIFY_AUTH_TOKEN --deploy-artifact-path ./$artifactName
+      run: ./build.cmd Deploy --deploy-artifact-path ./$artifactName
 
   deploy-prod:
     environment: Prod
@@ -51,4 +51,4 @@ jobs:
       with:
         name: $artifactName
     - name: Run './build.cmd Deploy'
-      run: ./build.cmd Deploy --Netlify-Site-Id $NETLIFY_SITE_ID --netlify-token $NETLIFY_AUTH_TOKEN --deploy-artifact-path ./$artifactName --prod
+      run: ./build.cmd Deploy --deploy-artifact-path ./$artifactName --prod
