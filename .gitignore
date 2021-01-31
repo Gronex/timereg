@@ -390,3 +390,6 @@ MigrationBackup/
 
 # Local Netlify folder
 .netlify
+
+# Misc
+src/**/dist

@@ -17,6 +17,7 @@ using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using Nuke.Common.CI.GitHubActions;
+using System.IO;
 
 [CheckBuildProjectConfigurations]
 [ShutdownDotNetAfterServerBuild]
@@ -100,6 +101,13 @@ class Build : NukeBuild
                 .When(Configuration == Configuration.Release, config => config.AddArguments("--environment", "BUILD:production"))
                 .When(Configuration == Configuration.Release, config => config.SetProcessEnvironmentVariable("NODE_ENV", "production"))
             );
+        }).Executes(() =>
+        {
+            NpmTasks.NpmRun(s => s
+                .SetCommand("build-indexed-db")
+                .When(Configuration == Configuration.Release, config => config.AddArguments("--environment", "BUILD:production"))
+                .When(Configuration == Configuration.Release, config => config.SetProcessEnvironmentVariable("NODE_ENV", "production"))
+            );
         });
 
     Target Clean => _ => _
@@ -147,12 +155,15 @@ class Build : NukeBuild
         });
 
     Target Deploy => _ => _
+        .Requires(() => DeployArtifactPath)
+        .Requires(() => DirectoryExists(DeployArtifactPath))
+        .Requires(() => Directory.EnumerateFiles(DeployArtifactPath).Any())
         .Executes(() =>
         {
             NpmTasks.NpmRun(s => s
                 .SetCommand("deploy")
                 .AddArguments("--dir", DeployArtifactPath)
-                .When(!Prod, config => config.AddArguments("--alias", "QA"))
+                .When(!Prod, config => config.AddArguments("--alias", "stage"))
                 .When(Prod, config => config.AddArguments("--prod"))
             );
         });

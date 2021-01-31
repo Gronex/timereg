@@ -4,10 +4,12 @@
   "version": "3.1.2",
   "private": true,
   "dependencies": {
+    "idb": "^6.0.0",
     "tailwindcss": "^1.9.6"
   },
   "scripts": {
     "build": "rollup ./src/index.css --config ./rollup.config.js",
+    "build-indexed-db": "rollup ./src/Gronia.Timereg.RegistrationDatabase/wwwroot/indexedDb.js --dir ./src/Gronia.Timereg.RegistrationDatabase/wwwroot/dist --config ./rollup.config.js --format esm",
     "deploy": "netlify deploy"
   },
   "browserslist": {
@@ -25,6 +27,7 @@
     ]
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^11.1.1",
     "@tailwindcss/custom-forms": "github:tailwindcss/custom-forms",
     "netlify-cli": "^3.4.2",
     "rollup": "^2.34.2",
