@@ -1,0 +1,108 @@
+﻿@using Gronia.Timereg.Application
+@using Gronia.Timereg.Domain
+@using Gronia.Timereg.Client.ViewModels
+@using Gronia.Timereg.Infrastructure
+@using Gronia.Timereg.Client.Extensions;
+@using Gronia.Timereg.Client.Components;
+
+@page "/"
+@inject RouteService Routes
+@inject ITimeRegistrationRepository Repo
+@inject IStringLocalizer<Home> Localizer
+
+
+<div class="ml-4">
+    <EditForm EditContext="@(new EditContext(new object()))">
+        <h2 class="text-2xl">@Localizer["Grouping"]</h2>
+        <div class="mt-2">
+            <InputRadioGroup Name="group" @bind-Value="@RegistrationGrouping">
+                <label htmlFor="week" class="inline-flex items-center">
+                    <InputRadio class="form-radio" Value="@RegistrationGroupings.Week" />
+                    <span class="ml-2">@Localizer["Week"]</span>
+                </label>
+                <label htmlFor="month" class="inline-flex items-center ml-6">
+                    <InputRadio class="form-radio" Value="@RegistrationGroupings.Month" />
+                    <span class="ml-2">@Localizer["Month"]</span>
+                </label>
+            </InputRadioGroup>
+        </div>
+    </EditForm>
+</div>
+@foreach (var group in registrations.GroupBy(GetGrouping).OrderByDescending(x => x.Key))
+{
+    <div class="flex flex-col mt-2 -mb-2">
+        <div class="flex flex-row mt-2">
+            <div class="flex w-full items-center justify-between px-8 py-6 bg-indigo-900">
+                <div class="flex flex-col ml-6">
+                    <h3 class="text-lg font-bold text-teal-500">
+                        @switch (RegistrationGrouping)
+                        {
+                            case RegistrationGroupings.Week:
+                                @Localizer["Week {0}", group.Key.GetIso8601WeekOfYear()]
+                                break;
+                            case RegistrationGroupings.Month:
+                                @Localizer["{0}", group.Key.ToString("MMMM")]
+                                break;
+                            default:
+                                @Localizer["Invalid grouping"]
+                                break;
+                        }
+                    </h3>
+                    <div class="mt-4 flex">
+                        @foreach (var icon in GetGroupIcons(group))
+                        {
+                            <Icon Model="icon" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <List Items="CreateDayList(group)" />
+}
+
+
+@code{
+
+    private RegistrationGroupings RegistrationGrouping { get; set; }
+
+    private IEnumerable<TimeRegistrationViewModel> registrations = Enumerable.Empty<TimeRegistrationViewModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        registrations = (await Repo.GetAllRegistrationAsync()).Select(x => new TimeRegistrationViewModel(x));
+    }
+
+    protected IEnumerable<ListItemViewModel> CreateDayList<T>(IGrouping<T, TimeRegistrationViewModel> group)
+    {
+        return group
+            .GroupBy(x => x.Date)
+            .OrderByDescending(x => x.Key)
+            .Select(x => new ListItemViewModel(x.Key.ToString("D"), new IconViewModel[]
+                {
+                    new IconViewModel(x.Sum(x => x.Time).ToString(), ViewModels.Icon.Time, Localizer["Hours"]),
+                    new IconViewModel(x.Count().ToString(), ViewModels.Icon.Number, Localizer["Registration count"])
+                    }, Routes.GetDayRoute(x.Key.Date)));
+    }
+
+    protected IEnumerable<IconViewModel> GetGroupIcons<T>(IGrouping<T, TimeRegistrationViewModel> group)
+    {
+        yield return new IconViewModel(group.Sum(x => x.Time).ToString(), ViewModels.Icon.Time, Localizer["Total Time"]);
+        yield return new IconViewModel(group.Count().ToString(), ViewModels.Icon.Number, Localizer["Registration count"]);
+    }
+
+    protected DateTime GetGrouping(TimeRegistrationViewModel registration)
+    {
+        return RegistrationGrouping switch
+        {
+            RegistrationGroupings.Month => new DateTime(registration.Date.Year, registration.Date.Month, 1),
+            RegistrationGroupings.Week => registration.Date.Date.GetFirstDayOfWeek(),
+            _ => registration.Date.Date
+        };
+    }
+
+    enum RegistrationGroupings
+    {
+        Week,
+        Month
+    }
+}

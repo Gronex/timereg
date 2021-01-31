@@ -1,0 +1,60 @@
+﻿@using Gronia.Timereg.Application
+@using Microsoft.Extensions.Logging
+
+@inject IStringLocalizer<Settings> Localizer
+@inject IDataMigrator Migrator
+@inject ILogger<Settings> Logger
+
+@page "/settings"
+
+<div class="pt-4 px-2">
+    <h1 class="text-3xl">@Localizer["Settings"]</h1>
+    <div class="pb-2">
+        <a href="https://github.com/Gronex/timereg/" target="_blank" rel="noreferrer">
+            <span class="text-lg align-middle">@Localizer["Version {0}", Version.Value.ToString(3)]</span>
+        </a>
+        <a href="https://github.com/Gronex/timereg/issues" target="_blank" rel="noreferrer">
+            <span aria-label="@Localizer["Github issues"]" class="pl-2 material-icons text-4xl inline-block align-middle">bug_report</span>
+        </a>
+    </div>
+
+    <h2 class="text-2xl">@Localizer["Data upgrade"]</h2>
+    <div class="grid grid-cols-4 gap-3 pb-2">
+        <p class="col-span-full">
+            @Localizer["Migrate data added in versions prior to 3.0 to the new format. Re-running will not create additional data"]
+        </p>
+        <button class="inline-flex items-center px-4 lg:col-span-1 col-span-full text-green-500 shadow bg-purple-800 hover:bg-purple-700 focus:shadow-outline focus:outline-none font-bold py-2 px-4 rounded @(_disableMigration ? "cursor-not-allowed": string.Empty)" type="button" disabled="@_disableMigration" @onclick="@MigrateData">
+            @if (_migrating)
+            {
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            }
+            @Localizer["Migrate data"]
+        </button>
+    </div>
+</div>
+
+@code {
+    private Lazy<Version> Version { get; } = new Lazy<Version>(GetVersion());
+
+    private bool _disableMigration = false;
+    private bool _migrating = false;
+
+    private static Version GetVersion()
+    {
+        var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+        return assembly.GetName().Version ?? new System.Version(0, 0, 0, 0);
+    }
+
+    private async Task MigrateData()
+    {
+        Logger.LogInformation("Starting Migration");
+        _disableMigration = true;
+        _migrating = true;
+        await Migrator.MigrateTimeRegistrations();
+        Logger.LogInformation("Migration done");
+        _migrating = false;
+    }
+}

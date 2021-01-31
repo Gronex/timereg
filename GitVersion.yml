@@ -1,0 +1,6 @@
+mode: Mainline
+branches: {}
+ignore:
+  sha: []
+  commits-before: 2020-06-01
+merge-message-formats: {}

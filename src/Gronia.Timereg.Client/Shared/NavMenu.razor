@@ -1,0 +1,33 @@
+﻿@using Gronia.Timereg.Client.Pages;
+
+@inject RouteService Routes
+@inject IStringLocalizer<NavMenu> Localizer
+
+<nav class="bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <NavLink href="@Routes.GetHomeRoute()" Match="NavLinkMatch.All">
+                        <img class="h-8 w-8 inline-block"
+                             height="32"
+                             width="32"
+                             src="images/clock.svg"
+                             alt="@Localizer["Timereg"]" />
+                        <span class="text-green-500 text-2xl font-semibold inline-block align-middle p-4">@Localizer["Timereg"]</span>
+                    </NavLink>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <NavLink href="@Routes.GetSettingsRoute()" Match="NavLinkMatch.Prefix">
+                        <span aria-label="@Localizer["Settings"]" class="pl-2 material-icons text-4xl inline-block align-middle">settings</span>
+                    </NavLink>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+@code {
+}
