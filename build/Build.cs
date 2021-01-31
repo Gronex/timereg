@@ -152,6 +152,7 @@ class Build : NukeBuild
                 .EnableNoBuild()
                 .SetOutput(ArtifactsDirectory)
                 );
+            CopyFileToDirectory(RootDirectory / "netlify.toml", ArtifactsDirectory / "wwwroot");
         });
 
     Target Deploy => _ => _
