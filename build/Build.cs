@@ -78,13 +78,6 @@ class Build : NukeBuild
             NpmTasks.NpmCi();
         });
 
-    Target CleanFrontend => _ => _
-        .Before(RestoreNpmPackages)
-        .Executes(() =>
-        {
-            SourceDirectory.GlobDirectories("**/wwwroot/assets").ForEach(DeleteDirectory);
-        });
-
     Target BuildFrontend => _ => _
         .DependsOn(RestoreNpmPackages)
         .Before(Compile)
@@ -133,7 +126,7 @@ class Build : NukeBuild
         });
 
     Target Publish => _ => _
-        .DependsOn(Clean, CleanFrontend)
+        .DependsOn(Clean)
         .DependsOn(Compile, BuildFrontend)
         .Produces(ArtifactsDirectory / "wwwroot")
         .Executes(() =>
@@ -146,20 +139,5 @@ class Build : NukeBuild
                 .SetOutput(ArtifactsDirectory)
                 );
             CopyFileToDirectory(RootDirectory / "netlify.toml", ArtifactsDirectory / "wwwroot");
-        });
-
-    Target Deploy => _ => _
-        .Requires(() => DeployArtifactPath)
-        .Requires(() => DirectoryExists(DeployArtifactPath))
-        .Requires(() => Directory.EnumerateFiles(DeployArtifactPath).Any())
-        .Consumes(Publish)
-        .Executes(() =>
-        {
-            NpmTasks.NpmRun(s => s
-                .SetCommand("deploy")
-                .AddArguments("--dir", DeployArtifactPath)
-                .When(!Prod, config => config.AddArguments("--alias", "stage"))
-                .When(Prod, config => config.AddArguments("--prod"))
-            );
         });
 }

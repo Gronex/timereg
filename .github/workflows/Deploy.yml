@@ -34,8 +34,19 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: $artifactName
-    - name: Run './build.cmd Deploy'
-      run: ./build.cmd Deploy --deploy-artifact-path ./$artifactName
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.2.2
+      with:
+        publish-dir: './$artifactName'
+        production-branch: master
+        production-deploy: false
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
   deploy-prod:
     environment: Prod
@@ -50,5 +61,16 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: $artifactName
-    - name: Run './build.cmd Deploy'
-      run: ./build.cmd Deploy --deploy-artifact-path ./$artifactName --prod
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.2.2
+      with:
+        publish-dir: './$artifactName'
+        production-branch: master
+        production-deploy: true
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
