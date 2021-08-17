@@ -85,7 +85,6 @@ class Build : NukeBuild
         }).Executes(() =>
         {
             NpmTasks.NpmRun(s => s
-                .SetProcessWorkingDirectory(RootDirectory)
                 .SetCommand("build-indexed-db")
                 .When(Configuration == Configuration.Release, config => config.AddArguments("--environment", "BUILD:production"))
                 .When(Configuration == Configuration.Release, config => config.SetProcessEnvironmentVariable("NODE_ENV", "production"))

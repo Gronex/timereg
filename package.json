@@ -8,7 +8,7 @@
   },
   "scripts": {
     "buildcss": "postcss src/Gronia.Timereg.Client/wwwroot/css/app.css -o src/Gronia.Timereg.Client/wwwroot/css/app.min.css",
-    "build-indexed-db": "rollup ./src/Gronia.Timereg.indexedDb/wwwroot/indexedDb.js --dir ./src/Gronia.Timereg.indexedDb/wwwroot/dist --config ./rollup.config.js --format esm"
+    "build-indexed-db": "rollup src/Gronia.Timereg.indexedDb/wwwroot/indexedDb.js --dir src/Gronia.Timereg.indexedDb/wwwroot/dist --config rollup.config.js --format esm"
   },
   "browserslist": {
     "production": [
