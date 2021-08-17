@@ -38,7 +38,7 @@ class Build : NukeBuild
     public static int Main () => Execute<Build>(x => x.Compile, x => x.BuildFrontend);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+    readonly Configuration Configuration = Configuration.Release;//IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Parameter("If the deployaction should be run against prod")]
     readonly bool Prod = false;

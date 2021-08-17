@@ -80,9 +80,7 @@
             "enum": [
               "BuildFrontend",
               "Clean",
-              "CleanFrontend",
               "Compile",
-              "Deploy",
               "Publish",
               "Restore",
               "RestoreNpmPackages"
@@ -101,9 +99,7 @@
             "enum": [
               "BuildFrontend",
               "Clean",
-              "CleanFrontend",
               "Compile",
-              "Deploy",
               "Publish",
               "Restore",
               "RestoreNpmPackages"
