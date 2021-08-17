@@ -38,13 +38,7 @@ class Build : NukeBuild
     public static int Main () => Execute<Build>(x => x.Compile, x => x.BuildFrontend);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly Configuration Configuration = Configuration.Release;//IsLocalBuild ? Configuration.Debug : Configuration.Release;
-
-    [Parameter("If the deployaction should be run against prod")]
-    readonly bool Prod = false;
-
-    [Parameter()]
-    readonly AbsolutePath DeployArtifactPath;
+    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Solution]
     readonly Solution Solution;
@@ -91,6 +85,7 @@ class Build : NukeBuild
         }).Executes(() =>
         {
             NpmTasks.NpmRun(s => s
+                .SetProcessWorkingDirectory(RootDirectory)
                 .SetCommand("build-indexed-db")
                 .When(Configuration == Configuration.Release, config => config.AddArguments("--environment", "BUILD:production"))
                 .When(Configuration == Configuration.Release, config => config.SetProcessEnvironmentVariable("NODE_ENV", "production"))
