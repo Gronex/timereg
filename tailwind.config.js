@@ -1,21 +1,19 @@
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
+  purge: {
+    enabled: true,
+    content: [
+        './**/*.html',
+        './**/*.razor'
+    ],
   },
-  purge: [
-    './src/**/*.html',
-    './src/**/*.razor',
-  ],
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
-    extend: {
-      screens: {
-        'light-mode': { raw: '(prefers-color-scheme: light)'}
-      }
-    },
+    extend: {},
   },
-  variants: {},
+  variants: {
+    extend: {},
+  },
   plugins: [
-    require('@tailwindcss/custom-forms'),
+    require('@tailwindcss/forms'),
   ],
 }

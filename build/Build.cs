@@ -65,11 +65,6 @@ class Build : NukeBuild
     const string ReleaseBranchPrefix = "release";
     const string HotfixBranchPrefix = "hotfix";
 
-    [Partition(1)]
-    Partition BuildPartition;
-
-    [Partition(1)]
-    Partition DeployPartition;
 
     IReadOnlyCollection<AbsolutePath> AditionalPaths = new[]
     {
@@ -96,8 +91,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             NpmTasks.NpmRun(s => s
-                .SetCommand("build")
-                .AddArguments("--dir", $"{ MainProject.Directory / "wwwroot/assets" }")
+                .SetCommand("buildcss")
                 .When(Configuration == Configuration.Release, config => config.AddArguments("--environment", "BUILD:production"))
                 .When(Configuration == Configuration.Release, config => config.SetProcessEnvironmentVariable("NODE_ENV", "production"))
             );
@@ -142,7 +136,6 @@ class Build : NukeBuild
         .DependsOn(Clean, CleanFrontend)
         .DependsOn(Compile, BuildFrontend)
         .Produces(ArtifactsDirectory / "wwwroot")
-        .Partition(() => BuildPartition)
         .Executes(() =>
         {
             DotNetPublish(s => s
@@ -159,6 +152,7 @@ class Build : NukeBuild
         .Requires(() => DeployArtifactPath)
         .Requires(() => DirectoryExists(DeployArtifactPath))
         .Requires(() => Directory.EnumerateFiles(DeployArtifactPath).Any())
+        .Consumes(Publish)
         .Executes(() =>
         {
             NpmTasks.NpmRun(s => s

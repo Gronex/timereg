@@ -2,7 +2,7 @@
 
 @tailwind components;
 
-.App {
+/* .App {
     @apply bg-gray-900;
     @apply text-teal-500;
 }
@@ -11,6 +11,6 @@
     .App {
         @apply bg-white text-black;
     }
-}
+} */
 
 @tailwind utilities;

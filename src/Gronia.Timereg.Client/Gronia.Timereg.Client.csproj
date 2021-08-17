@@ -8,19 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Accelist.FluentValidation.Blazor" Version="4.0.0" />
-    <PackageReference Include="FluentValidation" Version="9.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.2" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.2" />
+    <PackageReference Include="Blazored.FluentValidation" Version="2.0.1" />
+    <PackageReference Include="FluentValidation" Version="10.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.9" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.9" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Gronia.Timereg.Application\Gronia.Timereg.Application.csproj" />
+    <ProjectReference Include="..\Gronia.Timereg.IndexedDb\Gronia.Timereg.IndexedDb.csproj" />
     <ProjectReference Include="..\Gronia.Timereg.Infrastructure\Gronia.Timereg.Infrastructure.csproj" />
-    <ProjectReference Include="..\Gronia.Timereg.RegistrationDatabase\Gronia.Timereg.IndexedDb.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gronia.Timereg.RoutingGenerator\Gronia.Timereg.RoutingGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
 </Project>

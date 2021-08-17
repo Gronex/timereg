@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gronia.Timereg.Application\Gronia.Timereg.Application.csproj" />
-    <ProjectReference Include="..\Gronia.Timereg.RegistrationDatabase\Gronia.Timereg.IndexedDb.csproj" />
+    <ProjectReference Include="..\Gronia.Timereg.IndexedDb\Gronia.Timereg.IndexedDb.csproj" />
   </ItemGroup>
 
 </Project>

@@ -22,8 +22,8 @@
     {
         <div class="bg-gray-800 rounded-lg">
             <EditForm Model="@_timeRegistration" OnValidSubmit="SubmitForm" class="mx-8 my-6 py-6">
-                <FluentValidator  />
-                <DataAnnotationsValidator />
+                <FluentValidationValidator />
+                
                 <div class="mb-5">
                     <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="date">@Localizer["Date"]</label>
                     <InputDate @bind-Value="@_timeRegistration.Date" DisplayName="@Localizer["Date"]"
