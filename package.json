@@ -8,8 +8,7 @@
   },
   "scripts": {
     "buildcss": "postcss src/Gronia.Timereg.Client/wwwroot/css/app.css -o src/Gronia.Timereg.Client/wwwroot/css/app.min.css",
-    "build-indexed-db": "rollup ./src/Gronia.Timereg.indexedDb/wwwroot/indexedDb.js --dir ./src/Gronia.Timereg.indexedDb/wwwroot/dist --config ./rollup.config.js --format esm",
-    "deploy": "netlify deploy"
+    "build-indexed-db": "rollup ./src/Gronia.Timereg.indexedDb/wwwroot/indexedDb.js --dir ./src/Gronia.Timereg.indexedDb/wwwroot/dist --config ./rollup.config.js --format esm"
   },
   "browserslist": {
     "production": [
@@ -29,11 +28,9 @@
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@tailwindcss/forms": "^0.3.3",
     "autoprefixer": "^10.3.1",
-    "netlify-cli": "^3.4.2",
     "postcss": "^8.3.6",
     "postcss-cli": "^8.3.1",
     "rollup": "^2.56.2",
-    "rollup-plugin-postcss": "^4.0.1",
     "tailwindcss": "^2.2.7"
   }
 }

@@ -393,3 +393,4 @@ MigrationBackup/
 
 # Misc
 src/**/dist
+**/wwwroot/**/*.min.*
