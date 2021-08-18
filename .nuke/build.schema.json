@@ -18,9 +18,6 @@
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
         },
-        "DeployArtifactPath": {
-          "type": "string"
-        },
         "Help": {
           "type": "boolean",
           "description": "Shows the help text for this build assembly"
@@ -57,10 +54,6 @@
           "type": "boolean",
           "description": "Shows the execution plan (HTML)"
         },
-        "Prod": {
-          "type": "boolean",
-          "description": "If the deployaction should be run against prod"
-        },
         "Profile": {
           "type": "array",
           "description": "Defines the profiles to load",
@@ -80,9 +73,7 @@
             "enum": [
               "BuildFrontend",
               "Clean",
-              "CleanFrontend",
               "Compile",
-              "Deploy",
               "Publish",
               "Restore",
               "RestoreNpmPackages"
@@ -101,9 +92,7 @@
             "enum": [
               "BuildFrontend",
               "Clean",
-              "CleanFrontend",
               "Compile",
-              "Deploy",
               "Publish",
               "Restore",
               "RestoreNpmPackages"

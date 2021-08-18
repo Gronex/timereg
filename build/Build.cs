@@ -40,12 +40,6 @@ class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    [Parameter("If the deployaction should be run against prod")]
-    readonly bool Prod = false;
-
-    [Parameter()]
-    readonly AbsolutePath DeployArtifactPath;
-
     [Solution]
     readonly Solution Solution;
 
@@ -78,13 +72,6 @@ class Build : NukeBuild
             NpmTasks.NpmCi();
         });
 
-    Target CleanFrontend => _ => _
-        .Before(RestoreNpmPackages)
-        .Executes(() =>
-        {
-            SourceDirectory.GlobDirectories("**/wwwroot/assets").ForEach(DeleteDirectory);
-        });
-
     Target BuildFrontend => _ => _
         .DependsOn(RestoreNpmPackages)
         .Before(Compile)
@@ -97,11 +84,7 @@ class Build : NukeBuild
             );
         }).Executes(() =>
         {
-            NpmTasks.NpmRun(s => s
-                .SetCommand("build-indexed-db")
-                .When(Configuration == Configuration.Release, config => config.AddArguments("--environment", "BUILD:production"))
-                .When(Configuration == Configuration.Release, config => config.SetProcessEnvironmentVariable("NODE_ENV", "production"))
-            );
+            NpmTasks.NpmRun(s => s.SetCommand("build-indexed-db"));
         });
 
     Target Clean => _ => _
@@ -133,7 +116,7 @@ class Build : NukeBuild
         });
 
     Target Publish => _ => _
-        .DependsOn(Clean, CleanFrontend)
+        .DependsOn(Clean)
         .DependsOn(Compile, BuildFrontend)
         .Produces(ArtifactsDirectory / "wwwroot")
         .Executes(() =>
@@ -146,20 +129,5 @@ class Build : NukeBuild
                 .SetOutput(ArtifactsDirectory)
                 );
             CopyFileToDirectory(RootDirectory / "netlify.toml", ArtifactsDirectory / "wwwroot");
-        });
-
-    Target Deploy => _ => _
-        .Requires(() => DeployArtifactPath)
-        .Requires(() => DirectoryExists(DeployArtifactPath))
-        .Requires(() => Directory.EnumerateFiles(DeployArtifactPath).Any())
-        .Consumes(Publish)
-        .Executes(() =>
-        {
-            NpmTasks.NpmRun(s => s
-                .SetCommand("deploy")
-                .AddArguments("--dir", DeployArtifactPath)
-                .When(!Prod, config => config.AddArguments("--alias", "stage"))
-                .When(Prod, config => config.AddArguments("--prod"))
-            );
         });
 }
