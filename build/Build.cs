@@ -84,11 +84,7 @@ class Build : NukeBuild
             );
         }).Executes(() =>
         {
-            NpmTasks.NpmRun(s => s
-                .SetCommand("build-indexed-db")
-                .When(Configuration == Configuration.Release, config => config.AddArguments("--environment", "BUILD:production"))
-                .When(Configuration == Configuration.Release, config => config.SetProcessEnvironmentVariable("NODE_ENV", "production"))
-            );
+            NpmTasks.NpmRun(s => s.SetCommand("build-indexed-db"));
         });
 
     Target Clean => _ => _
