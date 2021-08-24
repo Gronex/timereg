@@ -2,15 +2,4 @@
 
 @tailwind components;
 
-/* .App {
-    @apply bg-gray-900;
-    @apply text-teal-500;
-}
-
-@liht-mode {
-    .App {
-        @apply bg-white text-black;
-    }
-} */
-
 @tailwind utilities;
