@@ -34,7 +34,7 @@ jobs:
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v1.2.2
       with:
-        publish-dir: './${{ env.artifactName }}'
+        publish-dir: ${{ env.artifactName }}
         production-branch: master
         production-deploy: false
         deploy-message: "Deploy from GitHub Actions"
@@ -55,10 +55,11 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: ${{ env.artifactName }}
+        path: 
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v1.2.2
       with:
-        publish-dir: './${{ env.artifactName }}'
+        publish-dir: ${{ env.artifactName }}
         production-branch: master
         production-deploy: true
         deploy-message: "Deploy from GitHub Actions"
