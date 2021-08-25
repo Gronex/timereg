@@ -18,7 +18,7 @@ jobs:
       run: ./build.cmd Publish
     - uses: actions/upload-artifact@v1
       with:
-        name: $${{ env.artifactName }}
+        name: ${{ env.artifactName }}
         path: artifacts/wwwroot
 
   deploy-test:
@@ -30,11 +30,11 @@ jobs:
     - name: Download a single artifact
       uses: actions/download-artifact@v2
       with:
-        name: ${{${{ env.artifactName }}}}
+        name: ${{ env.artifactName }}
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v1.2.2
       with:
-        publish-dir: './${{${{ env.artifactName }}}}'
+        publish-dir: './${{ env.artifactName }}'
         production-branch: master
         production-deploy: false
         deploy-message: "Deploy from GitHub Actions"
@@ -58,7 +58,7 @@ jobs:
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v1.2.2
       with:
-        publish-dir: './${{${{ env.artifactName }}}}'
+        publish-dir: './${{ env.artifactName }}'
         production-branch: master
         production-deploy: true
         deploy-message: "Deploy from GitHub Actions"
