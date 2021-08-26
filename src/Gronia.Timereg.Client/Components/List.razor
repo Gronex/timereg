@@ -1,0 +1,30 @@
+﻿@using Gronia.Timereg.Client.ViewModels;
+
+
+<div class="flex flex-col mt-2">
+    @foreach(var item in Items)
+    {
+        <a href="@item.LinkUrl">
+            <div class="flex flex-row mt-2">
+                <div class="flex w-full items-center justify-between bg-gray-900 px-8 py-6 border-l-4 border-green-800 bg-opacity-50">
+                    <div class="flex flex-col ml-6">
+                        <span class="text-lg font-bold text-green-600">@item.Title</span>
+                        <div class="mt-4 flex">
+                            @foreach(var listing in item.Icons)
+                            {
+                                <Icon Model="listing" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+
+
+@code {
+    [Parameter]
+    public IEnumerable<ListItemViewModel> Items { get; init; } = Array.Empty<ListItemViewModel>();
+}

@@ -1,0 +1,72 @@
+name: Deploy
+
+on:
+  pull_request:
+    branches:
+      - master
+
+env:
+  artifactName: 'wwwroot'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run './build.cmd Publish'
+      run: ./build.cmd Publish
+    - uses: actions/upload-artifact@v1
+      with:
+        name: ${{ env.artifactName }}
+        path: artifacts/wwwroot
+
+  deploy-test:
+    environment: QA
+    needs: build
+    name: Deploy to QA
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download a single artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ env.artifactName }}
+        path: ${{ env.artifactName }}
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.2.2
+      with:
+        publish-dir: ${{ env.artifactName }}
+        production-branch: master
+        production-deploy: false
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  deploy-prod:
+    environment: Prod
+    needs: build
+    name: Deploy to Prod
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download a single artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ env.artifactName }}
+        path: ${{ env.artifactName }}
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.2.2
+      with:
+        publish-dir: ${{ env.artifactName }}
+        production-branch: master
+        production-deploy: true
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
