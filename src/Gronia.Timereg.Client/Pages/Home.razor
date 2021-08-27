@@ -4,6 +4,7 @@
 @using Gronia.Timereg.Infrastructure
 @using Gronia.Timereg.Client.Extensions;
 @using Gronia.Timereg.Client.Components;
+@using Formatting;
 
 @page "/"
 @inject RouteService Routes
@@ -77,15 +78,15 @@
             .GroupBy(x => x.Date)
             .OrderByDescending(x => x.Key)
             .Select(x => new ListItemViewModel(x.Key.ToString("D"), new IconViewModel[]
-                {
-                    new IconViewModel(x.Sum(x => x.Time).ToString(), ViewModels.Icon.Time, Localizer["Hours"]),
-                    new IconViewModel(x.Count().ToString(), ViewModels.Icon.Number, Localizer["Registration count"])
-                    }, Routes.GetDayRoute(x.Key.Date)));
+            {
+                new IconViewModel(x.Sum(x => x.Time).Format(), ViewModels.Icon.Time, Localizer["Hours"]),
+                new IconViewModel(x.Count().ToString(), ViewModels.Icon.Number, Localizer["Registration count"])
+            }, Routes.GetDayRoute(x.Key.Date)));
     }
 
     protected IEnumerable<IconViewModel> GetGroupIcons<T>(IGrouping<T, TimeRegistrationViewModel> group)
     {
-        yield return new IconViewModel(group.Sum(x => x.Time).ToString(), ViewModels.Icon.Time, Localizer["Total Time"]);
+        yield return new IconViewModel(group.Sum(x => x.Time).Format(), ViewModels.Icon.Time, Localizer["Total Time"]);
         yield return new IconViewModel(group.Count().ToString(), ViewModels.Icon.Number, Localizer["Registration count"]);
     }
 
