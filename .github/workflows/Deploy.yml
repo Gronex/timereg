@@ -1,9 +1,8 @@
 name: Deploy
 
 on:
-  pull_request:
-    branches:
-      - master
+  release:
+    types: [created, published]
 
 env:
   artifactName: 'wwwroot'
