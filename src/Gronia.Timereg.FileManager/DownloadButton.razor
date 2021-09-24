@@ -13,16 +13,16 @@
     public Func<Task<Stream>>? DataFactory { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object> InputAttributes { get; set; }
+    public Dictionary<string, object>? InputAttributes { get; set; }
 
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public string FileName { get; set; }
+    public string FileName { get; set; } = "file";
 
     [Parameter]
-    public string MimeType { get; set; }
+    public string MimeType { get; set; } = "plain/text";
 
     protected override void OnParametersSet()
     {
