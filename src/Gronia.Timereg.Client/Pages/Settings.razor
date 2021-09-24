@@ -18,12 +18,17 @@
         </a>
     </div>
 
+    <DataImportExport></DataImportExport>
+
     <h2 class="text-2xl">@Localizer["Data upgrade"]</h2>
     <div class="grid grid-cols-4 gap-3 pb-2">
         <p class="col-span-full">
             @Localizer["Migrate data added in versions prior to 4.0 to the new format. Re-running will not create additional data"]
         </p>
-        <button class="inline-flex items-center px-4 lg:col-span-1 col-span-full shadow bg-blue-600 hover:bg-blue-400  focus:shadow-outline focus:outline-none font-bold py-2 px-4 rounded @(_disableMigration ? "cursor-not-allowed": string.Empty)" type="button" disabled="@_disableMigration" @onclick="@MigrateData">
+        <button class="inline-flex items-center px-4 lg:col-span-1 col-span-full shadow bg-blue-600 hover:bg-blue-400  focus:shadow-outline focus:outline-none font-bold py-2 px-4 rounded @(_disableMigration ? "cursor-not-allowed": string.Empty)"
+            type="button"
+            disabled="@_disableMigration"
+            @onclick="@MigrateData">
             @if (_migrating)
             {
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

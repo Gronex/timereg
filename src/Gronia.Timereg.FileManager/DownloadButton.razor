@@ -1,0 +1,39 @@
+﻿@inject FileManager FileManager
+
+<button @attributes="@InputAttributes" @onclick="@BeginDownload">
+    @ChildContent
+</button>
+
+@code {
+    [Parameter]
+    public byte[]? Data { get; set; }
+
+    [Parameter]
+    public Func<Task<byte[]>>? DataFactory { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string FileName { get; set; }
+
+    [Parameter]
+    public string MimeType { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if(Data is null && DataFactory is null)
+        {
+            throw new ArgumentNullException(nameof(Data), $"{nameof(Data)} or {nameof(DataFactory)} must be set");
+        }
+    }
+
+    protected async Task BeginDownload()
+    {
+        var data = Data ?? await DataFactory!.Invoke();
+        await FileManager.DownloadFile(data, FileName, MimeType);
+    }
+}

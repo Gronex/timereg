@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gronia.Timereg.Application\Gronia.Timereg.Application.csproj" />
+    <ProjectReference Include="..\Gronia.Timereg.FileManager\Gronia.Timereg.FileManager.csproj" />
     <ProjectReference Include="..\Gronia.Timereg.IndexedDb\Gronia.Timereg.IndexedDb.csproj" />
     <ProjectReference Include="..\Gronia.Timereg.Infrastructure\Gronia.Timereg.Infrastructure.csproj" />
   </ItemGroup>

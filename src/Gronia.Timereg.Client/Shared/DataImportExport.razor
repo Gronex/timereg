@@ -1,0 +1,45 @@
+﻿@using Gronia.Timereg.Application
+@using Gronia.Timereg.FileManager
+@using Microsoft.Extensions.Logging
+@using System.Text.Json
+
+@inject IStringLocalizer<DataImportExport> Localizer
+@inject ILogger<DataImportExport> Logger
+@inject ITimeRegistrationRepository TimeRegistrationRepo
+
+<div>
+    <h2 class="text-2xl">@Localizer["Data Export"]</h2>
+    <DownloadButton 
+        DataFactory="@GetData"
+        FileName="@GetFileName()"
+        MimeType="application/json"
+        class="inline-flex items-center px-4 lg:col-span-1 col-span-full shadow bg-blue-600 hover:bg-blue-400 focus:shadow-outline focus:outline-none font-bold py-2 px-4 rounded">
+        @Localizer["Download data from database"]
+    </DownloadButton>
+@*    <br/>
+    <div>
+        <label>@Localizer["Upload file to import"]</label><br />
+        <InputFile></InputFile>
+        <button type="submit"
+            class="inline-flex items-center px-4 lg:col-span-1 col-span-full shadow bg-blue-600 hover:bg-blue-400  focus:shadow-outline focus:outline-none font-bold py-2 px-4 rounded">
+            @Localizer["Import data"]
+        </button>
+    </div>*@
+</div>
+
+@code {
+
+    protected async Task<byte[]> GetData()
+    {
+        Logger.LogInformation("Downloading data");
+        var registraitons = await TimeRegistrationRepo.GetAllRegistrationAsync();
+        return JsonSerializer.SerializeToUtf8Bytes(registraitons, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+    }
+
+    protected string GetFileName() =>
+        $"TimeReg.{DateTime.Now:d}.json";
+}

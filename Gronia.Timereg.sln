@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gronia.Timereg.IndexedDb", "src\Gronia.Timereg.IndexedDb\Gronia.Timereg.IndexedDb.csproj", "{68814312-83A7-4537-9236-F6ADADC88838}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gronia.Timereg.FileManager", "src\Gronia.Timereg.FileManager\Gronia.Timereg.FileManager.csproj", "{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,18 @@ Global
 		{68814312-83A7-4537-9236-F6ADADC88838}.Release|x64.Build.0 = Release|Any CPU
 		{68814312-83A7-4537-9236-F6ADADC88838}.Release|x86.ActiveCfg = Release|Any CPU
 		{68814312-83A7-4537-9236-F6ADADC88838}.Release|x86.Build.0 = Release|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Debug|x64.Build.0 = Debug|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Release|x64.ActiveCfg = Release|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Release|x64.Build.0 = Release|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,6 +141,7 @@ Global
 		{C678BFA1-F546-4D13-9AD5-32F5BB24368F} = {A29D2423-DAE0-4966-A89A-D499EFC32FD3}
 		{F5FD1AD1-6543-4C97-98A7-8089F57DA9A7} = {C678BFA1-F546-4D13-9AD5-32F5BB24368F}
 		{68814312-83A7-4537-9236-F6ADADC88838} = {A29D2423-DAE0-4966-A89A-D499EFC32FD3}
+		{EE7BC01E-16F0-441B-B3B8-4D84A69BD79D} = {A29D2423-DAE0-4966-A89A-D499EFC32FD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61C34BC1-261F-40ED-BC8E-EC4B66F8F896}

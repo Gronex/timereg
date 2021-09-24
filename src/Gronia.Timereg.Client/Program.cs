@@ -1,21 +1,19 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Gronia.Timereg.Application;
-using Gronia.Timereg.Infrastructure;
-using Gronia.Timereg.Client.Pages;
-using Gronia.Timereg.Client.Shared;
+
 using FluentValidation;
+
+using Gronia.Timereg.Application;
+using Gronia.Timereg.Client.Pages;
 using Gronia.Timereg.Client.Validation;
 using Gronia.Timereg.Client.ViewModels;
 using Gronia.Timereg.Domain;
 using Gronia.Timereg.IndexedDb;
+using Gronia.Timereg.Infrastructure;
+
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Gronia.Timereg.Client
 {
@@ -50,6 +48,7 @@ namespace Gronia.Timereg.Client
 
             services.Configure<IndexedDbSettings>(nameof(OldTimeRegistration), builder.Configuration.GetSection("IndexedDbOld"));
             services.AddScoped<IIndexedDbContext<OldTimeRegistration, int>, IndexedDbContext<OldTimeRegistration, int>>();
+            services.AddScoped<FileManager.FileManager>();
         }
     }
 }
