@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using Gronia.Timereg.Application;
@@ -23,6 +25,35 @@ namespace Gronia.Timereg.Infrastructure
             _logger = logger;
             _dbContext = dbContext;
             _dbContextTarget = dbContextTarget;
+        }
+
+        public async Task<Stream> ExportData()
+        {
+            var registraitons = await _dbContextTarget.GetAll();
+            var stream = new MemoryStream();
+            await JsonSerializer.SerializeAsync(stream, registraitons, _jsonOptions);
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream;
+        }
+
+        public async Task ImportFromFile(Stream stream)
+        {
+            var registrations = (await JsonSerializer.DeserializeAsync<IEnumerable<TimeRegistration>>(stream, _jsonOptions))?.ToList();
+
+            if(registrations is null || !registrations.Any())
+            {
+                _logger.LogError("No registrations to import");
+                return;
+            }
+
+            _logger.LogInformation("Importing {count} registrations", registrations.Count);
+
+            int current = 1;
+            foreach(var registration in registrations)
+            {
+                _logger.LogDebug("({number}/{total}) Importing {id}", current++, registrations.Count, registration.Id);
+                await _dbContextTarget.Put(registration);
+            }
         }
 
         public async Task MigrateTimeRegistrations()
@@ -54,5 +85,11 @@ namespace Gronia.Timereg.Infrastructure
 
             _logger.LogInformation("Migration done.");
         }
+
+        private readonly JsonSerializerOptions _jsonOptions = new()
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
     }
 }

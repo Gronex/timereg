@@ -1,4 +1,5 @@
-﻿@inject FileManager FileManager
+﻿@using System.IO
+@inject FileManager FileManager
 
 <button @attributes="@InputAttributes" @onclick="@BeginDownload">
     @ChildContent
@@ -9,7 +10,7 @@
     public byte[]? Data { get; set; }
 
     [Parameter]
-    public Func<Task<byte[]>>? DataFactory { get; set; }
+    public Func<Task<Stream>>? DataFactory { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> InputAttributes { get; set; }
@@ -33,7 +34,19 @@
 
     protected async Task BeginDownload()
     {
-        var data = Data ?? await DataFactory!.Invoke();
+        byte[] data;
+        if(Data is not null)
+        {
+            data = Data;
+        }
+        else
+        {
+            using var stream = await DataFactory!.Invoke();
+            using var reader = new MemoryStream();
+            await stream.CopyToAsync(reader);
+            reader.Seek(0, SeekOrigin.Begin);
+            data = reader.ToArray();
+        }
         await FileManager.DownloadFile(data, FileName, MimeType);
     }
 }
