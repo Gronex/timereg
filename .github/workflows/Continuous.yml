@@ -21,6 +21,7 @@ on:
     branches:
       - master
       - 'release/*'
+      - develop
   pull_request:
     branches:
       - develop

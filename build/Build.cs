@@ -25,7 +25,7 @@ using System.IO;
     GitHubActionsImage.UbuntuLatest,
     PublishArtifacts = false,
     OnPullRequestBranches = new[] { DevelopBranch },
-    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
+    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" , DevelopBranch },
     InvokedTargets = new[] { nameof(Publish) })]
 class Build : NukeBuild
 {
