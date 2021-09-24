@@ -109,9 +109,9 @@ class Build : NukeBuild
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
-                .SetAssemblyVersion(GitVersion?.AssemblySemVer ?? "1.0.0")
-                .SetFileVersion(GitVersion?.AssemblySemFileVer ?? "1.0.0")
-                .SetInformationalVersion(GitVersion?.InformationalVersion ?? "1.0.0")
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)
+                .SetFileVersion(GitVersion.AssemblySemFileVer)
+                .SetInformationalVersion(GitVersion.InformationalVersion)
                 .EnableNoRestore());
         });
 
