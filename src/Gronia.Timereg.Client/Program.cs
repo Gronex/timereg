@@ -14,6 +14,7 @@ using Gronia.Timereg.Infrastructure;
 
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Gronia.Timereg.Client
 {
@@ -22,6 +23,7 @@ namespace Gronia.Timereg.Client
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddLocalization();

@@ -4,6 +4,7 @@ using Microsoft.JSInterop;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Gronia.Timereg.IndexedDb
@@ -42,26 +43,38 @@ namespace Gronia.Timereg.IndexedDb
 
         public async ValueTask<TModel?> Get(TKey key)
         {
-            IJSObjectReference module = await GetModule();
-            return await module.InvokeAsync<TModel>("get", _settings.DatabaseName, StoreName, key);
+            return await RunWithDiagnostics(nameof(Get), async () =>
+            {
+                IJSObjectReference module = await GetModule();
+                return await module.InvokeAsync<TModel>("get", _settings.DatabaseName, StoreName, key);
+            });
         }
 
         public async ValueTask<IEnumerable<TModel>> GetAll()
         {
-            IJSObjectReference module = await GetModule();
-            return await module.InvokeAsync<IEnumerable<TModel>>("getAll", _settings.DatabaseName, StoreName);
+            return await RunWithDiagnostics(nameof(GetAll), async () =>
+            {
+                IJSObjectReference module = await GetModule();
+                return await module.InvokeAsync<IEnumerable<TModel>>("getAll", _settings.DatabaseName, StoreName);
+            });
         }
 
         public async ValueTask Put(TModel value)
         {
-            IJSObjectReference module = await GetModule();
-            await module.InvokeVoidAsync("put", _settings.DatabaseName, StoreName, value);
+            await RunWithDiagnostics(nameof(Put), async () =>
+            {
+                IJSObjectReference module = await GetModule();
+                await module.InvokeVoidAsync("put", _settings.DatabaseName, StoreName, value);
+            });
         }
 
         public async ValueTask Delete(TKey key)
         {
-            IJSObjectReference module = await GetModule();
-            await module.InvokeVoidAsync("remove", _settings.DatabaseName, StoreName, key);
+            await RunWithDiagnostics(nameof(Delete), async () =>
+            {
+                IJSObjectReference module = await GetModule();
+                await module.InvokeVoidAsync("remove", _settings.DatabaseName, StoreName, key);
+            });
         }
 
         private string StoreName => string.IsNullOrWhiteSpace(_settings.StoreName) ? typeof(TModel).Name : _settings.StoreName;
@@ -72,6 +85,25 @@ namespace Gronia.Timereg.IndexedDb
             _logger.LogInformation("DB: {DBName}, Version: {Version}, Store: {StoreName}", _settings.DatabaseName, _settings.Version, StoreName);
             await module.InvokeVoidAsync("initDb", _settings.DatabaseName, _settings.Version, StoreName);
             return module;
+        }
+
+        private T RunWithDiagnostics<T>(string name, Func<T> action)
+        {
+            _logger.LogInformation("Calling {Name} on Database: {Database} using Store: {Store}", name, _settings.DatabaseName, StoreName);
+            var sw = Stopwatch.StartNew();
+            try
+            {
+                return action.Invoke();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Database query failed");
+                throw;
+            }
+            finally
+            {
+                _logger.LogInformation("Execution time: {Time} ms", sw.Elapsed.Milliseconds);
+            }
         }
     }
 }
