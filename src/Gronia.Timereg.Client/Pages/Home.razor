@@ -82,7 +82,7 @@
     protected IEnumerable<ListItemViewModel> CreateDayList<T>(IGrouping<T, TimeRegistrationViewModel> group)
     {
         return group
-            .GroupBy(x => x.Date)
+            .GroupBy(x => x.Date.Date)
             .OrderByDescending(x => x.Key)
             .Select(x => new ListItemViewModel(x.Key.ToString("D"), new IconViewModel[]
             {

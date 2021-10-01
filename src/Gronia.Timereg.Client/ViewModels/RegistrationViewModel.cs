@@ -33,7 +33,6 @@ namespace Gronia.Timereg.Client.ViewModels
         }
 
         // TODO: Mapping should probably be its own thing
-
         public TimeRegistrationViewModel(TimeRegistration timeRegistration)
         {
             Id = timeRegistration.Id;
