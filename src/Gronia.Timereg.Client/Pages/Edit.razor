@@ -38,7 +38,7 @@
                 </div>
                 <div class="mb-5">
                     <label class="block uppercase tracking-wide text-sm mb-2" htmlFor="description">@Localizer["Description"]</label>
-                    <InputTextArea @bind-Value="@_timeRegistration.Description" DisplayName="@Localizer["Description"]"
+                    <InputText @bind-Value="@_timeRegistration.Description" DisplayName="@Localizer["Description"]" 
                                    class="shadow bg-gray-800 border-gray-600 appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline" />
                     <ValidationMessage For="() => _timeRegistration.Description"></ValidationMessage>
                 </div>
