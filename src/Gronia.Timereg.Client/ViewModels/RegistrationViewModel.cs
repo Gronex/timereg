@@ -18,17 +18,17 @@ namespace Gronia.Timereg.Client.ViewModels
 
         public TimeSpan? StopTime { get; set; }
 
-        public TimeSpan? Time
+        public TimeSpan Time
         {
             get
             {
                 TimeSpan? diff = (StopTime - StartTime);
-                return diff < TimeSpan.Zero ? TimeSpan.Zero : diff;
+                return (diff < TimeSpan.Zero ? TimeSpan.Zero : diff) ?? TimeSpan.Zero;
             }
             set
             {
                 StartTime = TimeSpan.Zero;
-                StopTime = value is null ? null : StartTime + value;
+                StopTime = value == TimeSpan.Zero ? null : StartTime + value;
             }
         }
 
