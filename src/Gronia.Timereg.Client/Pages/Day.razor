@@ -1,12 +1,13 @@
 @using Gronia.Timereg.Application
 @using Gronia.Timereg.Client.ViewModels
 @using Gronia.Timereg.Client.Components
+@using Gronia.Timereg.Client.Extensions
 
 @page "/{date:datetime}"
 @inject ITimeRegistrationRepository Repo
 @inject RouteService Routes
 
-<h1 class="text-3xl font-bold pt-2 px-4">@Date.Date.ToShortDateString()</h1>
+<h1 class="text-3xl font-bold pt-2 px-4">@Date.Date.FormatDate()</h1>
 
 <List Items="_listItems" />
 
