@@ -40,12 +40,14 @@ namespace Gronia.Timereg.Infrastructure
         public async ValueTask<IEnumerable<TimeRegistration>> GetAllRegistrationAsync(DateTime? date)
         {
             IEnumerable<TimeRegistration> registrations = await _database.GetAll();
-            return registrations.Where(x => !date.HasValue || x.Date == date.Value.Date);
+            return registrations
+                .Select(FixDate)
+                .Where(x => !date.HasValue || x!.Date == date.Value.Date)!;
         }
 
-        public ValueTask<TimeRegistration?> GetRegistrationAsync(Guid id)
+        public async ValueTask<TimeRegistration?> GetRegistrationAsync(Guid id)
         {
-            return _database.Get(id);
+            return FixDate(await _database.Get(id));
         }
 
         public async ValueTask UpdateRegistrationAsync(Guid id, TimeRegistration registration)
@@ -56,6 +58,18 @@ namespace Gronia.Timereg.Infrastructure
                 throw new KeyNotFoundException($"Unable to find {id} in list of registrations");
             }
             await _database.Put(registration with { Id = id });
+        }
+
+        private TimeRegistration? FixDate(TimeRegistration? timeRegistration)
+        {
+            if (timeRegistration != null && timeRegistration.Date.Hour != 0)
+            {
+                // Earlier migrated data was setting timezone to utc time,
+                // meaning the date is not directly parsable.
+                // TODO: Handle when removeing time component on upgrade to .NET 6
+                timeRegistration = timeRegistration with { Date = timeRegistration.Date.ToLocalTime() };
+            }
+            return timeRegistration;
         }
     }
 }
