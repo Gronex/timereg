@@ -84,7 +84,7 @@
         return group
             .GroupBy(x => x.Date.Date)
             .OrderByDescending(x => x.Key)
-            .Select(x => new ListItemViewModel(x.Key.ToString("D"), new IconViewModel[]
+            .Select(x => new ListItemViewModel(x.Key.FormatDate(), new IconViewModel[]
             {
                 new IconViewModel(x.Sum(x => x.Time).Format(), ViewModels.Icon.Time, Localizer["Hours"]),
                 new IconViewModel(x.Count().ToString(), ViewModels.Icon.Number, Localizer["Registration count"])

@@ -41,5 +41,8 @@ namespace Gronia.Timereg.Client.Extensions
             // Return the week of our adjusted day
             return calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
+
+        public static string FormatDate(this DateTime date) =>
+            date.ToString("D");
     }
 }
